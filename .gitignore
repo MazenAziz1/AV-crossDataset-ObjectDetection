@@ -1,0 +1,66 @@
+# Python virtual environments
+AVenv/
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment files
+.env
+*.env
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Datasets
+data/
+datasets/
+KITTI/
+Waymo/
+waymo/
+kitti/
+
+# Model weights and checkpoints
+*.pt
+*.pth
+*.onnx
+*.engine
+*.ckpt
+*.weights
+
+# Training outputs
+runs/
+outputs/
+results/
+logs/
+checkpoints/
+wandb/
+mlruns/
+
+# FiftyOne database/cache
+.fiftyone/
+fiftyone/
+
+# Large archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Temporary files
+*.tmp
+*.log
