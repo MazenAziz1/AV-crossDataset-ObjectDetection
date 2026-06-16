@@ -1,0 +1,40 @@
+{
+  "source_dataset": "Waymo Open Dataset v2.0.1",
+  "source_split": "validation",
+  "purpose": "external_validation_without_retraining",
+  "camera_id": 1,
+  "camera_name": "FRONT",
+  "number_of_segments": 25,
+  "frame_sampling_interval": 5,
+  "frame_sampling_rule": "every_5th_front_frame_starting_at_first",
+  "number_of_selected_images": 996,
+  "images_without_target_boxes": 12,
+  "number_of_target_boxes": 24819,
+  "vehicle_box_count": 16928,
+  "pedestrian_box_count": 7127,
+  "cyclist_box_count": 764,
+  "invalid_or_zero_area_boxes_skipped": 0,
+  "time_of_day_image_distribution": {
+    "Day": 560,
+    "Dawn/Dusk": 237,
+    "Night": 199
+  },
+  "weather_image_distribution": {
+    "sunny": 956,
+    "rain": 40
+  },
+  "location_image_distribution": {
+    "location_sf": 480,
+    "location_phx": 436,
+    "location_other": 80
+  },
+  "density_image_distribution": {
+    "high": 400,
+    "low": 317,
+    "medium": 279
+  },
+  "selection_frozen_before_model_evaluation": true,
+  "manifest_file": "data/waymo/representative_subset/metadata/manifest.csv",
+  "boxes_file": "data/waymo/representative_subset/annotations/boxes.csv",
+  "class_mapping_file": "data/waymo/representative_subset/annotations/class_mapping.yaml"
+}

@@ -135,6 +135,7 @@ psutil==7.2.2
 ptflops==0.7.5
 pure_eval==0.2.3
 py7zr==1.1.0
+pyarrow==24.0.0
 pybcj==1.0.7
 pycocotools==2.0.11
 pycparser==3.0

@@ -1,0 +1,54 @@
+WAYMO CAMERA IMAGE SCHEMA INSPECTION
+============================================================
+Camera-image directory: C:\Users\Mazen\Desktop\AAST\Research\Autonomous research\data\waymo\raw\validation\camera_image\final
+Number of Parquet files: 25
+Inspected file: 10289507859301986274_4200_000_4220_000.parquet
+Rows in inspected file: 990
+
+COLUMN NAMES
+------------------------------------------------------------
+index
+key.segment_context_name
+key.frame_timestamp_micros
+key.camera_name
+[CameraImageComponent].image
+[CameraImageComponent].pose.transform
+[CameraImageComponent].velocity.linear_velocity.x
+[CameraImageComponent].velocity.linear_velocity.y
+[CameraImageComponent].velocity.linear_velocity.z
+[CameraImageComponent].velocity.angular_velocity.x
+[CameraImageComponent].velocity.angular_velocity.y
+[CameraImageComponent].velocity.angular_velocity.z
+[CameraImageComponent].pose_timestamp
+[CameraImageComponent].rolling_shutter_params.shutter
+[CameraImageComponent].rolling_shutter_params.camera_trigger_time
+[CameraImageComponent].rolling_shutter_params.camera_readout_done_time
+
+PARQUET SCHEMA
+------------------------------------------------------------
+index: string
+key.segment_context_name: string
+key.frame_timestamp_micros: int64
+key.camera_name: int8
+[CameraImageComponent].image: binary
+[CameraImageComponent].pose.transform: fixed_size_list<item: double>[16]
+  child 0, item: double
+[CameraImageComponent].velocity.linear_velocity.x: float
+[CameraImageComponent].velocity.linear_velocity.y: float
+[CameraImageComponent].velocity.linear_velocity.z: float
+[CameraImageComponent].velocity.angular_velocity.x: double
+[CameraImageComponent].velocity.angular_velocity.y: double
+[CameraImageComponent].velocity.angular_velocity.z: double
+[CameraImageComponent].pose_timestamp: double
+[CameraImageComponent].rolling_shutter_params.shutter: double
+[CameraImageComponent].rolling_shutter_params.camera_trigger_time: double
+[CameraImageComponent].rolling_shutter_params.camera_readout_done_time: double
+-- schema metadata --
+pandas: '{"column_indexes": [{"field_name": null, "metadata": {"encoding"' + 3109
+
+FIRST THREE ROWS
+------------------------------------------------------------
+              key.segment_context_name  key.frame_timestamp_micros  key.camera_name [CameraImageComponent].image                                                                                                                                                                                                                                               [CameraImageComponent].pose.transform  [CameraImageComponent].velocity.linear_velocity.x  [CameraImageComponent].velocity.linear_velocity.y  [CameraImageComponent].velocity.linear_velocity.z  [CameraImageComponent].velocity.angular_velocity.x  [CameraImageComponent].velocity.angular_velocity.y  [CameraImageComponent].velocity.angular_velocity.z  [CameraImageComponent].pose_timestamp  [CameraImageComponent].rolling_shutter_params.shutter  [CameraImageComponent].rolling_shutter_params.camera_trigger_time  [CameraImageComponent].rolling_shutter_params.camera_readout_done_time
+10289507859301986274_4200_000_4220_000            1557847392672581                1 <binary length=407410 bytes>              [0.15124296838985468, 0.9884965091979422, 0.00046456012302804276, -1689.0355682995462, -0.9876088523920181, 0.1511270342478211, -0.04230099521735788, 14430.499647786692, -0.04188459370158015, 0.005938924392547432, 0.9991048043060914, -27.622, 0.0, 0.0, 0.0, 1.0]                                           0.758412                                          -4.932937                                          -0.199827                                           -0.005528                                            0.005393                                           -0.003074                           1.557847e+09                                               0.002380                                                       1.557847e+09                                                            1.557847e+09
+10289507859301986274_4200_000_4220_000            1557847392672581                2 <binary length=459797 bytes> [0.1513388380420274, 0.988481847509021, 0.00043959668050548486, -1689.0508325060202, -0.9876022724011226, 0.15122290089956417, -0.04211158737995148, 14430.598055002025, -0.041693016780123875, 0.0059389720215799555, 0.9991128169346538, -27.618000000000002, 0.0, 0.0, 0.0, 1.0]                                           0.768911                                          -4.924013                                          -0.202212                                            0.002697                                            0.004228                                           -0.006769                           1.557847e+09                                               0.002676                                                       1.557847e+09                                                            1.557847e+09
+10289507859301986274_4200_000_4220_000            1557847392672581                4 <binary length=264439 bytes>              [0.1513388380420274, 0.988481847509021, 0.00043959668050548486, -1689.0584768201059, -0.9876022724011226, 0.15122290089956417, -0.04211158737995148, 14430.64725581079, -0.041693016780123875, 0.0059389720215799555, 0.9991128169346538, -27.616, 0.0, 0.0, 0.0, 1.0]                                           0.772157                                          -4.920211                                          -0.201477                                            0.004665                                            0.004718                                           -0.009162                           1.557847e+09                                               0.003210                                                       1.557847e+09                                                            1.557847e+09

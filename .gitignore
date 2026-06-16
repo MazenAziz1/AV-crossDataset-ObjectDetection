@@ -25,13 +25,27 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Datasets
-data/
+# Datasets — ignore large/raw files, keep documentation and metadata
+
+# Generic external dataset directories
 datasets/
-KITTI/
-Waymo/
-waymo/
-kitti/
+
+# KITTI raw dataset files
+data/kitti/raw/
+
+# Waymo raw downloaded components
+data/waymo/raw/
+
+# Waymo extracted images and visual samples
+data/waymo/representative_subset/images/
+
+# Large generated annotation tables
+data/waymo/representative_subset/annotations/boxes.csv
+
+# Dataset binary formats
+*.parquet
+*.tfrecord
+*.record
 
 # Model weights and checkpoints
 *.pt

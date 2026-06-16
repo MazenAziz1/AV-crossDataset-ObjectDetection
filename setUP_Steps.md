@@ -286,7 +286,7 @@ python -c "import torch, torchvision, ultralytics, cv2, pycocotools, torchmetric
 Save installed packages:
 
 ```bash
-pip freeze > requirements.txt
+python -m pip freeze > requirements.txt
 ```
 
 ---
@@ -375,4 +375,12 @@ Activate it
 Install packages inside it
 Select the same environment in VS Code
 Save requirements.txt
+```
+
+# whenever we make change on github
+```text
+git status
+git add .
+git commit -m "Add KITTI preprocessing script"
+git push
 ```

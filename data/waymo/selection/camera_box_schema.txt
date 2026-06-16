@@ -1,0 +1,47 @@
+WAYMO CAMERA BOX SCHEMA INSPECTION
+============================================================
+Camera-box directory: C:\Users\Mazen\Desktop\AAST\Research\Autonomous research\data\waymo\raw\validation\camera_box\candidates
+Number of Parquet files: 70
+Inspected file: 10289507859301986274_4200_000_4220_000.parquet
+Rows in inspected file: 29794
+
+COLUMN NAMES
+------------------------------------------------------------
+index
+key.segment_context_name
+key.frame_timestamp_micros
+key.camera_name
+key.camera_object_id
+[CameraBoxComponent].box.center.x
+[CameraBoxComponent].box.center.y
+[CameraBoxComponent].box.size.x
+[CameraBoxComponent].box.size.y
+[CameraBoxComponent].type
+[CameraBoxComponent].difficulty_level.detection
+[CameraBoxComponent].difficulty_level.tracking
+
+PARQUET SCHEMA
+------------------------------------------------------------
+index: string
+key.segment_context_name: string
+key.frame_timestamp_micros: int64
+key.camera_name: int8
+key.camera_object_id: string
+[CameraBoxComponent].box.center.x: double
+[CameraBoxComponent].box.center.y: double
+[CameraBoxComponent].box.size.x: double
+[CameraBoxComponent].box.size.y: double
+[CameraBoxComponent].type: int8
+[CameraBoxComponent].difficulty_level.detection: int8
+[CameraBoxComponent].difficulty_level.tracking: int8
+-- schema metadata --
+pandas: '{"column_indexes": [{"field_name": null, "metadata": {"encoding"' + 2048
+
+FIRST FIVE ROWS
+------------------------------------------------------------
+              key.segment_context_name  key.frame_timestamp_micros  key.camera_name                 key.camera_object_id  [CameraBoxComponent].box.center.x  [CameraBoxComponent].box.center.y  [CameraBoxComponent].box.size.x  [CameraBoxComponent].box.size.y  [CameraBoxComponent].type  [CameraBoxComponent].difficulty_level.detection  [CameraBoxComponent].difficulty_level.tracking
+10289507859301986274_4200_000_4220_000            1557847392672581                1 12fadb6a-f243-4f2a-aa38-8018dece5adc                          92.212140                         589.273470                        20.210880                        31.579500                          2                                              NaN                                             NaN
+10289507859301986274_4200_000_4220_000            1557847392672581                1 26890895-22fb-44e3-b98d-9164e91c7710                        1149.493800                         545.693691                        61.264369                        26.053061                          1                                              NaN                                             NaN
+10289507859301986274_4200_000_4220_000            1557847392672581                1 291cacbf-9ef1-4e25-951b-b55e94592c23                         625.274100                         589.905060                        72.632850                        49.895610                          1                                              NaN                                             NaN
+10289507859301986274_4200_000_4220_000            1557847392672581                1 2a4c0b66-5927-4578-bee9-dba4a903c226                         618.326610                         558.641383                        42.316530                        19.579290                          1                                              NaN                                             NaN
+10289507859301986274_4200_000_4220_000            1557847392672581                1 2bc8e0d0-2675-45bb-847d-3fe9b17bf992                         370.427753                         629.695325                        30.947891                        86.527830                          2                                              NaN                                             NaN

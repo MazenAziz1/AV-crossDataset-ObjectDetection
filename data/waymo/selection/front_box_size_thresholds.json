@@ -1,0 +1,10 @@
+{
+  "method": "candidate_front_camera_area_quantiles",
+  "area_unit": "square_pixels",
+  "small_definition": "box_area <= lower_33_percent_quantile",
+  "medium_definition": "lower_33_percent_quantile < box_area <= upper_67_percent_quantile",
+  "large_definition": "box_area > upper_67_percent_quantile",
+  "small_max_area": 745.954086,
+  "medium_max_area": 3250.183412,
+  "total_target_boxes_used": 290456
+}

@@ -1,0 +1,35 @@
+final_classes:
+  0: Vehicle
+  1: Pedestrian
+  2: Cyclist
+
+waymo_mapping:
+  1:
+    original_name: Vehicle
+    mapped_class_id: 0
+    mapped_class_name: Vehicle
+
+  2:
+    original_name: Pedestrian
+    mapped_class_id: 1
+    mapped_class_name: Pedestrian
+
+  3:
+    original_name: Sign
+    mapped_class_id: null
+    mapped_class_name: ignore
+
+  4:
+    original_name: Cyclist
+    mapped_class_id: 2
+    mapped_class_name: Cyclist
+
+camera:
+  id: 1
+  name: FRONT
+
+notes:
+  - Waymo validation is used only for external evaluation.
+  - No Waymo images are used for model training or tuning.
+  - Signs are excluded from the harmonized three-class task.
+  - Frames are sampled uniformly every fifth FRONT-camera frame.
