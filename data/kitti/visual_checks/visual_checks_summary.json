@@ -1,0 +1,107 @@
+{
+  "visual_checks_created": 8,
+  "files": [
+    {
+      "output_file": "sample_vehicle.jpg",
+      "image_id": "002972",
+      "split": "val",
+      "target_box_count": 17,
+      "ignored_box_count": 1,
+      "vehicle_count": 17,
+      "pedestrian_count": 0,
+      "cyclist_count": 0,
+      "boxes_drawn": 17,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_pedestrian.jpg",
+      "image_id": "002707",
+      "split": "train",
+      "target_box_count": 19,
+      "ignored_box_count": 2,
+      "vehicle_count": 1,
+      "pedestrian_count": 18,
+      "cyclist_count": 0,
+      "boxes_drawn": 19,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_cyclist.jpg",
+      "image_id": "006682",
+      "split": "train",
+      "target_box_count": 15,
+      "ignored_box_count": 1,
+      "vehicle_count": 3,
+      "pedestrian_count": 7,
+      "cyclist_count": 5,
+      "boxes_drawn": 15,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_mixed_scene.jpg",
+      "image_id": "004139",
+      "split": "train",
+      "target_box_count": 22,
+      "ignored_box_count": 2,
+      "vehicle_count": 5,
+      "pedestrian_count": 16,
+      "cyclist_count": 1,
+      "boxes_drawn": 22,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_crowded_scene.jpg",
+      "image_id": "004139",
+      "split": "train",
+      "target_box_count": 22,
+      "ignored_box_count": 2,
+      "vehicle_count": 5,
+      "pedestrian_count": 16,
+      "cyclist_count": 1,
+      "boxes_drawn": 22,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_occluded_scene.jpg",
+      "image_id": "002050",
+      "split": "val",
+      "target_box_count": 20,
+      "ignored_box_count": 1,
+      "vehicle_count": 19,
+      "pedestrian_count": 0,
+      "cyclist_count": 1,
+      "boxes_drawn": 20,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_truncated_scene.jpg",
+      "image_id": "002979",
+      "split": "train",
+      "target_box_count": 15,
+      "ignored_box_count": 5,
+      "vehicle_count": 1,
+      "pedestrian_count": 14,
+      "cyclist_count": 0,
+      "boxes_drawn": 15,
+      "ignored_boxes_included": false
+    },
+    {
+      "output_file": "sample_dontcare_scene.jpg",
+      "image_id": "000018",
+      "split": "train",
+      "target_box_count": 2,
+      "ignored_box_count": 18,
+      "vehicle_count": 2,
+      "pedestrian_count": 0,
+      "cyclist_count": 0,
+      "boxes_drawn": 20,
+      "ignored_boxes_included": true
+    }
+  ],
+  "legend": {
+    "Vehicle": "red",
+    "Pedestrian": "green",
+    "Cyclist": "blue",
+    "Ignored": "yellow"
+  }
+}

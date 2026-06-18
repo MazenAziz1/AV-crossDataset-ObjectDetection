@@ -1,0 +1,90 @@
+{
+  "dataset": "KITTI Object Detection",
+  "source_subset": "official labeled training set",
+  "official_testing_set_used": false,
+  "split_method": "stratified_shuffle_split",
+  "stratification_features": [
+    "Vehicle presence",
+    "Pedestrian presence",
+    "Cyclist presence",
+    "Mapped target-object density"
+  ],
+  "random_seed": 42,
+  "total_images": 7481,
+  "train_ratio": 0.8000267343937976,
+  "validation_ratio": 0.19997326560620238,
+  "density_thresholds": {
+    "method": "positive_target_count_quantiles",
+    "target_empty_definition": "target_count == 0",
+    "low_max_target_count": 3.0,
+    "medium_max_target_count": 6.0
+  },
+  "train": {
+    "images": 5985,
+    "target_boxes": 31294,
+    "ignored_boxes": 10174,
+    "vehicle_boxes": 26278,
+    "pedestrian_boxes": 3729,
+    "cyclist_boxes": 1287,
+    "images_containing_vehicle": 5438,
+    "images_containing_pedestrian": 1437,
+    "images_containing_cyclist": 913,
+    "target_empty_images": 0,
+    "density_distribution": {
+      "low": 2373,
+      "high": 1835,
+      "medium": 1777
+    },
+    "presence_distribution": {
+      "V1_P0_C0": 3984,
+      "V1_P1_C0": 639,
+      "V1_P0_C1": 564,
+      "V0_P1_C0": 449,
+      "V1_P1_C1": 251,
+      "V0_P1_C1": 98
+    }
+  },
+  "validation": {
+    "images": 1496,
+    "target_boxes": 7792,
+    "ignored_boxes": 2605,
+    "vehicle_boxes": 6472,
+    "pedestrian_boxes": 980,
+    "cyclist_boxes": 340,
+    "images_containing_vehicle": 1360,
+    "images_containing_pedestrian": 359,
+    "images_containing_cyclist": 228,
+    "target_empty_images": 0,
+    "density_distribution": {
+      "low": 594,
+      "high": 459,
+      "medium": 443
+    },
+    "presence_distribution": {
+      "V1_P0_C0": 996,
+      "V1_P1_C0": 160,
+      "V1_P0_C1": 141,
+      "V0_P1_C0": 112,
+      "V1_P1_C1": 63,
+      "V0_P1_C1": 24
+    }
+  },
+  "validation_checks": {
+    "expected_total_images": 7481,
+    "actual_total_images": 7481,
+    "expected_train_images": 5985,
+    "actual_train_images": 5985,
+    "expected_validation_images": 1496,
+    "actual_validation_images": 1496,
+    "train_validation_overlap": 0,
+    "unassigned_images": 0,
+    "all_target_classes_in_train": true,
+    "all_target_classes_in_validation": true
+  },
+  "split_validation_passed": true,
+  "split_frozen_before_training": true,
+  "notes": [
+    "The same split must be used for all detector families.",
+    "The official KITTI testing set is excluded because its ground-truth labels are not publicly available."
+  ]
+}

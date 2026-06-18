@@ -1,0 +1,39 @@
+{
+  "milestone": 2,
+  "task": "Three-class cross-dataset 2D object detection",
+  "unified_classes": {
+    "0": "Vehicle",
+    "1": "Pedestrian",
+    "2": "Cyclist"
+  },
+  "kitti": {
+    "role": "training_and_in_domain_validation",
+    "total_images": 7481,
+    "train_images": 5985,
+    "validation_images": 1496,
+    "random_seed": 42,
+    "target_boxes": 39086,
+    "integrity_passed": true
+  },
+  "waymo": {
+    "role": "external_validation_without_retraining",
+    "segments": 25,
+    "images": 996,
+    "target_boxes": 24819,
+    "camera": "FRONT",
+    "sampling_rule": "every_5th_front_frame_starting_at_first",
+    "selection_frozen": true
+  },
+  "reproducibility_rules": [
+    "All detectors use the same KITTI train and validation split.",
+    "All detectors use the same unified class mapping.",
+    "All detectors are evaluated on the same Waymo representative subset.",
+    "Waymo is not used for training, fine-tuning, or model selection."
+  ],
+  "generated_files": [
+    "docs/milestone_2/class_mapping_table.csv",
+    "docs/milestone_2/class_mapping_table.md",
+    "docs/milestone_2/dataset_comparison_table.csv",
+    "docs/milestone_2/dataset_comparison_table.md"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "dataset": "KITTI Object Detection",
+  "source_subset": "official labeled training set",
+  "official_testing_set_used": false,
+  "expected_training_images": 7481,
+  "image_files_found": 7481,
+  "label_files_found": 7481,
+  "calibration_files_found": 7481,
+  "devkit_files_found": 18,
+  "matching_sample_ids": 7481,
+  "filename_mismatch_count": 0,
+  "corrupted_or_unreadable_images": 0,
+  "empty_label_files": 0,
+  "total_annotation_rows": 51865,
+  "valid_annotation_rows": 51865,
+  "label_issue_count": 0,
+  "invalid_bounding_boxes": 0,
+  "out_of_image_box_warnings": 0,
+  "unknown_class_count": 0,
+  "calibration_issue_count": 0,
+  "original_class_counts": {
+    "Car": 28742,
+    "Cyclist": 1627,
+    "DontCare": 11295,
+    "Misc": 973,
+    "Pedestrian": 4487,
+    "Person_sitting": 222,
+    "Tram": 511,
+    "Truck": 1094,
+    "Van": 2914
+  },
+  "integrity_passed": true,
+  "fatal_issue_count": 0,
+  "notes": [
+    "Out-of-image bounding boxes are reported as warnings, not fatal errors.",
+    "The official KITTI testing split is not included because public labels are unavailable."
+  ]
+}

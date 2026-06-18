@@ -1,0 +1,13 @@
+partition,class_name,count,percentage
+all,Vehicle,32750,63.1447
+all,Ignored,12779,24.639
+all,Pedestrian,4709,9.0793
+all,Cyclist,1627,3.137
+train,Vehicle,26278,63.3693
+train,Ignored,10174,24.5346
+train,Pedestrian,3729,8.9925
+train,Cyclist,1287,3.1036
+val,Vehicle,6472,62.2487
+val,Ignored,2605,25.0553
+val,Pedestrian,980,9.4258
+val,Cyclist,340,3.2702
