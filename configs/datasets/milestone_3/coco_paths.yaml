@@ -1,0 +1,31 @@
+schema_version: 1
+milestone: 3
+dataset_root: data/processed/milestone_3
+canonical_annotation_format: COCO
+image_preprocessing:
+  width: 640
+  height: 640
+  method: centered_letterbox
+categories:
+  1: Vehicle
+  2: Pedestrian
+  3: Cyclist
+partitions:
+  kitti_train:
+    role: model_training
+    images: data/processed/milestone_3/images/kitti/train
+    annotations: data/processed/milestone_3/annotations/coco/kitti_train.json
+    evaluation_ignore: data/processed/milestone_3/annotations/ignore_regions/kitti_train_ignore.json
+    excluded_non_target: data/processed/milestone_3/annotations/excluded_objects/kitti_train_excluded.json
+  kitti_validation:
+    role: in_domain_validation
+    images: data/processed/milestone_3/images/kitti/val
+    annotations: data/processed/milestone_3/annotations/coco/kitti_val.json
+    evaluation_ignore: data/processed/milestone_3/annotations/ignore_regions/kitti_val_ignore.json
+    excluded_non_target: data/processed/milestone_3/annotations/excluded_objects/kitti_val_excluded.json
+  waymo_external:
+    role: external_validation_only
+    images: data/processed/milestone_3/images/waymo/external
+    annotations: data/processed/milestone_3/annotations/coco/waymo_external.json
+    evaluation_ignore: data/processed/milestone_3/annotations/ignore_regions/waymo_external_ignore.json
+    excluded_non_target: data/processed/milestone_3/annotations/excluded_objects/waymo_external_excluded.json

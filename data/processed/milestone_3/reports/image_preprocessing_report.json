@@ -1,0 +1,66 @@
+{
+  "milestone": 3,
+  "step": 5,
+  "purpose": "Create one deterministic 640x640 letterboxed image for every source sample.",
+  "configuration_sha256": "d66d13155873f76a9d890212d305ffb2756a73f4776f21230c57290dc923a0e9",
+  "source_manifest_sha256": "9749bb1ea749d027dc2a6dbb465f5f329e464fb7fad390eafd36cf0ce74ac473",
+  "target_width": 640,
+  "target_height": 640,
+  "padding_value": 114,
+  "png_compression_level": 3,
+  "source_manifest_rows": 8477,
+  "transform_manifest_rows": 8477,
+  "partition_counts": {
+    "kitti_train": 5985,
+    "kitti_val": 1496,
+    "waymo_external": 996
+  },
+  "processing_status_counts": {
+    "created": 8477
+  },
+  "interpolation_counts": {
+    "opencv_inter_area": 8477
+  },
+  "source_extension_counts": {
+    ".png": 7481,
+    ".jpg": 996
+  },
+  "padding_pattern_counts": {
+    "0/223/0/224": 7185,
+    "0/106/0/107": 996,
+    "0/223/0/223": 296
+  },
+  "total_output_size_bytes": 2261740885,
+  "total_output_size_gib": 2.10641,
+  "maximum_aspect_ratio_error": 0.00795406805769483,
+  "elapsed_seconds": 351.01,
+  "software": {
+    "python": "3.12.10",
+    "opencv": "4.13.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "issue_count": 0,
+  "validation_passed": true,
+  "checks": {
+    "source_manifest_rows": true,
+    "transform_manifest_rows": true,
+    "unique_global_image_ids": true,
+    "unique_output_paths": true,
+    "all_dimensions_valid": true,
+    "all_padding_valid": true,
+    "all_geometry_valid": true,
+    "all_aspect_ratios_valid": true,
+    "all_outputs_nonempty": true,
+    "no_missing_output_files": true,
+    "no_extra_output_files": true,
+    "output_file_count": true,
+    "kitti_train_count": true,
+    "kitti_val_count": true,
+    "waymo_external_count": true
+  },
+  "missing_output_files": 0,
+  "unexpected_output_files": 0,
+  "image_preprocessing_passed": true
+}

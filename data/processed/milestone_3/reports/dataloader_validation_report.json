@@ -1,0 +1,180 @@
+{
+  "milestone": 3,
+  "step": 15,
+  "purpose": "Build and validate model-ready PyTorch object-detection datasets and DataLoaders.",
+  "environment": {
+    "python": "3.12.10",
+    "pytorch": "2.11.0+cu128",
+    "opencv": "4.13.0",
+    "numpy": "2.4.6",
+    "cuda_available": true
+  },
+  "dataset_lengths": {
+    "kitti_train": 5985,
+    "kitti_val": 1496,
+    "waymo_external": 996
+  },
+  "length_checks": {
+    "kitti_train": true,
+    "kitti_val": true,
+    "waymo_external": true
+  },
+  "batch_results": {
+    "kitti_train": {
+      "batch_size": 4,
+      "image_tensor_shapes": [
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ]
+      ],
+      "target_box_counts": [
+        1,
+        3,
+        1,
+        2
+      ],
+      "checks": {
+        "batch_size": true,
+        "image_shapes": true,
+        "image_dtypes": true,
+        "target_dictionaries": true,
+        "variable_targets_supported": true
+      },
+      "batch_passed": true
+    },
+    "kitti_val": {
+      "batch_size": 4,
+      "image_tensor_shapes": [
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ]
+      ],
+      "target_box_counts": [
+        1,
+        1,
+        9,
+        1
+      ],
+      "checks": {
+        "batch_size": true,
+        "image_shapes": true,
+        "image_dtypes": true,
+        "target_dictionaries": true,
+        "variable_targets_supported": true
+      },
+      "batch_passed": true
+    },
+    "waymo_external": {
+      "batch_size": 4,
+      "image_tensor_shapes": [
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ],
+        [
+          3,
+          640,
+          640
+        ]
+      ],
+      "target_box_counts": [
+        13,
+        12,
+        12,
+        12
+      ],
+      "checks": {
+        "batch_size": true,
+        "image_shapes": true,
+        "image_dtypes": true,
+        "target_dictionaries": true,
+        "variable_targets_supported": true
+      },
+      "batch_passed": true
+    }
+  },
+  "deterministic_evaluation": {
+    "kitti_val": true,
+    "waymo_external": true
+  },
+  "augmentation_guard_passed": true,
+  "augmentation_test": {
+    "sample_index": 0,
+    "epoch": 0,
+    "operations_applied": [
+      "hsv_adjustment"
+    ],
+    "executed": true,
+    "deterministic": true,
+    "sample_valid": true
+  },
+  "negative_external_test": {
+    "sample_index": 86,
+    "global_image_id": 1000087,
+    "passed": true
+  },
+  "sample_manifest": {
+    "path": "data/processed/milestone_3/manifests/dataloader_smoke_test_manifest.csv",
+    "rows": 24
+  },
+  "checks": {
+    "dataset_lengths": true,
+    "sample_smoke_tests": true,
+    "batch_loading": true,
+    "validation_deterministic": true,
+    "external_deterministic": true,
+    "augmentation_partition_guard": true,
+    "training_augmentation_executed": true,
+    "training_augmentation_deterministic": true,
+    "augmented_sample_valid": true,
+    "external_negative_sample": true,
+    "manifest_row_count": true
+  },
+  "issue_count": 0,
+  "dataloader_validation_passed": true
+}

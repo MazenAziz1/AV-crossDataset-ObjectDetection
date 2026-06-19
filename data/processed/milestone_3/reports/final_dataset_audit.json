@@ -1,0 +1,521 @@
+{
+  "milestone": 3,
+  "step": 16,
+  "purpose": "Perform the final read-only end-to-end audit of the complete Milestone 3 dataset pipeline.",
+  "scope": {
+    "read_only": true,
+    "regenerates_images": false,
+    "regenerates_annotations": false,
+    "trains_models": false,
+    "executes_detectors": false
+  },
+  "expected_combined": {
+    "images": 8477,
+    "annotations": 63905,
+    "negative_images": 12,
+    "canonical_yolo_labels": 8477,
+    "framework_yolo_labels": 8477,
+    "empty_labels": 12,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    },
+    "evaluation_ignore_regions": 11295,
+    "excluded_non_target_regions": 1484
+  },
+  "previous_reports": {
+    "source_input_validation": {
+      "path": "data/processed/milestone_3/reports/source_input_validation.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "validation_passed"
+    },
+    "source_manifest": {
+      "path": "data/processed/milestone_3/reports/source_manifest_summary.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "source_manifest_passed"
+    },
+    "preprocessing_dry_run": {
+      "path": "data/processed/milestone_3/reports/preprocessing_dry_run.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "dry_run_passed"
+    },
+    "image_preprocessing": {
+      "path": "data/processed/milestone_3/reports/image_preprocessing_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "image_preprocessing_passed"
+    },
+    "coco_creation": {
+      "path": "data/processed/milestone_3/reports/coco_creation_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "coco_creation_passed"
+    },
+    "region_policy": {
+      "path": "data/processed/milestone_3/reports/region_policy_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "region_policy_passed"
+    },
+    "yolo_conversion": {
+      "path": "data/processed/milestone_3/reports/yolo_conversion_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "yolo_conversion_passed"
+    },
+    "dataset_configuration": {
+      "path": "data/processed/milestone_3/reports/config_validation.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "config_validation_passed"
+    },
+    "coco_validation": {
+      "path": "data/processed/milestone_3/reports/coco_validation_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "coco_validation_passed"
+    },
+    "yolo_validation": {
+      "path": "data/processed/milestone_3/reports/yolo_validation_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "yolo_validation_passed"
+    },
+    "coco_yolo_equivalence": {
+      "path": "data/processed/milestone_3/reports/coco_yolo_equivalence_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "coco_yolo_equivalence_passed"
+    },
+    "visual_annotation_checks": {
+      "path": "data/processed/milestone_3/reports/visual_annotation_checks_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "visual_annotation_checks_passed"
+    },
+    "augmentation_policy": {
+      "path": "data/processed/milestone_3/reports/augmentation_policy_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "augmentation_policy_passed"
+    },
+    "dataloader_validation": {
+      "path": "data/processed/milestone_3/reports/dataloader_validation_report.json",
+      "exists": true,
+      "passed": true,
+      "status_source": "dataloader_validation_passed"
+    }
+  },
+  "configurations": {
+    "preprocessing": {
+      "path": "configs/datasets/milestone_3/preprocessing.yaml",
+      "checks": {
+        "status_frozen": true,
+        "target_width": true,
+        "target_height": true,
+        "expected_images": true,
+        "expected_boxes": true
+      },
+      "passed": true
+    },
+    "class_mapping": {
+      "path": "configs/datasets/milestone_3/class_mapping.yaml",
+      "checks": {
+        "status_frozen": true,
+        "target_classes": true,
+        "kitti_ignore": true,
+        "kitti_excluded": true,
+        "waymo_ignore": true,
+        "waymo_excluded": true
+      },
+      "passed": true
+    },
+    "augmentation": {
+      "path": "configs/datasets/milestone_3/augmentation.yaml",
+      "checks": {
+        "status_frozen": true,
+        "online_only": true,
+        "enabled_partition": true,
+        "disabled_partitions": true
+      },
+      "passed": true
+    },
+    "yolo": {
+      "path": "configs/datasets/milestone_3/kitti_waymo_yolo.yaml",
+      "checks": {
+        "dataset_root": true,
+        "train": true,
+        "validation": true,
+        "external": true,
+        "class_count": true,
+        "class_names": true
+      },
+      "passed": true
+    },
+    "coco_paths": {
+      "path": "configs/datasets/milestone_3/coco_paths.yaml",
+      "passed": true
+    },
+    "dataset_registry": {
+      "path": "configs/datasets/milestone_3/dataset_registry.yaml",
+      "checks": {
+        "training_disabled": true,
+        "fine_tuning_disabled": true,
+        "hyperparameter_selection_disabled": true,
+        "checkpoint_selection_disabled": true,
+        "external_evaluation_enabled": true
+      },
+      "passed": true
+    }
+  },
+  "partitions": {
+    "kitti_train": {
+      "image_count": 5985,
+      "canonical_label_count": 5985,
+      "framework_label_count": 5985,
+      "canonical_empty_labels": 0,
+      "framework_empty_labels": 0,
+      "physical_checks": {
+        "image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "canonical_empty_labels": true,
+        "framework_empty_labels": true,
+        "image_canonical_stems": true,
+        "image_framework_stems": true,
+        "canonical_framework_stems": true
+      },
+      "coco_summary": {
+        "images": 5985,
+        "annotations": 31294,
+        "negative_images": 0,
+        "class_counts": {
+          "Vehicle": 26278,
+          "Pedestrian": 3729,
+          "Cyclist": 1287
+        },
+        "categories": {
+          "1": "Vehicle",
+          "2": "Pedestrian",
+          "3": "Cyclist"
+        }
+      },
+      "coco_checks": {
+        "categories": true,
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "coco_physical_filename_set": true
+      },
+      "passed": true
+    },
+    "kitti_val": {
+      "image_count": 1496,
+      "canonical_label_count": 1496,
+      "framework_label_count": 1496,
+      "canonical_empty_labels": 0,
+      "framework_empty_labels": 0,
+      "physical_checks": {
+        "image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "canonical_empty_labels": true,
+        "framework_empty_labels": true,
+        "image_canonical_stems": true,
+        "image_framework_stems": true,
+        "canonical_framework_stems": true
+      },
+      "coco_summary": {
+        "images": 1496,
+        "annotations": 7792,
+        "negative_images": 0,
+        "class_counts": {
+          "Vehicle": 6472,
+          "Pedestrian": 980,
+          "Cyclist": 340
+        },
+        "categories": {
+          "1": "Vehicle",
+          "2": "Pedestrian",
+          "3": "Cyclist"
+        }
+      },
+      "coco_checks": {
+        "categories": true,
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "coco_physical_filename_set": true
+      },
+      "passed": true
+    },
+    "waymo_external": {
+      "image_count": 996,
+      "canonical_label_count": 996,
+      "framework_label_count": 996,
+      "canonical_empty_labels": 12,
+      "framework_empty_labels": 12,
+      "physical_checks": {
+        "image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "canonical_empty_labels": true,
+        "framework_empty_labels": true,
+        "image_canonical_stems": true,
+        "image_framework_stems": true,
+        "canonical_framework_stems": true
+      },
+      "coco_summary": {
+        "images": 996,
+        "annotations": 24819,
+        "negative_images": 12,
+        "class_counts": {
+          "Vehicle": 16928,
+          "Pedestrian": 7127,
+          "Cyclist": 764
+        },
+        "categories": {
+          "1": "Vehicle",
+          "2": "Pedestrian",
+          "3": "Cyclist"
+        }
+      },
+      "coco_checks": {
+        "categories": true,
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "coco_physical_filename_set": true
+      },
+      "passed": true
+    }
+  },
+  "combined_physical": {
+    "images": 8477,
+    "canonical_yolo_labels": 8477,
+    "framework_yolo_labels": 8477,
+    "canonical_empty_labels": 12,
+    "framework_empty_labels": 12,
+    "coco_annotations": 63905,
+    "negative_images": 12,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    }
+  },
+  "combined_physical_checks": {
+    "images": true,
+    "canonical_yolo_labels": true,
+    "framework_yolo_labels": true,
+    "canonical_empty_labels": true,
+    "framework_empty_labels": true,
+    "annotations": true,
+    "negative_images": true,
+    "vehicle_count": true,
+    "pedestrian_count": true,
+    "cyclist_count": true
+  },
+  "region_policy": {
+    "ignore_sidecars": {
+      "kitti_train_ignore.json": 8983,
+      "kitti_val_ignore.json": 2312,
+      "waymo_external_ignore.json": 0
+    },
+    "excluded_sidecars": {
+      "kitti_train_excluded.json": 1191,
+      "kitti_val_excluded.json": 293,
+      "waymo_external_excluded.json": 0
+    },
+    "total_evaluation_ignore": 11295,
+    "total_excluded_non_target": 1484,
+    "checks": {
+      "evaluation_ignore_total": true,
+      "excluded_non_target_total": true,
+      "waymo_ignore_empty": true,
+      "waymo_excluded_empty": true
+    },
+    "passed": true
+  },
+  "manifests": {
+    "source_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/source_manifest.csv",
+      "expected_rows": 8477,
+      "actual_rows": 8477,
+      "passed": true
+    },
+    "transform_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/transform_manifest.csv",
+      "expected_rows": 8477,
+      "actual_rows": 8477,
+      "passed": true
+    },
+    "yolo_label_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/yolo_label_manifest.csv",
+      "expected_rows": 8477,
+      "actual_rows": 8477,
+      "passed": true
+    },
+    "framework_label_adapter_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/framework_label_adapter_manifest.csv",
+      "expected_rows": 8477,
+      "actual_rows": 8477,
+      "passed": true
+    },
+    "coco_yolo_equivalence_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/coco_yolo_equivalence_manifest.csv",
+      "expected_rows": 8477,
+      "actual_rows": 8477,
+      "passed": true
+    },
+    "region_policy_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/region_policy_manifest.csv",
+      "expected_rows": 8477,
+      "actual_rows": 8477,
+      "passed": true
+    },
+    "visual_annotation_checks_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/visual_annotation_checks_manifest.csv",
+      "expected_rows": 8,
+      "actual_rows": 8,
+      "passed": true
+    },
+    "augmentation_policy_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/augmentation_policy_manifest.csv",
+      "expected_rows": 8,
+      "actual_rows": 8,
+      "passed": true
+    },
+    "dataloader_smoke_test_manifest.csv": {
+      "path": "data/processed/milestone_3/manifests/dataloader_smoke_test_manifest.csv",
+      "expected_rows": 24,
+      "actual_rows": 24,
+      "passed": true
+    }
+  },
+  "issue_csvs": {
+    "augmentation_policy_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "coco_creation_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "coco_validation_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "coco_yolo_equivalence_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "config_validation_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "dataloader_validation_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "image_preprocessing_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "preprocessing_dry_run_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "region_policy_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "source_input_validation_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "source_manifest_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "visual_annotation_checks_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "yolo_conversion_issues.csv": {
+      "rows": 0,
+      "passed": true
+    },
+    "yolo_validation_issues.csv": {
+      "rows": 0,
+      "passed": true
+    }
+  },
+  "visual_artifacts": {
+    "data/processed/milestone_3/visual_checks/preprocessing_dry_run": {
+      "exists": true,
+      "nonempty": true,
+      "passed": true
+    },
+    "data/processed/milestone_3/visual_checks/coco_yolo_comparison/annotation_comparison_contact_sheet.png": {
+      "exists": true,
+      "nonempty": true,
+      "passed": true
+    },
+    "data/processed/milestone_3/visual_checks/augmentation_policy/augmentation_policy_contact_sheet.png": {
+      "exists": true,
+      "nonempty": true,
+      "passed": true
+    }
+  },
+  "semantic_reports": {
+    "partition_overlap_checks": {
+      "kitti_train__kitti_val": true,
+      "kitti_train__waymo_external": true,
+      "kitti_val__waymo_external": true
+    },
+    "coco_yolo_equivalence_checks": {
+      "coco_annotations": true,
+      "yolo_rows": true,
+      "matched_boxes": true,
+      "equivalent_boxes": true,
+      "mismatched_images": true
+    },
+    "dataloader_checks": {
+      "kitti_train": true,
+      "kitti_val": true,
+      "waymo_external": true,
+      "negative_external": true,
+      "validation_deterministic": true,
+      "external_deterministic": true
+    }
+  },
+  "checks": {
+    "all_previous_reports_passed": true,
+    "all_configurations_passed": true,
+    "all_partitions_passed": true,
+    "combined_physical_totals": true,
+    "region_policy_passed": true,
+    "all_manifests_passed": true,
+    "all_issue_csvs_empty": true,
+    "all_visual_artifacts_present": true,
+    "no_partition_overlap": true,
+    "coco_yolo_equivalence": true,
+    "dataloader_contract": true
+  },
+  "issue_count": 0,
+  "final_dataset_audit_passed": true
+}

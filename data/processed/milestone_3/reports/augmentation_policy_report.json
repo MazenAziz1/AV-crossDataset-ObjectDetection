@@ -1,0 +1,39 @@
+{
+  "milestone": 3,
+  "step": 14,
+  "purpose": "Freeze and validate the shared training augmentation and image-quality policy.",
+  "policy_status": "frozen",
+  "execution_mode": "online_during_training",
+  "enabled_partitions": [
+    "kitti_train"
+  ],
+  "disabled_partitions": [
+    "kitti_val",
+    "waymo_external"
+  ],
+  "created_samples": 8,
+  "operation_counts": {
+    "brightness_contrast": 3,
+    "gaussian_blur": 1,
+    "horizontal_flip": 7,
+    "hsv_adjustment": 5
+  },
+  "required_operation_coverage": {
+    "horizontal_flip": true,
+    "brightness_contrast": true,
+    "hsv_adjustment": true,
+    "gaussian_blur": true
+  },
+  "checks": {
+    "configuration_frozen": true,
+    "online_only": true,
+    "partition_policy": true,
+    "sample_count": true,
+    "all_samples_passed": true,
+    "all_operations_demonstrated": true,
+    "contact_sheet_exists": true,
+    "no_dataset_files_modified": true
+  },
+  "issue_count": 0,
+  "augmentation_policy_passed": true
+}

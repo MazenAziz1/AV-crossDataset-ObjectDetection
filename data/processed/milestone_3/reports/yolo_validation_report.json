@@ -1,0 +1,253 @@
+{
+  "milestone": 3,
+  "step": 11,
+  "purpose": "Independently validate all canonical and framework YOLO label files.",
+  "class_mapping": {
+    "0": "Vehicle",
+    "1": "Pedestrian",
+    "2": "Cyclist"
+  },
+  "normalized_coordinate_tolerance": 1e-09,
+  "configuration_validation": {
+    "checks": {
+      "dataset_root": true,
+      "train_path": true,
+      "validation_path": true,
+      "external_path": true,
+      "class_count": true,
+      "class_names": true
+    },
+    "validation_passed": true
+  },
+  "partitions": {
+    "kitti_train": {
+      "images": 5985,
+      "physical_images": 5985,
+      "canonical_labels": 5985,
+      "framework_labels": 5985,
+      "annotation_rows": 31294,
+      "empty_labels": 0,
+      "class_counts": {
+        "Vehicle": 26278,
+        "Pedestrian": 3729,
+        "Cyclist": 1287
+      },
+      "invalid_field_rows": 0,
+      "invalid_class_rows": 0,
+      "non_numeric_rows": 0,
+      "invalid_coordinate_rows": 0,
+      "hash_mismatches": 0,
+      "per_image_count_mismatches": 0,
+      "per_image_class_mismatches": 0,
+      "unexpected_empty_labels": 0,
+      "unexpected_nonempty_labels": 0,
+      "minimum_normalized_coordinates": {
+        "center_x": 0.0059219002,
+        "center_y": 0.4500318958,
+        "width": 0.0003703704,
+        "height": 0.0101887917
+      },
+      "maximum_normalized_coordinates": {
+        "center_x": 0.9990096618,
+        "center_y": 0.6123127507,
+        "width": 0.4681320451,
+        "height": 0.3023188165
+      },
+      "file_set_differences": {
+        "missing_images": 0,
+        "extra_images": 0,
+        "missing_canonical_labels": 0,
+        "extra_canonical_labels": 0,
+        "missing_framework_labels": 0,
+        "extra_framework_labels": 0
+      },
+      "checks": {
+        "image_count": true,
+        "physical_image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "annotation_row_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "exact_image_set": true,
+        "exact_canonical_label_set": true,
+        "exact_framework_label_set": true,
+        "canonical_framework_hashes": true,
+        "valid_field_counts": true,
+        "valid_class_ids": true,
+        "numeric_coordinates": true,
+        "valid_normalized_boxes": true,
+        "per_image_counts": true,
+        "per_image_class_counts": true,
+        "negative_image_policy": true
+      },
+      "validation_passed": true
+    },
+    "kitti_val": {
+      "images": 1496,
+      "physical_images": 1496,
+      "canonical_labels": 1496,
+      "framework_labels": 1496,
+      "annotation_rows": 7792,
+      "empty_labels": 0,
+      "class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "invalid_field_rows": 0,
+      "invalid_class_rows": 0,
+      "non_numeric_rows": 0,
+      "invalid_coordinate_rows": 0,
+      "hash_mismatches": 0,
+      "per_image_count_mismatches": 0,
+      "per_image_class_mismatches": 0,
+      "unexpected_empty_labels": 0,
+      "unexpected_nonempty_labels": 0,
+      "minimum_normalized_coordinates": {
+        "center_x": 0.0092995169,
+        "center_y": 0.4596899375,
+        "width": 8.98693e-05,
+        "height": 0.0102933333
+      },
+      "maximum_normalized_coordinates": {
+        "center_x": 0.9991380719,
+        "center_y": 0.6121434241,
+        "width": 0.4062801932,
+        "height": 0.3023188165
+      },
+      "file_set_differences": {
+        "missing_images": 0,
+        "extra_images": 0,
+        "missing_canonical_labels": 0,
+        "extra_canonical_labels": 0,
+        "missing_framework_labels": 0,
+        "extra_framework_labels": 0
+      },
+      "checks": {
+        "image_count": true,
+        "physical_image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "annotation_row_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "exact_image_set": true,
+        "exact_canonical_label_set": true,
+        "exact_framework_label_set": true,
+        "canonical_framework_hashes": true,
+        "valid_field_counts": true,
+        "valid_class_ids": true,
+        "numeric_coordinates": true,
+        "valid_normalized_boxes": true,
+        "per_image_counts": true,
+        "per_image_class_counts": true,
+        "negative_image_policy": true
+      },
+      "validation_passed": true
+    },
+    "waymo_external": {
+      "images": 996,
+      "physical_images": 996,
+      "canonical_labels": 996,
+      "framework_labels": 996,
+      "annotation_rows": 24819,
+      "empty_labels": 12,
+      "class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "invalid_field_rows": 0,
+      "invalid_class_rows": 0,
+      "non_numeric_rows": 0,
+      "invalid_coordinate_rows": 0,
+      "hash_mismatches": 0,
+      "per_image_count_mismatches": 0,
+      "per_image_class_mismatches": 0,
+      "unexpected_empty_labels": 0,
+      "unexpected_nonempty_labels": 0,
+      "minimum_normalized_coordinates": {
+        "center_x": 0.0011513359,
+        "center_y": 0.3973889242,
+        "width": 0.0016447656,
+        "height": 0.0009876304
+      },
+      "maximum_normalized_coordinates": {
+        "center_x": 0.9988574141,
+        "center_y": 0.8127913889,
+        "width": 0.6845339531,
+        "height": 0.5994525411
+      },
+      "file_set_differences": {
+        "missing_images": 0,
+        "extra_images": 0,
+        "missing_canonical_labels": 0,
+        "extra_canonical_labels": 0,
+        "missing_framework_labels": 0,
+        "extra_framework_labels": 0
+      },
+      "checks": {
+        "image_count": true,
+        "physical_image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "annotation_row_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "exact_image_set": true,
+        "exact_canonical_label_set": true,
+        "exact_framework_label_set": true,
+        "canonical_framework_hashes": true,
+        "valid_field_counts": true,
+        "valid_class_ids": true,
+        "numeric_coordinates": true,
+        "valid_normalized_boxes": true,
+        "per_image_counts": true,
+        "per_image_class_counts": true,
+        "negative_image_policy": true
+      },
+      "validation_passed": true
+    }
+  },
+  "combined": {
+    "images": 8477,
+    "canonical_labels": 8477,
+    "framework_labels": 8477,
+    "annotation_rows": 63905,
+    "empty_labels": 12,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    },
+    "invalid_rows": 0,
+    "hash_mismatches": 0,
+    "per_image_count_mismatches": 0,
+    "per_image_class_mismatches": 0
+  },
+  "combined_checks": {
+    "image_count": true,
+    "canonical_label_count": true,
+    "framework_label_count": true,
+    "annotation_row_count": true,
+    "empty_label_count": true,
+    "vehicle_count": true,
+    "pedestrian_count": true,
+    "cyclist_count": true,
+    "no_invalid_rows": true,
+    "no_hash_mismatches": true,
+    "no_per_image_count_mismatches": true,
+    "no_per_image_class_mismatches": true,
+    "all_partitions_passed": true,
+    "configuration_passed": true
+  },
+  "issue_count": 0,
+  "yolo_validation_passed": true
+}

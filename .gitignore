@@ -28,7 +28,7 @@ Thumbs.db
 # Datasets — ignore large/raw files, keep documentation and metadata
 
 # Generic external dataset directories
-datasets/
+/datasets/
 
 # KITTI raw dataset files
 data/kitti/raw/
@@ -41,6 +41,20 @@ data/waymo/representative_subset/images/
 
 # Large generated annotation tables
 data/waymo/representative_subset/annotations/boxes.csv
+
+# Milestone 3 generated processed images
+data/processed/milestone_3/images/
+
+# Milestone 3 visual-check images
+data/processed/milestone_3/visual_checks/**/*.png
+data/processed/milestone_3/visual_checks/**/*.jpg
+data/processed/milestone_3/visual_checks/**/*.jpeg
+
+# Milestone 3 generated framework label mirror
+data/processed/milestone_3/labels/
+
+# Milestone 3 generated canonical YOLO labels
+data/processed/milestone_3/annotations/yolo/
 
 # Dataset binary formats
 *.parquet

@@ -1,0 +1,9 @@
+path: data/processed/milestone_3
+train: images/kitti/train
+val: images/kitti/val
+test: images/waymo/external
+nc: 3
+names:
+  0: Vehicle
+  1: Pedestrian
+  2: Cyclist

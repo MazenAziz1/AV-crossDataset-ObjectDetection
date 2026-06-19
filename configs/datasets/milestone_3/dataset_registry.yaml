@@ -1,0 +1,26 @@
+schema_version: 1
+milestone: 3
+task: three_class_object_detection
+processed_image_size:
+- 640
+- 640
+training_source: KITTI project training split
+in_domain_validation: KITTI project validation split
+external_validation: Waymo frozen representative subset
+waymo_usage_policy:
+  training: false
+  fine_tuning: false
+  hyperparameter_selection: false
+  checkpoint_selection: false
+  external_evaluation_only: true
+configurations:
+  yolo: configs/datasets/milestone_3/kitti_waymo_yolo.yaml
+  coco: configs/datasets/milestone_3/coco_paths.yaml
+canonical_annotations:
+  kitti_train: data/processed/milestone_3/annotations/coco/kitti_train.json
+  kitti_validation: data/processed/milestone_3/annotations/coco/kitti_val.json
+  waymo_external: data/processed/milestone_3/annotations/coco/waymo_external.json
+derived_annotations:
+  format: YOLO
+  canonical_storage: data/processed/milestone_3/annotations/yolo
+  framework_adapter: data/processed/milestone_3/labels
