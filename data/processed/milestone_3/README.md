@@ -1,1507 +1,752 @@
-# \# Milestone 3 — Unified Dataset Preprocessing and Validation
+# Milestone 3 — Unified Dataset Preprocessing and Validation
 
-#
+## Overview
 
-# \## Overview
+Milestone 3 converts the frozen KITTI and Waymo data prepared during Milestone 2 into a unified, model-ready object-detection dataset.
 
-#
+The milestone standardizes:
 
-# Milestone 3 converts the frozen KITTI and Waymo data prepared during Milestone 2 into a unified, model-ready object-detection dataset.
+* image dimensions and aspect-ratio handling;
+* class definitions;
+* bounding-box coordinates;
+* COCO annotations;
+* YOLO annotations;
+* evaluation-ignore regions;
+* excluded non-target objects;
+* training augmentation;
+* framework configuration files;
+* PyTorch dataset loading;
+* validation and reproducibility procedures.
 
-#
+No detector is trained during this milestone.
 
-# The milestone standardizes:
+Model implementation, detector integration, training, hyperparameter tuning, and evaluation belong to Milestone 4.
 
-#
+---
 
-# \* image dimensions and aspect-ratio handling;
+## Experimental Roles
 
-# \* class definitions;
+The two datasets have different experimental purposes.
 
-# \* bounding-box coordinates;
+| Dataset partition | Experimental role                 | Training permitted | Model selection permitted |
+| ----------------- | --------------------------------- | -----------------: | ------------------------: |
+| KITTI train       | Model training                    |                Yes |                        No |
+| KITTI validation  | In-domain validation              |                 No |                       Yes |
+| Waymo external    | Cross-dataset external validation |                 No |                        No |
 
-# \* COCO annotations;
+Waymo is never used for:
 
-# \* YOLO annotations;
+* training;
+* fine-tuning;
+* augmentation-source sampling;
+* hyperparameter selection;
+* checkpoint selection;
+* early stopping;
+* threshold tuning.
 
-# \* evaluation-ignore regions;
+This separation is enforced by the dataset registry and the DataLoader validation checks.
 
-# \* excluded non-target objects;
+---
 
-# \* training augmentation;
+## Source Data
 
-# \* framework configuration files;
+### KITTI
 
-# \* PyTorch dataset loading;
+The complete official labeled KITTI object-detection training set is used.
 
-# \* validation and reproducibility procedures.
+* Images: `7,481`
+* Camera: left color camera, stored by KITTI as `image_2`
+* Labels: `label_2`
+* Calibration: `calib`
+* Official testing data: not used because its labels are not publicly available
 
-#
+In KITTI terminology, `image_2` means the images captured by the left color camera. It does not mean that the dataset contains only two images or that the images are a second copy.
 
-# No detector is trained during this milestone.
+The KITTI images were divided once into a frozen project split:
 
-#
+| Partition  | Images |
+| ---------- | -----: |
+| Train      |  5,985 |
+| Validation |  1,496 |
+| Total      |  7,481 |
 
-# Model implementation, detector integration, training, hyperparameter tuning, and evaluation belong to Milestone 4.
+The split seed is `42`.
 
-#
+The split must not be changed after model training begins.
 
-# \---
+### Waymo
 
-#
+A representative subset of the official Waymo validation split is used only for external validation.
 
-# \## Experimental Roles
+* Images: `996`
+* Driving segments: `25`
+* Camera: `FRONT`
+* Sampling rule: every fifth FRONT frame, starting with the first selected frame
+* Target-negative images: `12`
 
-#
+The sampling policy reduces temporal redundancy while preserving variation in traffic density, location, time of day, and weather.
 
-# The two datasets have different experimental purposes.
+---
 
-#
+## Final Dataset Totals
 
-# | Dataset partition | Experimental role                 | Training permitted | Model selection permitted |
+| Partition        |    Images | Target boxes |    Vehicle | Pedestrian |   Cyclist | Negative images |
+| ---------------- | --------: | -----------: | ---------: | ---------: | --------: | --------------: |
+| KITTI train      |     5,985 |       31,294 |     26,278 |      3,729 |     1,287 |               0 |
+| KITTI validation |     1,496 |        7,792 |      6,472 |        980 |       340 |               0 |
+| Waymo external   |       996 |       24,819 |     16,928 |      7,127 |       764 |              12 |
+| **Combined**     | **8,477** |   **63,905** | **49,678** | **11,836** | **2,391** |          **12** |
 
-# | ----------------- | --------------------------------- | -----------------: | ------------------------: |
+The 12 target-negative Waymo images are intentionally preserved for false-positive analysis.
 
-# | KITTI train       | Model training                    |                Yes |                        No |
+---
 
-# | KITTI validation  | In-domain validation              |                 No |                       Yes |
+## Harmonized Target Classes
 
-# | Waymo external    | Cross-dataset external validation |                 No |                        No |
+The project uses three semantic classes.
 
-#
+| Internal ID | COCO ID | YOLO ID | Class      |
+| ----------: | ------: | ------: | ---------- |
+|           0 |       1 |       0 | Vehicle    |
+|           1 |       2 |       1 | Pedestrian |
+|           2 |       3 |       2 | Cyclist    |
 
-# Waymo is never used for:
+### KITTI Mapping
 
-#
+| KITTI source class | Unified treatment          |
+| ------------------ | -------------------------- |
+| Car                | Vehicle                    |
+| Van                | Vehicle                    |
+| Truck              | Vehicle                    |
+| Pedestrian         | Pedestrian                 |
+| Person_sitting     | Pedestrian                 |
+| Cyclist            | Cyclist                    |
+| DontCare           | Evaluation-ignore region   |
+| Tram               | Excluded non-target object |
+| Misc               | Excluded non-target object |
 
-# \* training;
+### Waymo Mapping
 
-# \* fine-tuning;
+| Waymo source class | Unified treatment          |
+| ------------------ | -------------------------- |
+| Vehicle            | Vehicle                    |
+| Pedestrian         | Pedestrian                 |
+| Cyclist            | Cyclist                    |
+| Sign               | Excluded non-target object |
+| Unknown            | Excluded if encountered    |
 
-# \* augmentation-source sampling;
+The selected Waymo subset contains no Sign or Unknown boxes, but the policy remains explicitly defined.
 
-# \* hyperparameter selection;
+---
 
-# \* checkpoint selection;
+## Region Policy
 
-# \* early stopping;
+Target annotations, evaluation-ignore regions, and excluded objects are stored separately.
 
-# \* threshold tuning.
+### Evaluation-ignore regions
 
-#
+KITTI `DontCare` regions are retained to suppress detections that should not count as false positives during evaluation.
 
-# This separation is enforced by the dataset registry and the DataLoader validation checks.
+Total evaluation-ignore regions:
 
-#
+```text
+11,295
+```
 
-# \---
+### Excluded non-target objects
 
-#
+KITTI `Tram` and `Misc` objects are preserved in audit sidecars but are not targets and do not suppress false positives.
 
-# \## Source Data
+Total excluded non-target regions:
 
-#
+```text
+1,484
+```
 
-# \### KITTI
+Waymo `Sign` is also defined as an excluded class, although none occurs in the selected external subset.
 
-#
+---
 
-# The complete official labeled KITTI object-detection training set is used.
+## Image Preprocessing
 
-#
+All images are converted to a shared size of:
 
-# \* Images: `7,481`
+```text
+640 × 640 pixels
+```
 
-# \* Camera: left color camera, stored by KITTI as `image\_2`
+The preprocessing procedure is:
 
-# \* Labels: `label\_2`
+1. Read the original RGB camera image.
+2. Preserve the original aspect ratio.
+3. Resize the image so its longest side fits within `640 × 640`.
+4. Center the resized image inside a `640 × 640` canvas.
+5. Fill the remaining letterbox area with pixel value `114`.
+6. Transform every bounding box using the same scale and padding offsets.
+7. Save the processed image as PNG.
 
-# \* Calibration: `calib`
+No image is stretched.
 
-# \* Official testing data: not used because its labels are not publicly available
+No object box is intentionally removed during preprocessing.
 
-#
+### Typical transformations
 
-# In KITTI terminology, `image\_2` means the images captured by the left color camera. It does not mean that the dataset contains only two images or that the images are a second copy.
+KITTI images are wide and receive larger top and bottom padding.
 
-#
+Example:
 
-# The KITTI images were divided once into a frozen project split:
+```text
+Original: 1224 × 370
+Resized:  640 × 193
+Padding:  left=0, top=223, right=0, bottom=224
+```
 
-#
+Waymo FRONT images are less wide relative to height.
 
-# | Partition  | Images |
+Example:
 
-# | ---------- | -----: |
+```text
+Original: 1920 × 1280
+Resized:  640 × 427
+Padding:  left=0, top=106, right=0, bottom=107
+```
 
-# | Train      |  5,985 |
+---
 
-# | Validation |  1,496 |
+## Canonical Annotation Format
 
-# | Total      |  7,481 |
+COCO is the canonical annotation representation.
 
-#
+Files:
 
-# The split seed is `42`.
+```text
+annotations/coco/kitti_train.json
+annotations/coco/kitti_val.json
+annotations/coco/waymo_external.json
+```
 
-#
+Each COCO annotation uses:
 
-# The split must not be changed after model training begins.
+```text
+[x, y, width, height]
+```
 
-#
+in absolute processed-image pixel coordinates.
 
-# \### Waymo
+COCO category IDs are:
 
-#
+```text
+1 = Vehicle
+2 = Pedestrian
+3 = Cyclist
+```
 
-# A representative subset of the official Waymo validation split is used only for external validation.
+---
 
-#
+## Derived YOLO Annotation Format
 
-# \* Images: `996`
+YOLO labels are derived from the canonical COCO annotations.
 
-# \* Driving segments: `25`
+Files:
 
-# \* Camera: `FRONT`
+```text
+annotations/yolo/kitti/train/
+annotations/yolo/kitti/val/
+annotations/yolo/waymo/external/
+```
 
-# \* Sampling rule: every fifth FRONT frame, starting with the first selected frame
+Each YOLO row uses:
 
-# \* Target-negative images: `12`
+```text
+class_id center_x center_y width height
+```
 
-#
+All coordinates are normalized to the processed `640 × 640` image.
 
-# The sampling policy reduces temporal redundancy while preserving variation in traffic density, location, time of day, and weather.
+YOLO class IDs are:
 
-#
+```text
+0 = Vehicle
+1 = Pedestrian
+2 = Cyclist
+```
 
-# \---
+YOLO coordinates are serialized with ten decimal places.
 
-#
+The numerical equivalence validation proved that all `63,905` COCO boxes match their YOLO representations.
 
-# \## Final Dataset Totals
+Observed combined maximum errors:
 
-#
+```text
+Maximum normalized error: approximately 5.0 × 10^-11
+Maximum pixel error: approximately 4.8 × 10^-8 pixels
+Minimum reconstructed IoU: 0.999999785696
+```
 
-# | Partition        |    Images | Target boxes |    Vehicle | Pedestrian |   Cyclist | Negative images |
+These differences are caused only by decimal serialization.
 
-# | ---------------- | --------: | -----------: | ---------: | ---------: | --------: | --------------: |
+---
 
-# | KITTI train      |     5,985 |       31,294 |     26,278 |      3,729 |     1,287 |               0 |
+## Framework Label Adapter
 
-# | KITTI validation |     1,496 |        7,792 |      6,472 |        980 |       340 |               0 |
+Framework-ready YOLO labels are mirrored under:
 
-# | Waymo external   |       996 |       24,819 |     16,928 |      7,127 |       764 |              12 |
+```text
+labels/kitti/train/
+labels/kitti/val/
+labels/waymo/external/
+```
 
-# | \*\*Combined\*\*     | \*\*8,477\*\* |   \*\*63,905\*\* | \*\*49,678\*\* | \*\*11,836\*\* | \*\*2,391\*\* |          \*\*12\*\* |
+The adapter labels are byte-identical to the canonical YOLO labels.
 
-#
+The duplicated layout exists because frameworks such as Ultralytics normally expect sibling `images` and `labels` directory structures.
 
-# The 12 target-negative Waymo images are intentionally preserved for false-positive analysis.
+---
 
-#
+## Augmentation Policy
 
-# \---
+Augmentation is applied online during training.
 
-#
+No permanent augmented image dataset is generated.
 
-# \## Harmonized Target Classes
+Augmentation is enabled only for:
 
-#
+```text
+kitti_train
+```
 
-# The project uses three semantic classes.
+It is disabled for:
 
-#
+```text
+kitti_val
+waymo_external
+```
 
-# | Internal ID | COCO ID | YOLO ID | Class      |
+### Enabled transformations
 
-# | ----------: | ------: | ------: | ---------- |
+| Transformation          | Probability |
+| ----------------------- | ----------: |
+| Horizontal flip         |        0.50 |
+| Brightness and contrast |        0.50 |
+| HSV adjustment          |        0.30 |
+| Mild Gaussian blur      |        0.10 |
 
-# |           0 |       1 |       0 | Vehicle    |
+### Disabled transformations
 
-# |           1 |       2 |       1 | Pedestrian |
+* vertical flipping;
+* random cropping;
+* arbitrary rotation;
+* perspective distortion;
+* random scaling;
+* shear;
+* Mosaic;
+* MixUp;
+* Copy-Paste;
+* Cutout.
 
-# |           2 |       3 |       2 | Cyclist    |
+These transformations are disabled to maintain a conservative and consistent policy across detector families.
 
-#
+The same image, image ID, epoch, and base seed produce the same augmentation.
 
-# \### KITTI Mapping
+The base seed is:
 
-#
+```text
+42
+```
 
-# | KITTI source class | Unified treatment          |
+---
 
-# | ------------------ | -------------------------- |
+## Directory Structure
 
-# | Car                | Vehicle                    |
+```text
+data/processed/milestone_3/
+├── README.md
+├── images/
+│   ├── kitti/
+│   │   ├── train/
+│   │   └── val/
+│   └── waymo/
+│       └── external/
+├── labels/
+│   ├── kitti/
+│   │   ├── train/
+│   │   └── val/
+│   └── waymo/
+│       └── external/
+├── annotations/
+│   ├── coco/
+│   ├── yolo/
+│   ├── ignore_regions/
+│   └── excluded_objects/
+├── manifests/
+├── reports/
+└── visual_checks/
+```
 
-# | Van                | Vehicle                    |
+Large processed-image and generated-label directories may be excluded from Git because they can be regenerated from the frozen sources and scripts.
 
-# | Truck              | Vehicle                    |
+Configurations, scripts, reports, manifests, documentation, and selected visual-quality artifacts should remain version-controlled.
 
-# | Pedestrian         | Pedestrian                 |
+---
 
-# | Person\_sitting     | Pedestrian                 |
+## Dataset Configurations
 
-# | Cyclist            | Cyclist                    |
+Configuration files are stored under:
 
-# | DontCare           | Evaluation-ignore region   |
+```text
+configs/datasets/milestone_3/
+```
 
-# | Tram               | Excluded non-target object |
+Important files:
 
-# | Misc               | Excluded non-target object |
+```text
+preprocessing.yaml
+class_mapping.yaml
+augmentation.yaml
+kitti_waymo_yolo.yaml
+coco_paths.yaml
+dataset_registry.yaml
+```
 
-#
+### Ultralytics configuration
 
-# \### Waymo Mapping
+```text
+configs/datasets/milestone_3/kitti_waymo_yolo.yaml
+```
 
-#
+The configuration defines:
 
-# | Waymo source class | Unified treatment          |
+```text
+train = KITTI train
+val   = KITTI validation
+test  = Waymo external
+```
 
-# | ------------------ | -------------------------- |
+The `test` path is external validation only. It must not influence model development.
 
-# | Vehicle            | Vehicle                    |
+---
 
-# | Pedestrian         | Pedestrian                 |
+## PyTorch Dataset Loader
 
-# | Cyclist            | Cyclist                    |
+The framework-neutral PyTorch loader is implemented in:
 
-# | Sign               | Excluded non-target object |
+```text
+scripts/milestone_3/dataset_core.py
+```
 
-# | Unknown            | Excluded if encountered    |
+Available partitions:
 
-#
+```python
+kitti_train
+kitti_val
+waymo_external
+```
 
-# The selected Waymo subset contains no Sign or Unknown boxes, but the policy remains explicitly defined.
+Example:
 
-#
+```python
+from scripts.milestone_3.dataset_core import (
+    Milestone3DetectionDataset,
+    detection_collate_fn,
+)
+dataset = Milestone3DetectionDataset(
+    partition_name="kitti_val",
+    enable_augmentation=False,
+)
+image, target = dataset[0]
+```
 
-# \---
+The returned image is a float tensor with shape:
 
-#
+```text
+[3, 640, 640]
+```
 
-# \## Region Policy
+and range:
 
-#
+```text
+[0, 1]
+```
 
-# Target annotations, evaluation-ignore regions, and excluded objects are stored separately.
+Targets contain:
 
-#
+```text
+boxes
+labels
+image_id
+area
+iscrowd
+ignore_boxes
+excluded_boxes
+size
+image_path
+file_name
+source_dataset
+source_image_id
+partition
+role
+augmentation_trace
+```
 
-# \### Evaluation-ignore regions
+Canonical target labels preserve COCO and Torchvision-compatible IDs:
 
-#
+```text
+1 = Vehicle
+2 = Pedestrian
+3 = Cyclist
+```
 
-# KITTI `DontCare` regions are retained to suppress detections that should not count as false positives during evaluation.
+---
 
-#
+## Validation Results
 
-# Total evaluation-ignore regions:
+The complete pipeline passed all validation stages.
 
-#
+### Final audit
 
-# ```text
+```text
+Previous validation reports passed: 14 / 14
+Frozen configurations passed:      6 / 6
+Generated manifests passed:        9 / 9
+Unresolved issue rows:              0
+Final audit status:                 PASSED
+```
 
-# 11,295
+### Verified properties
 
-# ```
+* `8,477` processed images exist.
+* Every processed image is `640 × 640`.
+* `63,905` target boxes are preserved.
+* COCO and YOLO totals match.
+* All COCO and YOLO boxes are valid and in bounds.
+* Canonical and framework YOLO files match.
+* KITTI train and validation contain no overlapping image IDs.
+* Waymo external does not overlap with KITTI.
+* The 12 Waymo negative images contain empty target labels.
+* Visual COCO and YOLO overlays coincide.
+* Online augmentation preserves box counts and class IDs.
+* Validation and external loaders are deterministic.
+* Augmentation cannot be enabled for validation partitions.
+* No unresolved validation issue remains.
 
-#
+---
 
-# \### Excluded non-target objects
+## Reproducibility Runner
 
-#
+The complete pipeline can be listed with:
 
-# KITTI `Tram` and `Misc` objects are preserved in audit sidecars but are not targets and do not suppress false positives.
+```cmd
+python scripts\milestone_3\run_milestone_3.py --list
+```
 
-#
+### Safe validation-only run
 
-# Total excluded non-target regions:
+```cmd
+python scripts\milestone_3\run_milestone_3.py --validate-only
+```
 
-#
+This reruns the non-destructive validation stages without rebuilding the complete processed image dataset.
 
-# ```text
+### Validation dry run
 
-# 1,484
+```cmd
+python scripts\milestone_3\run_milestone_3.py --validate-only --dry-run
+```
 
-# ```
+### Full pipeline
 
-#
+The full pipeline is protected by an explicit confirmation token:
 
-# Waymo `Sign` is also defined as an excluded class, although none occurs in the selected external subset.
+```cmd
+python scripts\milestone_3\run_milestone_3.py --full --confirm RUN_MILESTONE_3_FULL
+```
 
-#
+### Clean regeneration
 
-# \---
+A clean regeneration may delete and recreate generated outputs. It requires a stronger token:
 
-#
+```cmd
+python scripts\milestone_3\run_milestone_3.py --full --clean-generated --confirm REGENERATE_MILESTONE_3
+```
 
-# \## Image Preprocessing
+Clean regeneration should be used only when:
 
-#
+* all frozen source data is available;
+* sufficient disk space is available;
+* regeneration is intentional;
+* existing generated outputs may safely be replaced.
 
-# All images are converted to a shared size of:
+---
 
-#
+## Reproducibility Result
 
-# ```text
+The validation-only runner completed successfully:
 
-# 640 × 640 pixels
+```text
+Selected stages:     9
+Passed stages:       9
+Failed stages:       0
+Final dataset audit: PASSED
+Overall status:      PASSED
+```
 
-# ```
+Generated reproducibility records:
 
-#
+```text
+reports/reproducibility_report.json
+manifests/reproducibility_run_manifest.csv
+```
 
-# The preprocessing procedure is:
+---
 
-#
+## Visual Quality Checks
 
-# 1\. Read the original RGB camera image.
+The main visual artifacts are:
 
-# 2\. Preserve the original aspect ratio.
+```text
+visual_checks/preprocessing_dry_run/
+visual_checks/coco_yolo_comparison/
+visual_checks/augmentation_policy/
+```
 
-# 3\. Resize the image so its longest side fits within `640 × 640`.
+Important contact sheets:
 
-# 4\. Center the resized image inside a `640 × 640` canvas.
+```text
+visual_checks/coco_yolo_comparison/annotation_comparison_contact_sheet.png
+visual_checks/augmentation_policy/augmentation_policy_contact_sheet.png
+```
 
-# 5\. Fill the remaining letterbox area with pixel value `114`.
+The visual checks confirmed:
 
-# 6\. Transform every bounding box using the same scale and padding offsets.
+* correct letterboxing;
+* correct transformed coordinates;
+* COCO–YOLO visual equivalence;
+* correct cyclist and pedestrian annotations;
+* preserved negative scenes;
+* correct horizontal-flip behavior;
+* unchanged letterbox padding;
+* realistic photometric augmentation.
 
-# 7\. Save the processed image as PNG.
+---
 
-#
+## Generated Reports
 
-# No image is stretched.
+Reports are stored under:
 
-#
+```text
+data/processed/milestone_3/reports/
+```
 
-# No object box is intentionally removed during preprocessing.
+Important reports include:
 
-#
+```text
+source_input_validation.json
+source_manifest_summary.json
+preprocessing_dry_run.json
+image_preprocessing_report.json
+coco_creation_report.json
+region_policy_report.json
+yolo_conversion_report.json
+config_validation.json
+coco_validation_report.json
+yolo_validation_report.json
+coco_yolo_equivalence_report.json
+visual_annotation_checks_report.json
+augmentation_policy_report.json
+dataloader_validation_report.json
+final_dataset_audit.json
+reproducibility_report.json
+```
 
-# \### Typical transformations
+Each validation stage also generates an issue CSV. A successful stage leaves its issue CSV with a header and zero issue rows.
 
-#
+---
 
-# KITTI images are wide and receive larger top and bottom padding.
+## Generated Manifests
 
-#
+Important manifests include:
 
-# Example:
+```text
+source_manifest.csv
+transform_manifest.csv
+region_policy_manifest.csv
+yolo_label_manifest.csv
+framework_label_adapter_manifest.csv
+coco_yolo_equivalence_manifest.csv
+visual_annotation_checks_manifest.csv
+augmentation_policy_manifest.csv
+dataloader_smoke_test_manifest.csv
+reproducibility_run_manifest.csv
+```
 
-#
+The region-policy manifest contains one row per image, not one row per region.
 
-# ```text
+Therefore:
 
-# Original: 1224 × 370
+```text
+region_policy_manifest.csv rows = 8,477
+```
 
-# Resized:  640 × 193
+The combined region totals are validated separately through the sidecar files:
 
-# Padding:  left=0, top=223, right=0, bottom=224
+```text
+Evaluation-ignore regions = 11,295
+Excluded non-target regions = 1,484
+```
 
-# ```
+---
 
-#
+## Tested Environment
 
-# Waymo FRONT images are less wide relative to height.
+The final validation was executed using:
 
-#
+```text
+PyTorch:      2.11.0+cu128
+Torchvision:  0.26.0+cu128
+Ultralytics:  8.4.60
+CUDA:         available
+GPU:          NVIDIA GeForce RTX 3060 Laptop GPU
+```
 
-# Example:
+Milestone 3 does not execute or train the four detector families.
 
-#
+Ultralytics is present because the project will use it during the model implementation stage and because its dataset configuration format is prepared here.
 
-# ```text
+---
 
-# Original: 1920 × 1280
+## Scope Boundary
 
-# Resized:  640 × 427
+Milestone 3 ends with a validated, reproducible, framework-ready dataset.
 
-# Padding:  left=0, top=106, right=0, bottom=107
+The following tasks are intentionally deferred to Milestone 4:
 
-# ```
+* initializing detector architectures;
+* downloading pretrained weights;
+* detector-interface smoke tests;
+* selecting model variants;
+* training;
+* checkpoint creation;
+* hyperparameter tuning;
+* in-domain evaluation;
+* external Waymo evaluation;
+* inference-speed benchmarking;
+* comparison of YOLO, Faster R-CNN, RetinaNet, and RT-DETR.
 
-#
+No model-performance claim is made by Milestone 3.
 
-# \---
+---
 
-#
+## Completion Status
 
-# \## Canonical Annotation Format
-
-#
-
-# COCO is the canonical annotation representation.
-
-#
-
-# Files:
-
-#
-
-# ```text
-
-# annotations/coco/kitti\_train.json
-
-# annotations/coco/kitti\_val.json
-
-# annotations/coco/waymo\_external.json
-
-# ```
-
-#
-
-# Each COCO annotation uses:
-
-#
-
-# ```text
-
-# \[x, y, width, height]
-
-# ```
-
-#
-
-# in absolute processed-image pixel coordinates.
-
-#
-
-# COCO category IDs are:
-
-#
-
-# ```text
-
-# 1 = Vehicle
-
-# 2 = Pedestrian
-
-# 3 = Cyclist
-
-# ```
-
-#
-
-# \---
-
-#
-
-# \## Derived YOLO Annotation Format
-
-#
-
-# YOLO labels are derived from the canonical COCO annotations.
-
-#
-
-# Files:
-
-#
-
-# ```text
-
-# annotations/yolo/kitti/train/
-
-# annotations/yolo/kitti/val/
-
-# annotations/yolo/waymo/external/
-
-# ```
-
-#
-
-# Each YOLO row uses:
-
-#
-
-# ```text
-
-# class\_id center\_x center\_y width height
-
-# ```
-
-#
-
-# All coordinates are normalized to the processed `640 × 640` image.
-
-#
-
-# YOLO class IDs are:
-
-#
-
-# ```text
-
-# 0 = Vehicle
-
-# 1 = Pedestrian
-
-# 2 = Cyclist
-
-# ```
-
-#
-
-# YOLO coordinates are serialized with ten decimal places.
-
-#
-
-# The numerical equivalence validation proved that all `63,905` COCO boxes match their YOLO representations.
-
-#
-
-# Observed combined maximum errors:
-
-#
-
-# ```text
-
-# Maximum normalized error: approximately 5.0 × 10^-11
-
-# Maximum pixel error: approximately 4.8 × 10^-8 pixels
-
-# Minimum reconstructed IoU: 0.999999785696
-
-# ```
-
-#
-
-# These differences are caused only by decimal serialization.
-
-#
-
-# \---
-
-#
-
-# \## Framework Label Adapter
-
-#
-
-# Framework-ready YOLO labels are mirrored under:
-
-#
-
-# ```text
-
-# labels/kitti/train/
-
-# labels/kitti/val/
-
-# labels/waymo/external/
-
-# ```
-
-#
-
-# The adapter labels are byte-identical to the canonical YOLO labels.
-
-#
-
-# The duplicated layout exists because frameworks such as Ultralytics normally expect sibling `images` and `labels` directory structures.
-
-#
-
-# \---
-
-#
-
-# \## Augmentation Policy
-
-#
-
-# Augmentation is applied online during training.
-
-#
-
-# No permanent augmented image dataset is generated.
-
-#
-
-# Augmentation is enabled only for:
-
-#
-
-# ```text
-
-# kitti\_train
-
-# ```
-
-#
-
-# It is disabled for:
-
-#
-
-# ```text
-
-# kitti\_val
-
-# waymo\_external
-
-# ```
-
-#
-
-# \### Enabled transformations
-
-#
-
-# | Transformation          | Probability |
-
-# | ----------------------- | ----------: |
-
-# | Horizontal flip         |        0.50 |
-
-# | Brightness and contrast |        0.50 |
-
-# | HSV adjustment          |        0.30 |
-
-# | Mild Gaussian blur      |        0.10 |
-
-#
-
-# \### Disabled transformations
-
-#
-
-# \* vertical flipping;
-
-# \* random cropping;
-
-# \* arbitrary rotation;
-
-# \* perspective distortion;
-
-# \* random scaling;
-
-# \* shear;
-
-# \* Mosaic;
-
-# \* MixUp;
-
-# \* Copy-Paste;
-
-# \* Cutout.
-
-#
-
-# These transformations are disabled to maintain a conservative and consistent policy across detector families.
-
-#
-
-# The same image, image ID, epoch, and base seed produce the same augmentation.
-
-#
-
-# The base seed is:
-
-#
-
-# ```text
-
-# 42
-
-# ```
-
-#
-
-# \---
-
-#
-
-# \## Directory Structure
-
-#
-
-# ```text
-
-# data/processed/milestone\_3/
-
-# ├── README.md
-
-# ├── images/
-
-# │   ├── kitti/
-
-# │   │   ├── train/
-
-# │   │   └── val/
-
-# │   └── waymo/
-
-# │       └── external/
-
-# ├── labels/
-
-# │   ├── kitti/
-
-# │   │   ├── train/
-
-# │   │   └── val/
-
-# │   └── waymo/
-
-# │       └── external/
-
-# ├── annotations/
-
-# │   ├── coco/
-
-# │   ├── yolo/
-
-# │   ├── ignore\_regions/
-
-# │   └── excluded\_objects/
-
-# ├── manifests/
-
-# ├── reports/
-
-# └── visual\_checks/
-
-# ```
-
-#
-
-# Large processed-image and generated-label directories may be excluded from Git because they can be regenerated from the frozen sources and scripts.
-
-#
-
-# Configurations, scripts, reports, manifests, documentation, and selected visual-quality artifacts should remain version-controlled.
-
-#
-
-# \---
-
-#
-
-# \## Dataset Configurations
-
-#
-
-# Configuration files are stored under:
-
-#
-
-# ```text
-
-# configs/datasets/milestone\_3/
-
-# ```
-
-#
-
-# Important files:
-
-#
-
-# ```text
-
-# preprocessing.yaml
-
-# class\_mapping.yaml
-
-# augmentation.yaml
-
-# kitti\_waymo\_yolo.yaml
-
-# coco\_paths.yaml
-
-# dataset\_registry.yaml
-
-# ```
-
-#
-
-# \### Ultralytics configuration
-
-#
-
-# ```text
-
-# configs/datasets/milestone\_3/kitti\_waymo\_yolo.yaml
-
-# ```
-
-#
-
-# The configuration defines:
-
-#
-
-# ```text
-
-# train = KITTI train
-
-# val   = KITTI validation
-
-# test  = Waymo external
-
-# ```
-
-#
-
-# The `test` path is external validation only. It must not influence model development.
-
-#
-
-# \---
-
-#
-
-# \## PyTorch Dataset Loader
-
-#
-
-# The framework-neutral PyTorch loader is implemented in:
-
-#
-
-# ```text
-
-# scripts/milestone\_3/dataset\_core.py
-
-# ```
-
-#
-
-# Available partitions:
-
-#
-
-# ```python
-
-# kitti\_train
-
-# kitti\_val
-
-# waymo\_external
-
-# ```
-
-#
-
-# Example:
-
-#
-
-# ```python
-
-# from scripts.milestone\_3.dataset\_core import (
-
-# &#x20;   Milestone3DetectionDataset,
-
-# &#x20;   detection\_collate\_fn,
-
-# )
-
-#
-
-# dataset = Milestone3DetectionDataset(
-
-# &#x20;   partition\_name="kitti\_val",
-
-# &#x20;   enable\_augmentation=False,
-
-# )
-
-#
-
-# image, target = dataset\[0]
-
-# ```
-
-#
-
-# The returned image is a float tensor with shape:
-
-#
-
-# ```text
-
-# \[3, 640, 640]
-
-# ```
-
-#
-
-# and range:
-
-#
-
-# ```text
-
-# \[0, 1]
-
-# ```
-
-#
-
-# Targets contain:
-
-#
-
-# ```text
-
-# boxes
-
-# labels
-
-# image\_id
-
-# area
-
-# iscrowd
-
-# ignore\_boxes
-
-# excluded\_boxes
-
-# size
-
-# image\_path
-
-# file\_name
-
-# source\_dataset
-
-# source\_image\_id
-
-# partition
-
-# role
-
-# augmentation\_trace
-
-# ```
-
-#
-
-# Canonical target labels preserve COCO and Torchvision-compatible IDs:
-
-#
-
-# ```text
-
-# 1 = Vehicle
-
-# 2 = Pedestrian
-
-# 3 = Cyclist
-
-# ```
-
-#
-
-# \---
-
-#
-
-# \## Validation Results
-
-#
-
-# The complete pipeline passed all validation stages.
-
-#
-
-# \### Final audit
-
-#
-
-# ```text
-
-# Previous validation reports passed: 14 / 14
-
-# Frozen configurations passed:      6 / 6
-
-# Generated manifests passed:        9 / 9
-
-# Unresolved issue rows:              0
-
-# Final audit status:                 PASSED
-
-# ```
-
-#
-
-# \### Verified properties
-
-#
-
-# \* `8,477` processed images exist.
-
-# \* Every processed image is `640 × 640`.
-
-# \* `63,905` target boxes are preserved.
-
-# \* COCO and YOLO totals match.
-
-# \* All COCO and YOLO boxes are valid and in bounds.
-
-# \* Canonical and framework YOLO files match.
-
-# \* KITTI train and validation contain no overlapping image IDs.
-
-# \* Waymo external does not overlap with KITTI.
-
-# \* The 12 Waymo negative images contain empty target labels.
-
-# \* Visual COCO and YOLO overlays coincide.
-
-# \* Online augmentation preserves box counts and class IDs.
-
-# \* Validation and external loaders are deterministic.
-
-# \* Augmentation cannot be enabled for validation partitions.
-
-# \* No unresolved validation issue remains.
-
-#
-
-# \---
-
-#
-
-# \## Reproducibility Runner
-
-#
-
-# The complete pipeline can be listed with:
-
-#
-
-# ```cmd
-
-# python scripts\\milestone\_3\\run\_milestone\_3.py --list
-
-# ```
-
-#
-
-# \### Safe validation-only run
-
-#
-
-# ```cmd
-
-# python scripts\\milestone\_3\\run\_milestone\_3.py --validate-only
-
-# ```
-
-#
-
-# This reruns the non-destructive validation stages without rebuilding the complete processed image dataset.
-
-#
-
-# \### Validation dry run
-
-#
-
-# ```cmd
-
-# python scripts\\milestone\_3\\run\_milestone\_3.py --validate-only --dry-run
-
-# ```
-
-#
-
-# \### Full pipeline
-
-#
-
-# The full pipeline is protected by an explicit confirmation token:
-
-#
-
-# ```cmd
-
-# python scripts\\milestone\_3\\run\_milestone\_3.py --full --confirm RUN\_MILESTONE\_3\_FULL
-
-# ```
-
-#
-
-# \### Clean regeneration
-
-#
-
-# A clean regeneration may delete and recreate generated outputs. It requires a stronger token:
-
-#
-
-# ```cmd
-
-# python scripts\\milestone\_3\\run\_milestone\_3.py --full --clean-generated --confirm REGENERATE\_MILESTONE\_3
-
-# ```
-
-#
-
-# Clean regeneration should be used only when:
-
-#
-
-# \* all frozen source data is available;
-
-# \* sufficient disk space is available;
-
-# \* regeneration is intentional;
-
-# \* existing generated outputs may safely be replaced.
-
-#
-
-# \---
-
-#
-
-# \## Reproducibility Result
-
-#
-
-# The validation-only runner completed successfully:
-
-#
-
-# ```text
-
-# Selected stages:     9
-
-# Passed stages:       9
-
-# Failed stages:       0
-
-# Final dataset audit: PASSED
-
-# Overall status:      PASSED
-
-# ```
-
-#
-
-# Generated reproducibility records:
-
-#
-
-# ```text
-
-# reports/reproducibility\_report.json
-
-# manifests/reproducibility\_run\_manifest.csv
-
-# ```
-
-#
-
-# \---
-
-#
-
-# \## Visual Quality Checks
-
-#
-
-# The main visual artifacts are:
-
-#
-
-# ```text
-
-# visual\_checks/preprocessing\_dry\_run/
-
-# visual\_checks/coco\_yolo\_comparison/
-
-# visual\_checks/augmentation\_policy/
-
-# ```
-
-#
-
-# Important contact sheets:
-
-#
-
-# ```text
-
-# visual\_checks/coco\_yolo\_comparison/annotation\_comparison\_contact\_sheet.png
-
-# visual\_checks/augmentation\_policy/augmentation\_policy\_contact\_sheet.png
-
-# ```
-
-#
-
-# The visual checks confirmed:
-
-#
-
-# \* correct letterboxing;
-
-# \* correct transformed coordinates;
-
-# \* COCO–YOLO visual equivalence;
-
-# \* correct cyclist and pedestrian annotations;
-
-# \* preserved negative scenes;
-
-# \* correct horizontal-flip behavior;
-
-# \* unchanged letterbox padding;
-
-# \* realistic photometric augmentation.
-
-#
-
-# \---
-
-#
-
-# \## Generated Reports
-
-#
-
-# Reports are stored under:
-
-#
-
-# ```text
-
-# data/processed/milestone\_3/reports/
-
-# ```
-
-#
-
-# Important reports include:
-
-#
-
-# ```text
-
-# source\_input\_validation.json
-
-# source\_manifest\_summary.json
-
-# preprocessing\_dry\_run.json
-
-# image\_preprocessing\_report.json
-
-# coco\_creation\_report.json
-
-# region\_policy\_report.json
-
-# yolo\_conversion\_report.json
-
-# config\_validation.json
-
-# coco\_validation\_report.json
-
-# yolo\_validation\_report.json
-
-# coco\_yolo\_equivalence\_report.json
-
-# visual\_annotation\_checks\_report.json
-
-# augmentation\_policy\_report.json
-
-# dataloader\_validation\_report.json
-
-# final\_dataset\_audit.json
-
-# reproducibility\_report.json
-
-# ```
-
-#
-
-# Each validation stage also generates an issue CSV. A successful stage leaves its issue CSV with a header and zero issue rows.
-
-#
-
-# \---
-
-#
-
-# \## Generated Manifests
-
-#
-
-# Important manifests include:
-
-#
-
-# ```text
-
-# source\_manifest.csv
-
-# transform\_manifest.csv
-
-# region\_policy\_manifest.csv
-
-# yolo\_label\_manifest.csv
-
-# framework\_label\_adapter\_manifest.csv
-
-# coco\_yolo\_equivalence\_manifest.csv
-
-# visual\_annotation\_checks\_manifest.csv
-
-# augmentation\_policy\_manifest.csv
-
-# dataloader\_smoke\_test\_manifest.csv
-
-# reproducibility\_run\_manifest.csv
-
-# ```
-
-#
-
-# The region-policy manifest contains one row per image, not one row per region.
-
-#
-
-# Therefore:
-
-#
-
-# ```text
-
-# region\_policy\_manifest.csv rows = 8,477
-
-# ```
-
-#
-
-# The combined region totals are validated separately through the sidecar files:
-
-#
-
-# ```text
-
-# Evaluation-ignore regions = 11,295
-
-# Excluded non-target regions = 1,484
-
-# ```
-
-#
-
-# \---
-
-#
-
-# \## Tested Environment
-
-#
-
-# The final validation was executed using:
-
-#
-
-# ```text
-
-# PyTorch:      2.11.0+cu128
-
-# Torchvision:  0.26.0+cu128
-
-# Ultralytics:  8.4.60
-
-# CUDA:         available
-
-# GPU:          NVIDIA GeForce RTX 3060 Laptop GPU
-
-# ```
-
-#
-
-# Milestone 3 does not execute or train the four detector families.
-
-#
-
-# Ultralytics is present because the project will use it during the model implementation stage and because its dataset configuration format is prepared here.
-
-#
-
-# \---
-
-#
-
-# \## Scope Boundary
-
-#
-
-# Milestone 3 ends with a validated, reproducible, framework-ready dataset.
-
-#
-
-# The following tasks are intentionally deferred to Milestone 4:
-
-#
-
-# \* initializing detector architectures;
-
-# \* downloading pretrained weights;
-
-# \* detector-interface smoke tests;
-
-# \* selecting model variants;
-
-# \* training;
-
-# \* checkpoint creation;
-
-# \* hyperparameter tuning;
-
-# \* in-domain evaluation;
-
-# \* external Waymo evaluation;
-
-# \* inference-speed benchmarking;
-
-# \* comparison of YOLO, Faster R-CNN, RetinaNet, and RT-DETR.
-
-#
-
-# No model-performance claim is made by Milestone 3.
-
-#
-
-# \---
-
-#
-
-# \## Completion Status
-
-#
-
-# ```text
-
-# Dataset preprocessing:       COMPLETE
-
-# Annotation harmonization:    COMPLETE
-
-# COCO generation:             COMPLETE
-
-# YOLO conversion:             COMPLETE
-
-# Region-policy preservation:  COMPLETE
-
-# Augmentation policy:         COMPLETE
-
-# DataLoader validation:       COMPLETE
-
-# Final dataset audit:         PASSED
-
-# Reproducibility validation:  PASSED
-
-# Model training:              NOT PART OF THIS MILESTONE
-
-# ```
+```text
+Dataset preprocessing:       COMPLETE
+Annotation harmonization:    COMPLETE
+COCO generation:             COMPLETE
+YOLO conversion:             COMPLETE
+Region-policy preservation:  COMPLETE
+Augmentation policy:         COMPLETE
+DataLoader validation:       COMPLETE
+Final dataset audit:         PASSED
+Reproducibility validation:  PASSED
+Model training:              NOT PART OF THIS MILESTONE
+```
