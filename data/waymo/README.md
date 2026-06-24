@@ -72,9 +72,10 @@ Install missing packages if needed:
 ```cmd
 python -m pip install pandas numpy pyarrow pillow scipy
 ```
-
+(ignore for now)
 Verify Google Cloud CLI:
 
+(ensure gcloud in available and running)
 ```cmd
 gcloud --version
 where gcloud
@@ -168,6 +169,7 @@ mkdir data\waymo\raw\validation\stats
 mkdir data\waymo\raw\validation\camera_box\candidates
 mkdir data\waymo\raw\validation\camera_image\final
 mkdir data\waymo\raw\validation\camera_calibration\final
+(already exists)
 mkdir data\waymo\selection
 mkdir data\waymo\representative_subset\images\front
 mkdir data\waymo\representative_subset\annotations
@@ -219,7 +221,7 @@ This order avoids downloading the entire Waymo image validation set and prevents
 
 # Reproduction Steps
 
-## Step 1 — Download Validation Statistics
+## Step 1 — Download Validation Statistics (ignore)
 
 ```cmd
 gcloud storage cp "gs://waymo_open_dataset_v_2_0_1/validation/stats/*.parquet" "data\waymo\raw\validation\stats\"
@@ -241,7 +243,7 @@ The stats component includes frame-level context such as segment ID, timestamp, 
 
 ---
 
-## Step 2 — Inspect the Stats Schema
+## Step 2 — Inspect the Stats Schema (already exist)
 
 Script:
 
@@ -275,7 +277,7 @@ key.frame_timestamp_micros
 
 ---
 
-## Step 3 — Build the Validation Segment Catalog
+## Step 3 — Build the Validation Segment Catalog (already exist)
 
 Script:
 
@@ -333,7 +335,7 @@ Density:
 
 ---
 
-## Step 4 — Select 70 Diverse Candidate Segments
+## Step 4 — Select 70 Diverse Candidate Segments (already exist)
 
 Script:
 
@@ -391,7 +393,7 @@ These are candidates, not the final evaluation set.
 
 ---
 
-## Step 5 — Download Candidate Camera Boxes
+## Step 5 — Download Candidate Camera Boxes (already exist)
 
 Script:
 
@@ -457,7 +459,7 @@ The download scripts are resumable: completed files are skipped and zero-byte fi
 
 ---
 
-## Step 6 — Inspect the Camera-Box Schema
+## Step 6 — Inspect the Camera-Box Schema (already exist)
 
 Script:
 
@@ -510,7 +512,7 @@ Missing difficulty values are recorded as `UNSPECIFIED`, not treated as easy.
 
 ---
 
-## Step 7 — Analyze Candidate FRONT-Camera Boxes
+## Step 7 — Analyze Candidate FRONT-Camera Boxes (already exist)
 
 Script:
 
@@ -563,7 +565,7 @@ These are project sampling categories, not official Waymo size definitions.
 
 ---
 
-## Step 8 — Select and Freeze the Final 25 Segments
+## Step 8 — Select and Freeze the Final 25 Segments (already exist)
 
 Script:
 
@@ -618,7 +620,7 @@ Segments containing cyclists: 18
 
 ---
 
-## Step 9 — Download Final Images and Calibration
+## Step 9 — Download Final Images and Calibration  (already exist)
 
 Script:
 
@@ -666,7 +668,7 @@ Calibration is preserved for reproducibility even though existing 2D pixel-space
 
 ---
 
-## Step 10 — Inspect the Camera-Image Schema
+## Step 10 — Inspect the Camera-Image Schema (already exist)
 
 Script:
 
@@ -699,7 +701,7 @@ Images are stored as binary JPEG data.
 
 ---
 
-## Step 11 — Extract the Representative Subset
+## Step 11 — Extract the Representative Subset (already exist)
 
 Script:
 

@@ -75,7 +75,7 @@ Small, distant, and occluded objects will account for a disproportionately large
 The main contributions of this study are as follows:
 
 1. **Controlled Cross-Family Detector Comparison**  
-   A harmonized benchmark is developed for four representative object-detection paradigms: a real-time one-stage CNN detector, a two-stage region-proposal detector, a dense focal-loss detector, and a real-time transformer detector.
+   A harmonized benchmark is developed for four representative object-detection paradigms: a real-time one-stage CNN detector (Yolo), a two-stage region-proposal detector (Faster R-CNN), a dense focal-loss detector (RetinaNet), and a real-time transformer detector (RT-DETR).
 
 2. **Target-Free External Validation**  
    Models are trained exclusively on KITTI and evaluated directly on a representative Waymo front-camera subset without retraining, fine-tuning, domain adaptation, or target-dependent hyperparameter selection.

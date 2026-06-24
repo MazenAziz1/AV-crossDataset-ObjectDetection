@@ -453,6 +453,8 @@ Integrity status: PASSED
 
 File:
 
+
+(already created)
 ```text
 data/kitti/selection/class_mapping.yaml
 ```

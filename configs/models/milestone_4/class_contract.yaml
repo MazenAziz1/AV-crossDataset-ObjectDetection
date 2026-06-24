@@ -1,0 +1,64 @@
+# Milestone 4 + 5 Class Contract
+# Status: Frozen
+
+metadata:
+  milestone: 4
+  status: frozen
+  date_frozen: "2026-06-24"
+
+canonical_classes:
+  - id: 1
+    name: "Vehicle"
+  - id: 2
+    name: "Pedestrian"
+  - id: 3
+    name: "Cyclist"
+
+frameworks:
+  yolo:
+    # YOLO framework labels are 0-indexed without background
+    mapping:
+      0: "Vehicle"
+      1: "Pedestrian"
+      2: "Cyclist"
+    coco_to_yolo:
+      # maps COCO category ID (1, 2, 3) to YOLO class index (0, 1, 2)
+      1: 0
+      2: 1
+      3: 2
+    yolo_to_coco:
+      0: 1
+      1: 2
+      2: 3
+
+  torchvision:
+    # Torchvision framework requires background as class 0
+    mapping:
+      0: "background"
+      1: "Vehicle"
+      2: "Pedestrian"
+      3: "Cyclist"
+    coco_to_torchvision:
+      # maps COCO category ID (1, 2, 3) to Torchvision class index (1, 2, 3)
+      1: 1
+      2: 2
+      3: 3
+    torchvision_to_coco:
+      1: 1
+      2: 2
+      3: 3
+
+  rtdetr:
+    # Ultralytics RT-DETR uses the same class indices as YOLO for indexing
+    mapping:
+      0: "Vehicle"
+      1: "Pedestrian"
+      2: "Cyclist"
+    coco_to_rtdetr:
+      1: 0
+      2: 1
+      3: 2
+    rtdetr_to_coco:
+      0: 1
+      1: 2
+      2: 3

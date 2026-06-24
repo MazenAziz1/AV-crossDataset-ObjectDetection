@@ -6,7 +6,7 @@
   "image_files_found": 7481,
   "label_files_found": 7481,
   "calibration_files_found": 7481,
-  "devkit_files_found": 18,
+  "devkit_files_found": 0,
   "matching_sample_ids": 7481,
   "filename_mismatch_count": 0,
   "corrupted_or_unreadable_images": 0,

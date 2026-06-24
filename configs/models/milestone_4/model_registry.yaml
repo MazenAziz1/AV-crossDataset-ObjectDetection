@@ -1,0 +1,102 @@
+# Model Registry Configuration (Original Architectures with 4GB VRAM Mitigations)
+# Status: Frozen
+
+metadata:
+  milestone: 4
+  status: frozen
+  date_frozen: "2026-06-24"
+  hardware_target: "NVIDIA GeForce RTX 3050 Laptop GPU (4 GB VRAM)"
+  memory_policy: "Extreme VRAM optimization enabled"
+
+models:
+  yolo:
+    family: "yolo"
+    name: "yolov8s"
+    architecture: "YOLOv8-Small"
+    framework: "ultralytics"
+    framework_version: "8.2.0"
+    pretrained_weights: "yolov8s.pt"
+    input_size: [640, 640]
+    num_classes: 3
+    parameter_count: 11166822 # ~11.2M
+    recommended_batch_size: 2
+    gradient_accumulation_factor: 8 # Effective batch size = 16
+    expected_gpu_memory_mb: 2300 # ~2.3GB VRAM with AMP
+    status: "frozen"
+    mitigation_strategies:
+      - "batch_size_reduction_to_2"
+      - "automatic_mixed_precision_amp_true"
+      - "gradient_accumulation_8"
+      - "dataloader_workers_2"
+    selection_rationale: "Original YOLOv8s preserved. Reduced batch size from 16 to 2 and enabled gradient accumulation to fit within 4GB VRAM."
+
+  faster_rcnn:
+    family: "faster_rcnn"
+    name: "fasterrcnn_resnet50_fpn"
+    architecture: "Faster R-CNN with ResNet-50-FPN backbone"
+    framework: "torchvision"
+    framework_version: "0.18.0"
+    pretrained_weights: "FasterRCNN_ResNet50_FPN_Weights.DEFAULT"
+    input_size: [640, 640]
+    num_classes: 4 # 3 targets + 1 background
+    parameter_count: 41755028 # ~41.8M
+    recommended_batch_size: 1
+    gradient_accumulation_factor: 16 # Effective batch size = 16
+    expected_gpu_memory_mb: 2800 # ~2.8GB VRAM with checkpointing & AMP
+    status: "frozen"
+    mitigation_strategies:
+      - "batch_size_reduction_to_1"
+      - "automatic_mixed_precision_amp_true"
+      - "gradient_accumulation_16"
+      - "gradient_checkpointing_on_backbone"
+      - "freeze_backbone_stages_1_to_3" # trainable_backbone_layers = 2
+      - "dataloader_workers_2"
+      - "cuda_alloc_conf_expandable_segments"
+    selection_rationale: "Original Faster R-CNN ResNet-50 preserved. Constrained to batch size 1, enabled gradient checkpointing, and froze early backbone stages to prevent OOM."
+
+  retinanet:
+    family: "retinanet"
+    name: "retinanet_resnet50_fpn_v2"
+    architecture: "RetinaNet with ResNet-50-FPN V2 backbone"
+    framework: "torchvision"
+    framework_version: "0.18.0"
+    pretrained_weights: "RetinaNet_ResNet50_FPN_V2_Weights.DEFAULT"
+    input_size: [640, 640]
+    num_classes: 4 # 3 targets + 1 background
+    parameter_count: 34015332 # ~34.0M
+    recommended_batch_size: 1
+    gradient_accumulation_factor: 16 # Effective batch size = 16
+    expected_gpu_memory_mb: 2900 # ~2.9GB VRAM with checkpointing & AMP
+    status: "frozen"
+    mitigation_strategies:
+      - "batch_size_reduction_to_1"
+      - "automatic_mixed_precision_amp_true"
+      - "gradient_accumulation_16"
+      - "gradient_checkpointing_on_backbone"
+      - "freeze_backbone_stages_1_to_3" # trainable_backbone_layers = 2
+      - "dataloader_workers_2"
+      - "cuda_alloc_conf_expandable_segments"
+    selection_rationale: "Original RetinaNet ResNet-50 V2 preserved. Optimized using batch size 1 and backbone gradient checkpointing."
+
+  rtdetr:
+    family: "rtdetr"
+    name: "rtdetr_l"
+    architecture: "RT-DETR-L (Real-Time DEtection TRansformer)"
+    framework: "ultralytics"
+    framework_version: "8.2.0"
+    pretrained_weights: "rtdetr-l.pt"
+    input_size: [640, 640]
+    num_classes: 3
+    parameter_count: 32900000 # ~32.9M
+    recommended_batch_size: 1 # Enforce batch size 1 to prevent OOM
+    gradient_accumulation_factor: 16 # Effective batch size = 16
+    expected_gpu_memory_mb: 3200 # ~3.2GB VRAM with AMP
+    status: "frozen"
+    mitigation_strategies:
+      - "batch_size_reduction_to_1"
+      - "automatic_mixed_precision_amp_true"
+      - "gradient_accumulation_16"
+      - "dataloader_workers_2"
+      - "explicit_cuda_cache_clearing"
+      - "cuda_alloc_conf_expandable_segments"
+    selection_rationale: "Original RT-DETR-L preserved. Restricted to batch size 1, AMP, and proactive garbage collection / CUDA cache clearing to prevent transformer attention OOMs."
