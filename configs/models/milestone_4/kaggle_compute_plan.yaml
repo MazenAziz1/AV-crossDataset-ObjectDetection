@@ -1,0 +1,73 @@
+# Kaggle Compute-Allocation Policy
+# Status: Frozen
+# Purpose: Define how two legitimate compute slots are assigned to detectors
+#          and how RT-DETR multi-session resume is managed.
+
+metadata:
+  milestone: 4
+  status: frozen
+  date_frozen: "2026-06-26"
+
+policy:
+  local_training_allowed: false
+  kaggle_training_only: true
+  local_final_evaluation_preferred: true
+  waymo_allowed_in_milestone_4: false
+
+compute_slots:
+  slot_a:
+    role: "team_member_or_primary_compute_slot"
+    description: "Primary training slot for YOLOv8s, Faster R-CNN, and RetinaNet"
+    assigned_detectors:
+      - yolo
+      - faster_rcnn
+      - retinanet
+  slot_b:
+    role: "team_member_or_secondary_compute_slot"
+    description: "Dedicated training slot for RT-DETR-L with resume capability"
+    assigned_detectors:
+      - rtdetr
+
+session_limits:
+  planned_safe_stop_hours: 10.5
+  checkpoint_before_shutdown: true
+  session_type: "interruptible"
+  rationale: "Kaggle GPU sessions have a ~12h hard limit. We stop at 10.5h to leave
+    margin for graceful save/package before forced termination."
+
+rtdetr_resume_policy:
+  target_epochs: 150
+  checkpoint_every_epochs: 5
+  validation_every_epochs: 5
+  package_resume_after_each_session: true
+  resume_required_if_incomplete: true
+  session_chain_tracking:
+    enabled: true
+    store_session_manifest: true
+    store_resume_state: true
+    validate_epoch_continuity: true
+
+slot_a_training:
+  yolo:
+    target_epochs: 150
+    early_stopping_patience: 20
+    save_every_epochs: 1
+    validation_every_epochs: 1
+  faster_rcnn:
+    target_epochs: 150
+    early_stopping_patience: 20
+    save_every_epochs: 1
+    validation_every_epochs: 1
+  retinanet:
+    target_epochs: 150
+    early_stopping_patience: 20
+    save_every_epochs: 1
+    validation_every_epochs: 1
+
+reproducibility:
+  # Ensures identical training on both slots
+  enforce_deterministic_algorithms: true
+  lock_python_seed: true
+  lock_numpy_seed: true
+  lock_pytorch_seed: true
+  lock_dataloader_workers_seed: true
