@@ -1,0 +1,146 @@
+# Milestone 4 + 5: Kaggle Training Protocol
+**Status**: `FROZEN`
+**Date Frozen**: 2026-06-26
+**Target Platform**: Kaggle GPU Notebooks (P100 / T4 x2)
+
+---
+
+## 1. Purpose
+
+This protocol defines the shared training configuration used by both Kaggle compute slots (Slot A and Slot B). All four detectors share the same training policies for comparability; only per-model batch sizes and VRAM mitigations differ (see `model_registry.yaml`).
+
+---
+
+## 2. Shared Training Configuration
+
+### 2.1 Epochs and Early Stopping
+
+| Parameter | Value |
+|-----------|-------|
+| Target epochs | 150 |
+| Early stopping patience | 20 epochs |
+| Early stopping metric | `mAP@0.50:0.95` |
+| Min delta for improvement | 0.001 |
+
+### 2.2 Effective Batch Size
+
+All four detectors are trained with an **effective batch size of 16** via gradient accumulation:
+
+| Detector | Physical Batch | Gradient Accumulation | Effective Batch |
+|----------|---------------|----------------------|-----------------|
+| YOLOv8s | 2 | 8 | 16 |
+| Faster R-CNN | 1 | 16 | 16 |
+| RetinaNet | 1 | 16 | 16 |
+| RT-DETR-L | 1 | 16 | 16 |
+
+### 2.3 Dataloader Configuration
+
+- **Workers**: 2 per detector.
+- **Seed locked**: DataLoader worker seed enforced for reproducibility.
+- **Resolution**: 640 x 640 (letterboxed).
+- **Shuffle**: Enabled for training, disabled for validation.
+
+---
+
+## 3. Framework-Specific Optimizer Settings
+
+### 3.1 Ultralytics (YOLOv8s, RT-DETR-L)
+
+| Parameter | Value |
+|-----------|-------|
+| Optimizer | AdamW (ultralytics default) |
+| Initial LR (`lr0`) | 0.01 |
+| Final LR factor (`lrf`) | 0.01 |
+| Momentum | 0.937 |
+| Weight decay | 0.0005 |
+| Warmup epochs | 3 |
+| Warmup momentum | 0.8 |
+| Warmup bias LR | 0.1 |
+
+### 3.2 Torchvision (Faster R-CNN, RetinaNet)
+
+| Parameter | Value |
+|-----------|-------|
+| Optimizer | AdamW |
+| Learning rate | 1e-4 |
+| Weight decay | 1e-4 |
+| LR scheduler | CosineAnnealingLR (T_max = 150) |
+| Warmup iterations | 500 |
+
+---
+
+## 4. Augmentation Policy
+
+Training augmentation follows the frozen policy defined in:
+```
+configs/datasets/milestone_3/augmentation.yaml
+```
+
+- **Training**: Augmentation enabled (Albumentations).
+- **Validation**: Augmentation disabled (raw 640x640 letterboxed images).
+- Standard augmentations: random horizontal flip, HSV jitter, translation, scale.
+
+---
+
+## 5. Checkpointing Policy
+
+| Rule | Value |
+|------|-------|
+| Save best checkpoint | Yes (by `mAP@0.50:0.95`) |
+| Save last checkpoint | Yes (every epoch) |
+| Save frequency | Every epoch |
+| Keep last N | 3 most recent checkpoints |
+| Save resume state | Yes (`resume_state.json`) |
+| Checkpoint format | `.pt` (PyTorch) |
+
+---
+
+## 6. Runtime Guard
+
+To prevent forced Kaggle session termination from corrupting checkpoints:
+
+- **Max runtime**: 10.5 hours (safe margin before ~12h hard limit).
+- **Grace period**: 5 minutes for saving and packaging before exit.
+- **Check interval**: Every 300 seconds (5 minutes).
+- **On timeout**: Finish current epoch, save checkpoint, write `resume_state.json`, package outputs, exit cleanly.
+- **Exit status recorded** in session manifest as `runtime_guard_stop`.
+
+---
+
+## 7. Kaggle Dataset Paths
+
+All paths are relative to the Kaggle working directory after unzipping the training package:
+
+```
+/kaggle/working/project/milestone4_kaggle_training_package/
+```
+
+| Resource | Relative Path |
+|----------|--------------|
+| KITTI train images | `data/processed/milestone_3/images/kitti/train` |
+| KITTI val images | `data/processed/milestone_3/images/kitti/val` |
+| COCO train annotations | `data/processed/milestone_3/annotations/coco/kitti_train.json` |
+| COCO val annotations | `data/processed/milestone_3/annotations/coco/kitti_val.json` |
+| YOLO train labels | `data/processed/milestone_3/labels/kitti/train` |
+| YOLO val labels | `data/processed/milestone_3/labels/kitti/val` |
+| Outputs | `outputs/milestone_4/` |
+
+---
+
+## 8. Waymo Exclusion
+
+> **Hard boundary**: No Waymo images, labels, or paths are present in the Kaggle training package. Waymo is excluded from Milestones 4 and 5 and deferred to Milestone 6.
+
+---
+
+## 9. Completion Gate
+
+- [x] Training epochs, early stopping frozen
+- [x] Effective batch size = 16 for all detectors
+- [x] Optimizer settings frozen per framework
+- [x] Augmentation policy linked
+- [x] Checkpointing rules frozen
+- [x] Runtime guard configured (10.5h limit)
+- [x] Kaggle dataset paths documented
+- [x] Waymo exclusion enforced
+- [x] Config file frozen: `configs/models/milestone_4/kaggle_training_policy.yaml`
