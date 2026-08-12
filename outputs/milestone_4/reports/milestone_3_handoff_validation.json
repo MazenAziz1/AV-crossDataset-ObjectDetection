@@ -1,0 +1,244 @@
+{
+  "summary": {
+    "generated_at": "2026-08-12T14:27:30",
+    "project_root": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research",
+    "milestone_3_root": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3",
+    "expected_counts": {
+      "kitti_train": 5985,
+      "kitti_val": 1496
+    },
+    "split_summaries": {
+      "kitti_train": {
+        "split": "kitti_train",
+        "expected_images": 5985,
+        "coco_file": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\coco\\kitti_train.json",
+        "actual_images": 5985,
+        "actual_annotations": 31294,
+        "missing_images": 0,
+        "wrong_size_images": 0,
+        "checked_image_sizes": 5985
+      },
+      "kitti_val": {
+        "split": "kitti_val",
+        "expected_images": 1496,
+        "coco_file": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\coco\\kitti_val.json",
+        "actual_images": 1496,
+        "actual_annotations": 7792,
+        "missing_images": 0,
+        "wrong_size_images": 0,
+        "checked_image_sizes": 1496
+      }
+    },
+    "checks_total": 34,
+    "checks_passed": 34,
+    "error_issues": 0,
+    "warning_issues": 0,
+    "final_status": "PASSED"
+  },
+  "checks": [
+    {
+      "check": "Milestone 3 root exists",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\images",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\images"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\annotations\\coco",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\coco"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\labels",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\labels"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\annotations\\ignore_regions",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\ignore_regions"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\annotations\\excluded_objects",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\excluded_objects"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\manifests",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\manifests"
+    },
+    {
+      "check": "Required directory exists: data\\processed\\milestone_3\\reports",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\reports"
+    },
+    {
+      "check": "Image index built",
+      "passed": true,
+      "severity": "error",
+      "details": "indexed_entries=16954"
+    },
+    {
+      "check": "kitti_train: COCO file exists",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\coco\\kitti_train.json"
+    },
+    {
+      "check": "kitti_train: image count",
+      "passed": true,
+      "severity": "error",
+      "details": "expected=5985, actual=5985"
+    },
+    {
+      "check": "kitti_train: target categories exist",
+      "passed": true,
+      "severity": "error",
+      "details": "categories=['Cyclist', 'Pedestrian', 'Vehicle']"
+    },
+    {
+      "check": "kitti_train: referenced images exist",
+      "passed": true,
+      "severity": "error",
+      "details": "missing=0; examples=[]"
+    },
+    {
+      "check": "kitti_train: images are 640x640",
+      "passed": true,
+      "severity": "error",
+      "details": "wrong_size=0; examples=[]"
+    },
+    {
+      "check": "kitti_val: COCO file exists",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\annotations\\coco\\kitti_val.json"
+    },
+    {
+      "check": "kitti_val: image count",
+      "passed": true,
+      "severity": "error",
+      "details": "expected=1496, actual=1496"
+    },
+    {
+      "check": "kitti_val: target categories exist",
+      "passed": true,
+      "severity": "error",
+      "details": "categories=['Cyclist', 'Pedestrian', 'Vehicle']"
+    },
+    {
+      "check": "kitti_val: referenced images exist",
+      "passed": true,
+      "severity": "error",
+      "details": "missing=0; examples=[]"
+    },
+    {
+      "check": "kitti_val: images are 640x640",
+      "passed": true,
+      "severity": "error",
+      "details": "wrong_size=0; examples=[]"
+    },
+    {
+      "check": "YOLO label files exist locally",
+      "passed": true,
+      "severity": "error",
+      "details": "label_files=8477, expected_at_least=7481"
+    },
+    {
+      "check": "Ignore-region sidecars exist",
+      "passed": true,
+      "severity": "error",
+      "details": "files=3"
+    },
+    {
+      "check": "Excluded-object sidecars exist",
+      "passed": true,
+      "severity": "error",
+      "details": "files=3"
+    },
+    {
+      "check": "Milestone 3 class mapping exists",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\configs\\datasets\\milestone_3\\class_mapping.yaml"
+    },
+    {
+      "check": "Milestone 3 class mapping contains target classes",
+      "passed": true,
+      "severity": "error",
+      "details": "Checked Vehicle, Pedestrian, Cyclist."
+    },
+    {
+      "check": "Milestone 3 audit report indicates passed",
+      "passed": true,
+      "severity": "warning",
+      "details": "matches=['C:\\\\Users\\\\Mazen\\\\Desktop\\\\AAST\\\\Research\\\\Autonomous research\\\\data\\\\processed\\\\milestone_3\\\\reports\\\\final_dataset_audit.json']"
+    },
+    {
+      "check": "Milestone 3 reproducibility report indicates passed",
+      "passed": true,
+      "severity": "warning",
+      "details": "matches=['C:\\\\Users\\\\Mazen\\\\Desktop\\\\AAST\\\\Research\\\\Autonomous research\\\\data\\\\processed\\\\milestone_3\\\\reports\\\\image_preprocessing_report.json', 'C:\\\\Users\\\\Mazen\\\\Desktop\\\\AAST\\\\Research\\\\Autonomous research\\\\data\\\\processed\\\\milestone_3\\\\reports\\\\preprocessing_dry_run.json', 'C:\\\\Users\\\\Mazen\\\\Desktop\\\\AAST\\\\Research\\\\Autonomous research\\\\data\\\\processed\\\\milestone_3\\\\reports\\\\reproducibility_report.json']"
+    },
+    {
+      "check": "Milestone 4 policy exists: experiment_protocol.yaml",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\configs\\models\\milestone_4\\experiment_protocol.yaml"
+    },
+    {
+      "check": "Milestone 4 policy exists: kaggle_training_policy.yaml",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\configs\\models\\milestone_4\\kaggle_training_policy.yaml"
+    },
+    {
+      "check": "Milestone 4 policy exists: kaggle_compute_plan.yaml",
+      "passed": true,
+      "severity": "error",
+      "details": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\configs\\models\\milestone_4\\kaggle_compute_plan.yaml"
+    },
+    {
+      "check": "Waymo disabled in experiment protocol",
+      "passed": true,
+      "severity": "error",
+      "details": "False"
+    },
+    {
+      "check": "Local training disabled in Kaggle training policy",
+      "passed": true,
+      "severity": "error",
+      "details": "False"
+    },
+    {
+      "check": "Kaggle training only enabled",
+      "passed": true,
+      "severity": "error",
+      "details": "True"
+    },
+    {
+      "check": "Compute plan has Slot A and Slot B",
+      "passed": true,
+      "severity": "error",
+      "details": "dict_keys(['slot_a', 'slot_b'])"
+    },
+    {
+      "check": "RT-DETR resume policy exists",
+      "passed": true,
+      "severity": "error",
+      "details": "rtdetr_resume_policy present"
+    }
+  ]
+}

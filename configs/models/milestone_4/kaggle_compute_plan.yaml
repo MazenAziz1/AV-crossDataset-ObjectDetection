@@ -1,0 +1,143 @@
+status: frozen
+milestone: "4_plus_5"
+title: "Kaggle Multi-Session Compute Allocation Plan"
+
+policy:
+  local_machine_role:
+    - source_of_truth
+    - package_preparation
+    - kaggle_output_import
+    - checkpoint_locking
+    - final_kitti_validation
+    - benchmarking
+    - documentation
+    - github_commit
+
+  kaggle_role:
+    - gpu_training
+    - tiny_overfit_runs
+    - pilot_runs
+    - full_training_runs
+    - resume_training_for_long_models
+
+  local_training_allowed: false
+  kaggle_training_only: true
+  local_final_evaluation_preferred: true
+  kaggle_final_evaluation_allowed_if_local_vram_fails: true
+  waymo_allowed_in_milestone_4_plus_5: false
+  waymo_deferred_to_milestone: 6
+
+dataset_policy:
+  training_partition: "kitti_train"
+  validation_partition: "kitti_val"
+  external_partition: "waymo_external_deferred"
+  input_size: [640, 640]
+  seed: 42
+  target_classes:
+    - Vehicle
+    - Pedestrian
+    - Cyclist
+
+compute_slots:
+  slot_a:
+    description: "Kaggle training slot for shorter detector families"
+    assigned_detectors:
+      - yolo
+      - faster_rcnn
+      - retinanet
+    estimated_full_training_hours:
+      yolo: 3.0
+      faster_rcnn: 5.0
+      retinanet: 4.5
+    expected_completion:
+      yolo: "single_session"
+      faster_rcnn: "single_session"
+      retinanet: "single_session"
+
+  slot_b:
+    description: "Kaggle training slot reserved for RT-DETR because it may exceed one session"
+    assigned_detectors:
+      - rtdetr
+    estimated_full_training_hours:
+      rtdetr: 13.0
+    expected_completion:
+      rtdetr: "multi_session_resume_required_or_likely"
+
+session_limits:
+  assumed_kaggle_session_limit_hours: 12.0
+  planned_safe_stop_hours: 10.5
+  checkpoint_before_shutdown: true
+  package_outputs_before_shutdown: true
+  save_session_manifest: true
+
+checkpointing_policy:
+  save_best: true
+  save_last: true
+  save_resume_state: true
+  save_every_epochs: 5
+  keep_last_n_checkpoints: 3
+  record_sha256: true
+
+rtdetr_resume_policy:
+  total_target_epochs: 150
+  expected_session_count: 2
+  save_every_epochs: 5
+  validation_every_epochs: 5
+  runtime_guard_hours: 10.5
+  stop_after_current_epoch: true
+  package_resume_after_each_session: true
+  resume_required_if_incomplete: true
+  resume_mode: "latest_checkpoint"
+
+  example_resume_chain:
+    session_1:
+      start_epoch: 0
+      expected_end_epoch: "approximately_100_or_until_runtime_guard"
+      exit_reason: "runtime_guard_stop_or_completed"
+    session_2:
+      resume_from: "latest_checkpoint_from_session_1"
+      expected_end_epoch: 150
+      exit_reason: "completed"
+
+training_schedule_recommendation:
+  slot_a_order:
+    - yolo
+    - faster_rcnn
+    - retinanet
+  slot_b_order:
+    - rtdetr_session_1
+    - rtdetr_session_2_if_needed
+
+required_kaggle_outputs:
+  slot_a:
+    - yolo_checkpoints
+    - faster_rcnn_checkpoints
+    - retinanet_checkpoints
+    - training_histories
+    - training_reports
+    - checkpoint_manifests
+    - kaggle_session_manifest
+
+  slot_b:
+    - rtdetr_checkpoints
+    - rtdetr_resume_state
+    - rtdetr_training_history
+    - rtdetr_training_report
+    - rtdetr_checkpoint_manifest
+    - rtdetr_session_manifest
+
+local_import_requirements:
+  - import_slot_a_outputs
+  - import_slot_b_outputs
+  - validate_checkpoint_hashes
+  - validate_rtdetr_resume_chain
+  - lock_final_checkpoints
+  - run_local_kitti_validation
+  - run_local_benchmarking
+
+prohibited_actions:
+  - upload_waymo_to_kaggle_for_milestone_4_plus_5
+  - tune_models_using_waymo
+  - select_checkpoints_using_waymo
+  - run_milestone_6_external_validation_before_checkpoint_locking
+  - commit_model_weight_files_to_git

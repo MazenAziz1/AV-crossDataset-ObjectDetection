@@ -1,0 +1,105 @@
+status: frozen
+milestone: "4_plus_5"
+title: "KITTI In-Domain Evaluation Policy"
+
+evaluation_scope:
+  final_partition: "kitti_val"
+  expected_images: 1496
+  external_waymo_evaluation_allowed: false
+  external_waymo_evaluation_deferred_to_milestone: 6
+
+metric_engine:
+  authoritative_engine: "scripts/milestone_4/evaluation/evaluation_core.py"
+  framework_native_metrics_are_secondary: true
+  canonical_predictions_required: true
+
+ap_metrics:
+  map_50_95:
+    enabled: true
+    iou_thresholds: [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+  ap50:
+    enabled: true
+    iou_threshold: 0.50
+  ap75:
+    enabled: true
+    iou_threshold: 0.75
+
+per_class_metrics:
+  enabled: true
+  classes:
+    - Vehicle
+    - Pedestrian
+    - Cyclist
+
+operating_point_metrics:
+  enabled: true
+  operating_threshold_strategy: "fixed_common_threshold"
+  operating_threshold: 0.25
+  metrics:
+    - precision
+    - recall
+    - f1_score
+    - true_positives
+    - false_positives
+    - false_negatives
+
+size_metrics:
+  enabled: true
+  categories:
+    small:
+      area_range_pixels_squared: [0, 1024]
+    medium:
+      area_range_pixels_squared: [1024, 9216]
+    large:
+      area_range_pixels_squared: [9216, 100000000]
+
+confidence_policy:
+  ap_confidence_threshold: 0.001
+  operating_threshold: 0.25
+  save_precision_recall_curves: true
+
+matching_policy:
+  box_format: "xyxy"
+  coordinate_space: "processed_640x640_image_space"
+  max_detections_per_image: 100
+  duplicate_detection_policy: "highest_confidence_prediction_matches_first"
+
+ignore_region_policy:
+  dontcare_regions:
+    enabled: true
+    suppress_false_positives: true
+    min_overlap_with_dontcare: 0.5
+  excluded_objects:
+    enabled: true
+    suppress_false_positives: false
+    examples:
+      - Misc
+      - Tram
+
+reported_outputs:
+  - metrics_json
+  - per_class_ap_csv
+  - operating_point_metrics_csv
+  - size_metrics_csv
+  - pr_curves_csv
+  - prediction_csv
+  - evaluation_manifest_csv
+  - evaluation_report_json
+
+required_metrics:
+  - map_50_95
+  - ap50
+  - ap75
+  - vehicle_ap
+  - pedestrian_ap
+  - cyclist_ap
+  - precision
+  - recall
+  - f1_score
+  - small_object_ap
+  - medium_object_ap
+  - large_object_ap
+  - detections_per_image
+  - false_positives_per_image
+  - dontcare_suppression_count
+  - confusion_summary

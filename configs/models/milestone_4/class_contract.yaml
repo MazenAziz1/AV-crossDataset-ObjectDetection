@@ -1,0 +1,73 @@
+status: frozen
+milestone: "4_plus_5"
+title: "Class Contract for Milestone 4 + 5"
+
+target_classes:
+  - class_name: Vehicle
+    canonical_id: 1
+    yolo_id: 0
+  - class_name: Pedestrian
+    canonical_id: 2
+    yolo_id: 1
+  - class_name: Cyclist
+    canonical_id: 3
+    yolo_id: 2
+
+torchvision_contract:
+  background:
+    id: 0
+    name: Background
+  foreground_classes:
+    - id: 1
+      name: Vehicle
+    - id: 2
+      name: Pedestrian
+    - id: 3
+      name: Cyclist
+  num_classes_including_background: 4
+  num_foreground_classes: 3
+
+yolo_contract:
+  foreground_classes:
+    - id: 0
+      name: Vehicle
+    - id: 1
+      name: Pedestrian
+    - id: 2
+      name: Cyclist
+  num_classes: 3
+
+canonical_prediction_schema:
+  - image_id
+  - source_image_id
+  - file_name
+  - model_family
+  - architecture
+  - experiment_id
+  - checkpoint_hash
+  - class_id
+  - class_name
+  - confidence
+  - xmin
+  - ymin
+  - xmax
+  - ymax
+  - image_width
+  - image_height
+  - partition
+
+class_mapping_rules:
+  yolo_to_canonical:
+    0: 1
+    1: 2
+    2: 3
+  torchvision_to_canonical:
+    1: 1
+    2: 2
+    3: 3
+
+forbidden_training_classes:
+  - DontCare
+  - Misc
+  - Tram
+  - Sign

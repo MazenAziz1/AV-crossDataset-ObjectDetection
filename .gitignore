@@ -92,3 +92,20 @@ fiftyone/
 # Temporary files
 *.tmp
 *.log
+# Milestone 4 large model outputs
+outputs/milestone_4/checkpoints/
+outputs/milestone_4/pretrained/
+outputs/milestone_4/logs/
+outputs/milestone_4/predictions/raw/
+outputs/milestone_4/runtime/
+outputs/milestone_4/cache/
+outputs/milestone_4/kaggle_packages/
+outputs/milestone_4/kaggle_downloads/
+
+# Model files
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+

@@ -1,0 +1,64 @@
+status: frozen
+milestone: "4_plus_5"
+title: "Kaggle Training Policy"
+
+execution_policy:
+  primary_training_environment: "kaggle"
+  local_training_allowed: false
+  kaggle_training_only: true
+  local_machine_is_source_of_truth: true
+  local_final_evaluation_preferred: true
+
+kaggle_paths:
+  project_root: "/kaggle/working/project/milestone4_kaggle_training_package"
+  output_root: "/kaggle/working/project/milestone4_kaggle_training_package/outputs/milestone_4"
+  dataset_root: "/kaggle/working/project/milestone4_kaggle_training_package/data/processed/milestone_3"
+
+runtime_policy:
+  assumed_session_limit_hours: 12.0
+  safe_runtime_guard_hours: 10.5
+  stop_after_current_epoch: true
+  save_before_exit: true
+  package_on_exit: true
+
+checkpointing:
+  save_best: true
+  save_last: true
+  save_every_epochs: 5
+  keep_last_n_checkpoints: 3
+  save_resume_state: true
+  record_sha256: true
+
+resume_policy:
+  resume_supported: true
+  resume_mode: "latest_checkpoint"
+  resume_state_required_for_rtdetr: true
+  session_manifest_required: true
+
+slot_policy:
+  slot_a:
+    detectors:
+      - yolo
+      - faster_rcnn
+      - retinanet
+  slot_b:
+    detectors:
+      - rtdetr
+
+output_packaging_policy:
+  package_checkpoints: true
+  package_logs: true
+  package_metrics: true
+  package_reports: true
+  package_manifests: true
+  package_figures: true
+  package_visual_checks: true
+
+git_policy:
+  commit_checkpoints: false
+  commit_pretrained_weights: false
+  commit_logs: false
+  commit_kaggle_zip_packages: false
+  commit_metrics_and_reports: true
+  commit_manifests: true
+  commit_documentation: true

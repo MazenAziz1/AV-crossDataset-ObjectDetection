@@ -1,0 +1,73 @@
+status: frozen
+milestone: "4_plus_5"
+title: "Kaggle Upload Set Definition"
+
+purpose: "Define the exact local files and directories that are allowed to enter the Kaggle training package."
+
+allowed_upload_groups:
+  source_code:
+    include:
+      - scripts/milestone_4
+    exclude:
+      - outputs
+      - checkpoints
+      - pretrained weights
+      - kaggle downloaded packages
+
+  configs:
+    include:
+      - configs/models/milestone_4
+      - configs/datasets/milestone_3
+    exclude:
+      - local secrets
+      - credentials
+
+  dataset:
+    include:
+      - data/processed/milestone_3/images
+      - data/processed/milestone_3/annotations/coco
+      - data/processed/milestone_3/labels
+      - data/processed/milestone_3/annotations/ignore_regions
+      - data/processed/milestone_3/annotations/excluded_objects
+      - data/processed/milestone_3/manifests
+      - data/processed/milestone_3/reports
+    exclude:
+      - Waymo raw data
+      - original KITTI raw ZIP files
+      - Milestone 6 external validation packages
+
+  documentation:
+    include:
+      - docs/milestone_4
+    exclude:
+      - private notes
+      - temporary reports
+
+dataset_policy:
+  include_kitti_train: true
+  include_kitti_val: true
+  include_waymo_external: false
+  waymo_deferred_to_milestone: 6
+
+training_policy:
+  kaggle_training_only: true
+  local_final_evaluation_preferred: true
+  local_training_allowed: false
+
+prohibited_uploads:
+  - model checkpoints
+  - pretrained model weights
+  - Kaggle output ZIP files
+  - secrets
+  - credentials
+  - raw Waymo data
+  - Waymo external validation subset
+  - Milestone 6 evaluation outputs
+
+required_before_packaging:
+  - configs/models/milestone_4/kaggle_compute_plan.yaml
+  - configs/models/milestone_4/experiment_protocol.yaml
+  - configs/models/milestone_4/class_contract.yaml
+  - configs/models/milestone_4/evaluation_policy.yaml
+  - configs/models/milestone_4/kaggle_training_policy.yaml
+  - outputs/milestone_4/reports/milestone_3_handoff_validation.json

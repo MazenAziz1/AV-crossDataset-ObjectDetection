@@ -1,0 +1,87 @@
+status: frozen
+milestone: "4_plus_5"
+title: "Experiment Protocol for Kaggle-Based Training and KITTI In-Domain Evaluation"
+
+project_policy:
+  local_machine_is_source_of_truth: true
+  kaggle_used_for_training_only: true
+  local_full_training_allowed: false
+  local_final_kitti_evaluation_preferred: true
+  kaggle_final_evaluation_allowed_if_local_vram_fails: true
+
+scope:
+  objective: "Train and compare four object detector families on KITTI under a controlled and reproducible protocol."
+  training_dataset: "KITTI train"
+  internal_validation_dataset: "KITTI validation"
+  external_validation_dataset: "Waymo external validation deferred to Milestone 6"
+  waymo_allowed_in_milestone_4_plus_5: false
+  input_size: [640, 640]
+  seed: 42
+
+detectors:
+  - yolo
+  - faster_rcnn
+  - retinanet
+  - rtdetr
+
+dataset_roles:
+  kitti_train:
+    role: "model optimization"
+    expected_images: 5985
+    allowed_for_training: true
+    allowed_for_checkpoint_selection: false
+
+  kitti_val:
+    role: "internal validation, checkpoint selection, and final in-domain evaluation"
+    expected_images: 1496
+    allowed_for_training: false
+    allowed_for_checkpoint_selection: true
+
+  waymo_external:
+    role: "external validation only in Milestone 6"
+    allowed_in_this_milestone: false
+    allowed_for_training: false
+    allowed_for_checkpoint_selection: false
+    allowed_for_hyperparameter_tuning: false
+
+linked_policy_files:
+  class_contract: "configs/models/milestone_4/class_contract.yaml"
+  evaluation_policy: "configs/models/milestone_4/evaluation_policy.yaml"
+  kaggle_training_policy: "configs/models/milestone_4/kaggle_training_policy.yaml"
+  kaggle_compute_plan: "configs/models/milestone_4/kaggle_compute_plan.yaml"
+
+pretrained_weight_policy:
+  pretrained_initialization_allowed: true
+  pretrained_weights_must_be_recorded: true
+  pretrained_weights_must_be_hashed: true
+  pretrained_weights_committed_to_git: false
+
+augmentation_policy:
+  training_augmentation_allowed: true
+  validation_augmentation_allowed: false
+  external_validation_augmentation_allowed: false
+  augmentation_source: "Milestone 3 online augmentation policy"
+  permanent_augmented_dataset_allowed: false
+
+checkpoint_selection_policy:
+  selection_dataset: "kitti_val"
+  primary_selection_metric: "map_50_95"
+  waymo_checkpoint_selection_allowed: false
+  selected_checkpoints_must_be_hashed: true
+  final_checkpoints_must_be_locked: true
+
+reproducibility_policy:
+  record_git_commit: true
+  record_config_hashes: true
+  record_dataset_manifest_hashes: true
+  record_environment_snapshot: true
+  record_training_history: true
+  record_checkpoint_hashes: true
+  record_kaggle_session_manifests: true
+
+prohibited_actions:
+  - "using Waymo during Milestone 4 + 5"
+  - "training locally as the primary training environment"
+  - "selecting checkpoints using external validation"
+  - "tuning hyperparameters using Waymo"
+  - "committing model weights to Git"
