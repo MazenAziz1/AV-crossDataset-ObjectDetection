@@ -1,12 +1,12 @@
-# Model Registry Configuration (Original Architectures with 4GB VRAM Mitigations)
+# Model Registry Configuration (Standard Training on T4 16GB)
 # Status: Frozen
 
 metadata:
   milestone: 4
   status: frozen
   date_frozen: "2026-06-24"
-  hardware_target: "NVIDIA GeForce RTX 3050 Laptop GPU (4 GB VRAM)"
-  memory_policy: "Extreme VRAM optimization enabled"
+  hardware_target: "NVIDIA Tesla T4 (16 GB VRAM)"
+  memory_policy: "Full-batch training with AMP"
 
 models:
   yolo:
@@ -19,16 +19,15 @@ models:
     input_size: [640, 640]
     num_classes: 3
     parameter_count: 11166822 # ~11.2M
-    recommended_batch_size: 2
-    gradient_accumulation_factor: 8 # Effective batch size = 16
-    expected_gpu_memory_mb: 2300 # ~2.3GB VRAM with AMP
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 5500 # ~5.5GB with AMP
     status: "frozen"
+    optimizer: "auto (SGD)"
+    learning_rate: 0.01
+    weight_decay: 0.0005
     mitigation_strategies:
-      - "batch_size_reduction_to_2"
       - "automatic_mixed_precision_amp_true"
-      - "gradient_accumulation_8"
-      - "dataloader_workers_2"
-    selection_rationale: "Original YOLOv8s preserved. Reduced batch size from 16 to 2 and enabled gradient accumulation to fit within 4GB VRAM."
+    selection_rationale: "YOLOv8s SGD training with batch=32 at 640x640 on T4 16GB."
 
   faster_rcnn:
     family: "faster_rcnn"
@@ -40,19 +39,16 @@ models:
     input_size: [640, 640]
     num_classes: 4 # 3 targets + 1 background
     parameter_count: 41755028 # ~41.8M
-    recommended_batch_size: 1
-    gradient_accumulation_factor: 16 # Effective batch size = 16
-    expected_gpu_memory_mb: 2800 # ~2.8GB VRAM with checkpointing & AMP
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 14000 # ~14GB with AMP + gradient checkpointing
     status: "frozen"
+    optimizer: "SGD"
+    learning_rate: 0.02
+    weight_decay: 0.0001
     mitigation_strategies:
-      - "batch_size_reduction_to_1"
       - "automatic_mixed_precision_amp_true"
-      - "gradient_accumulation_16"
       - "gradient_checkpointing_on_backbone"
-      - "freeze_backbone_stages_1_to_3" # trainable_backbone_layers = 2
-      - "dataloader_workers_2"
-      - "cuda_alloc_conf_expandable_segments"
-    selection_rationale: "Original Faster R-CNN ResNet-50 preserved. Constrained to batch size 1, enabled gradient checkpointing, and froze early backbone stages to prevent OOM."
+    selection_rationale: "Faster R-CNN ResNet-50 SGD training with batch=32, fully trainable backbone, gradient checkpointing for memory safety on T4 16GB."
 
   retinanet:
     family: "retinanet"
@@ -64,19 +60,15 @@ models:
     input_size: [640, 640]
     num_classes: 4 # 3 targets + 1 background
     parameter_count: 34015332 # ~34.0M
-    recommended_batch_size: 1
-    gradient_accumulation_factor: 16 # Effective batch size = 16
-    expected_gpu_memory_mb: 2900 # ~2.9GB VRAM with checkpointing & AMP
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 9500 # ~9.5GB with AMP
     status: "frozen"
+    optimizer: "SGD"
+    learning_rate: 0.02
+    weight_decay: 0.0001
     mitigation_strategies:
-      - "batch_size_reduction_to_1"
       - "automatic_mixed_precision_amp_true"
-      - "gradient_accumulation_16"
-      - "gradient_checkpointing_on_backbone"
-      - "freeze_backbone_stages_1_to_3" # trainable_backbone_layers = 2
-      - "dataloader_workers_2"
-      - "cuda_alloc_conf_expandable_segments"
-    selection_rationale: "Original RetinaNet ResNet-50 V2 preserved. Optimized using batch size 1 and backbone gradient checkpointing."
+    selection_rationale: "RetinaNet ResNet-50 V2 SGD training with batch=32, fully trainable backbone on T4 16GB."
 
   rtdetr:
     family: "rtdetr"
@@ -88,15 +80,12 @@ models:
     input_size: [640, 640]
     num_classes: 3
     parameter_count: 32900000 # ~32.9M
-    recommended_batch_size: 1 # Enforce batch size 1 to prevent OOM
-    gradient_accumulation_factor: 16 # Effective batch size = 16
-    expected_gpu_memory_mb: 3200 # ~3.2GB VRAM with AMP
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 12000 # ~12GB with AMP
     status: "frozen"
+    optimizer: "auto (AdamW)"
+    learning_rate: 0.0001
+    weight_decay: 0.0001
     mitigation_strategies:
-      - "batch_size_reduction_to_1"
       - "automatic_mixed_precision_amp_true"
-      - "gradient_accumulation_16"
-      - "dataloader_workers_2"
-      - "explicit_cuda_cache_clearing"
-      - "cuda_alloc_conf_expandable_segments"
-    selection_rationale: "Original RT-DETR-L preserved. Restricted to batch size 1, AMP, and proactive garbage collection / CUDA cache clearing to prevent transformer attention OOMs."
+    selection_rationale: "RT-DETR-L AdamW training with batch=32, proper transformer LR on T4 16GB."

@@ -1,0 +1,67 @@
+# RetinaNet ResNet-50-FPN V2 Training Configuration
+# Status: Frozen
+# Slot: A | Framework: Torchvision | Hardware: NVIDIA T4 16GB
+
+metadata:
+  milestone: 4
+  step: 11
+  status: frozen
+  date_frozen: "2026-08-11"
+
+model:
+  family: "retinanet"
+  name: "retinanet_resnet50_fpn_v2"
+  architecture: "RetinaNet with ResNet-50-FPN V2 backbone"
+  framework: "torchvision"
+  pretrained_weights: "RetinaNet_ResNet50_FPN_V2_Weights.DEFAULT"
+  input_size: [640, 640]
+  num_classes: 4
+  class_mapping:
+    0: "background"
+    1: "Vehicle"
+    2: "Pedestrian"
+    3: "Cyclist"
+
+slot:
+  assignment: "slot_a"
+  role: "primary"
+
+training:
+  target_epochs: 200
+  early_stopping_patience: 20
+  batch_size: 4
+  gradient_accumulation_factor: 8
+  effective_batch_size: 32
+  dataloader_workers: 4
+  amp: true
+  trainable_backbone_layers: 5
+
+  optimizer:
+    name: "SGD"
+    learning_rate: 0.02
+    momentum: 0.9
+    weight_decay: 0.0001
+    lr_scheduler: "CosineAnnealingLR"
+    lr_scheduler_t_max: 200
+    warmup_epochs: 5
+
+augmentation:
+  config: "configs/datasets/milestone_3/augmentation.yaml"
+
+vram:
+  target_hardware: "NVIDIA Tesla T4 16GB"
+  expected_gpu_memory_mb: 9500
+  mitigations:
+    - "automatic_mixed_precision_amp_true"
+
+run_types:
+  tiny_overfit:
+    epochs: 5
+    subset_size: 10
+    description: "Verify loss decreases to near-zero"
+  pilot:
+    epochs: 10
+    description: "Check memory, epoch time, loss stability"
+  final:
+    epochs: 200
+    description: "Full training with early stopping"

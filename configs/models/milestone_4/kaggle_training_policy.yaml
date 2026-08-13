@@ -2,6 +2,7 @@
 # Status: Frozen
 # Purpose: Define shared training hyperparameters, checkpointing rules,
 #          runtime guard behavior, and Kaggle-specific environment paths.
+# Hardware: NVIDIA Tesla T4 16GB
 
 metadata:
   milestone: 4
@@ -16,7 +17,7 @@ environment:
 
 training:
   shared:
-    target_epochs: 150
+    target_epochs: 200
     early_stopping_patience: 20
     early_stopping_metric: "mAP_50_95"
     early_stopping_min_delta: 0.001
@@ -25,34 +26,37 @@ training:
   ultralytics_framework:
     applies_to: ["yolo", "rtdetr"]
     batch_size:
-      yolo: 2
-      rtdetr: 1
-    gradient_accumulation_factor:
-      yolo: 8
-      rtdetr: 16
-    effective_batch_size: 16
-    dataloader_workers: 2
-    optimizer: "auto"  # Ultralytics default (AdamW)
-    lr0: 0.01           # Initial learning rate
+      yolo: 32
+      rtdetr: 32
+    effective_batch_size: 32
+    dataloader_workers: 4
+    optimizer: "auto"  # Ultralytics auto (SGD for YOLO, AdamW for RT-DETR)
+    lr0:
+      yolo: 0.01       # SGD cosine schedule (Ultralytics YOLO default)
+      rtdetr: 0.0001   # AdamW for transformer detector
     lrf: 0.01           # Final learning rate factor (lr0 * lrf)
-    momentum: 0.937
-    weight_decay: 0.0005
+    momentum:
+      yolo: 0.937      # SGD momentum (YOLO standard)
+      rtdetr: 0.9      # not used by AdamW, kept for config compatibility
+    weight_decay:
+      yolo: 0.0005     # SGD weight decay (YOLO standard)
+      rtdetr: 0.0001   # AdamW weight decay (transformer standard)
     warmup_epochs: 3
     warmup_momentum: 0.8
     warmup_bias_lr: 0.1
 
   torchvision_framework:
     applies_to: ["faster_rcnn", "retinanet"]
-    batch_size: 1
-    gradient_accumulation_factor: 16
-    effective_batch_size: 16
-    dataloader_workers: 2
-    optimizer: "AdamW"
-    learning_rate: 0.0001
-    weight_decay: 0.0001
+    batch_size: 32
+    effective_batch_size: 32
+    dataloader_workers: 4
+    optimizer: "SGD"
+    learning_rate: 0.02    # SGD with batch=32, linear scaling from reference
+    momentum: 0.9           # Standard SGD momentum for detection
+    weight_decay: 0.0001    # Standard L2 regularization
     lr_scheduler: "CosineAnnealingLR"
-    lr_scheduler_t_max: 150
-    warmup_iterations: 500
+    lr_scheduler_t_max: 200
+    warmup_epochs: 5    # Linear warmup for SGD stability (~940 iters at batch=32)
 
 augmentation:
   training:

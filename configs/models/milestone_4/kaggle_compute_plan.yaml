@@ -36,7 +36,7 @@ session_limits:
     margin for graceful save/package before forced termination."
 
 rtdetr_resume_policy:
-  target_epochs: 150
+  target_epochs: 200
   checkpoint_every_epochs: 5
   validation_every_epochs: 5
   package_resume_after_each_session: true
@@ -49,17 +49,17 @@ rtdetr_resume_policy:
 
 slot_a_training:
   yolo:
-    target_epochs: 150
+    target_epochs: 200
     early_stopping_patience: 20
     save_every_epochs: 1
     validation_every_epochs: 1
   faster_rcnn:
-    target_epochs: 150
+    target_epochs: 200
     early_stopping_patience: 20
     save_every_epochs: 1
     validation_every_epochs: 1
   retinanet:
-    target_epochs: 150
+    target_epochs: 200
     early_stopping_patience: 20
     save_every_epochs: 1
     validation_every_epochs: 1
