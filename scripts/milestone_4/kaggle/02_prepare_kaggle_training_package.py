@@ -2,7 +2,7 @@ import os
 import sys
 import json
 import csv
-import zipfile
+import tarfile
 import hashlib
 from pathlib import Path
 from datetime import datetime, timezone
@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 
 def compute_sha256(file_path):
     sha256 = hashlib.sha256()
-    with open(file_path, 'rb') as f:
+    with open(file_path, "rb") as f:
         while True:
             data = f.read(65536)
             if not data:
@@ -34,7 +34,7 @@ def main():
     os.makedirs(manifests_dir, exist_ok=True)
 
     package_name = "milestone4_kaggle_training_package"
-    zip_path = package_dir / f"{package_name}.zip"
+    tar_path = package_dir / f"{package_name}.tar.gz"
     manifest_csv_path = manifests_dir / "kaggle_training_package_manifest.csv"
     report_json_path = reports_dir / "kaggle_training_package_report.json"
     issues_csv_path = reports_dir / "kaggle_training_package_issues.csv"
@@ -67,13 +67,9 @@ def main():
             "severity": severity,
         })
 
-    # --- Inclusion Rules ---
-
     include_rules = [
-        # Configs
         ("configs/models/milestone_4/", "configs/models/milestone_4/", "*.yaml"),
         ("configs/datasets/milestone_3/", "configs/datasets/milestone_3/", "*.yaml"),
-        # Scripts
         ("scripts/__init__.py", "scripts/", None),
         ("scripts/milestone_4/", "scripts/milestone_4/", "*.py"),
         ("scripts/milestone_4/kaggle/", "scripts/milestone_4/kaggle/", "*.py"),
@@ -81,51 +77,38 @@ def main():
         ("scripts/milestone_4/trainers/", "scripts/milestone_4/trainers/", "*.py"),
         ("scripts/milestone_4/evaluation/", "scripts/milestone_4/evaluation/", "*.py"),
         ("scripts/milestone_4/utilities/", "scripts/milestone_4/utilities/", "*.py"),
-        # KITTI Data only
         ("data/processed/milestone_3/images/kitti/", "data/processed/milestone_3/images/kitti/", "*.*"),
         ("data/processed/milestone_3/labels/kitti/", "data/processed/milestone_3/labels/kitti/", "*.*"),
         ("data/processed/milestone_3/annotations/coco/", "data/processed/milestone_3/annotations/coco/", "kitti_*.json"),
         ("data/processed/milestone_3/annotations/ignore_regions/", "data/processed/milestone_3/annotations/ignore_regions/", "kitti_*.json"),
         ("data/processed/milestone_3/annotations/excluded_objects/", "data/processed/milestone_3/annotations/excluded_objects/", "kitti_*.json"),
-        # Docs
         ("docs/milestone_4/", "docs/milestone_4/", "*.md"),
-        # Requirements
         ("requirements.txt", "", None),
     ]
 
-    # --- Hard Exclusion Patterns (only for data files, not configs/scripts/docs) ---
     exclude_patterns = [
-        "waymo",
-        "Waymo",
-        ".git",
-        ".venv",
-        "__pycache__",
-        ".pyc",
-        "pretrained",
-        "checkpoints",
-        "kaggle_packages",
-        "kaggle_downloads",
-        ".zip",
-        ".pt",
-        ".pth",
+        "waymo", "Waymo",
+        ".git", ".venv", "__pycache__", ".pyc",
+        "pretrained", "checkpoints",
+        "kaggle_packages", "kaggle_downloads",
+        ".pt", ".pth",
+        "02_prepare_kaggle_training_package.py",
     ]
 
     def is_excluded(rel_path_str):
         lower = rel_path_str.lower()
         if lower.endswith("__init__.py"):
             return True
-        if "kaggle/" in lower and "02_prepare_kaggle_training_package" in lower:
+        if "kaggle/" in lower and "02_prepare" in lower:
             return True
         if "/configs/" in lower or "/scripts/" in lower or "/docs/" in lower:
-            if lower.endswith("__init__.py"):
-                return True
             return False
         for pat in exclude_patterns:
             if pat.lower() in lower:
                 return True
         return False
 
-    def add_to_zip(zf, local_path, arcname):
+    def add_to_tar(tf, local_path, arcname):
         arcname_str = str(arcname).replace("\\", "/")
         if is_excluded(arcname_str):
             stats["waymo_files_found_locally"] += 1
@@ -139,7 +122,7 @@ def main():
         stats["total_files"] += 1
         stats["total_size_bytes"] += file_size
 
-        zf.write(local_path, arcname_str)
+        tf.add(local_path, arcname=arcname_str)
 
         if "images/kitti/train" in arcname_str:
             stats["kitti_images_train"] += 1
@@ -169,16 +152,13 @@ def main():
             "file_size_bytes": file_size,
             "sha256_hash": sha256_hash,
         })
-
-        print(f"  Added: {arcname_str}")
         return True
 
-    # --- Build the ZIP ---
-    print(f"\nCreating package: {zip_path}\n")
+    print(f"\nCreating package: {tar_path}\n")
 
     package_prefix = Path(package_name)
 
-    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+    with tarfile.open(tar_path, "w:gz") as tf:
         for source_pattern, archive_prefix, file_pattern in include_rules:
             source_path = project_root / source_pattern
 
@@ -188,7 +168,7 @@ def main():
 
             if source_path.is_file():
                 arcname = package_prefix / archive_prefix / source_path.name
-                add_to_zip(zf, source_path, arcname)
+                add_to_tar(tf, source_path, arcname)
 
             elif source_path.is_dir():
                 if file_pattern:
@@ -198,14 +178,12 @@ def main():
 
                 for file_path in matched:
                     if file_path.is_file():
-                        rel = file_path.relative_to(project_root)
                         if archive_prefix:
                             arcname = package_prefix / archive_prefix / file_path.relative_to(source_path)
                         else:
-                            arcname = package_prefix / rel
-                        add_to_zip(zf, file_path, arcname)
+                            arcname = package_prefix / file_path.relative_to(project_root)
+                        add_to_tar(tf, file_path, arcname)
 
-    # --- Write Manifest ---
     with open(manifest_csv_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["archive_path", "source_path", "file_size_bytes", "sha256_hash"])
         writer.writeheader()
@@ -213,81 +191,68 @@ def main():
             writer.writerow(row)
     print(f"\nManifest saved: {manifest_csv_path}")
 
-    # --- Write Issues ---
     with open(issues_csv_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["check_name", "file_path", "issue_description", "severity"])
         writer.writeheader()
         for issue in issues:
             writer.writerow(issue)
-    if issues:
-        print(f"Issues saved: {issues_csv_path}")
 
-    # --- Validate and Write Report ---
     expected_kitti_train = 5985
     expected_kitti_val = 1496
     expected_coco = 2
 
-    # Post-build ZIP audit
-    zip_waymo_count = 0
-    zip_weight_count = 0
-    with zipfile.ZipFile(zip_path, "r") as audit_zf:
-        for entry_name in audit_zf.namelist():
+    tar_waymo_count = 0
+    tar_weight_count = 0
+    with tarfile.open(tar_path, "r:gz") as audit_tf:
+        for entry_name in audit_tf.getnames():
             entry_lower = entry_name.lower()
             if "waymo" in entry_lower and "/data/" in entry_lower:
-                zip_waymo_count += 1
-                log_issue("ZIP Waymo Check", entry_name, "Waymo data file found in package")
+                tar_waymo_count += 1
+                log_issue("TAR Waymo Check", entry_name, "Waymo data file found in package")
             if entry_name.endswith((".pt", ".pth")):
-                zip_weight_count += 1
-                log_issue("ZIP Weight Check", entry_name, "Pretrained weight file found in package")
+                tar_weight_count += 1
+                log_issue("TAR Weight Check", entry_name, "Pretrained weight file found in package")
 
     validation_checks = {
         "kitti_train_images_count": {
-            "expected": expected_kitti_train,
-            "actual": stats["kitti_images_train"],
+            "expected": expected_kitti_train, "actual": stats["kitti_images_train"],
             "passed": stats["kitti_images_train"] == expected_kitti_train,
         },
         "kitti_val_images_count": {
-            "expected": expected_kitti_val,
-            "actual": stats["kitti_images_val"],
+            "expected": expected_kitti_val, "actual": stats["kitti_images_val"],
             "passed": stats["kitti_images_val"] == expected_kitti_val,
         },
         "coco_annotations_count": {
-            "expected": expected_coco,
-            "actual": stats["coco_annotations"],
+            "expected": expected_coco, "actual": stats["coco_annotations"],
             "passed": stats["coco_annotations"] == expected_coco,
         },
-        "zip_waymo_data_files": {
-            "expected": 0,
-            "actual": zip_waymo_count,
-            "passed": zip_waymo_count == 0,
+        "tar_waymo_data_files": {
+            "expected": 0, "actual": tar_waymo_count,
+            "passed": tar_waymo_count == 0,
         },
-        "zip_pretrained_weights": {
-            "expected": 0,
-            "actual": zip_weight_count,
-            "passed": zip_weight_count == 0,
+        "tar_pretrained_weights": {
+            "expected": 0, "actual": tar_weight_count,
+            "passed": tar_weight_count == 0,
         },
     }
 
     for check, detail in validation_checks.items():
         print(f"  {check}: expected={detail['expected']} actual={detail['actual']} -> {'PASSED' if detail['passed'] else 'FAILED'}")
         if not detail["passed"]:
-            log_issue(check, zip_path, f"Expected {detail['expected']}, got {detail['actual']}")
+            log_issue(check, tar_path, f"Expected {detail['expected']}, got {detail['actual']}")
 
-    zip_size_mb = round(os.path.getsize(zip_path) / (1024 * 1024), 2)
+    tar_size_mb = round(os.path.getsize(tar_path) / (1024 * 1024), 2)
     all_checks_passed = all(v["passed"] for v in validation_checks.values())
     errors_count = len([i for i in issues if i["severity"] == "ERROR"])
     final_status = "PASSED" if (all_checks_passed and errors_count == 0) else "FAILED"
 
     report = {
-        "milestone": 4,
-        "step": 6,
+        "milestone": 4, "step": 6,
         "purpose": "Create self-contained Kaggle training package with KITTI data only",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "package": {
-            "path": str(zip_path),
-            "size_mb": zip_size_mb,
-            "total_files": stats["total_files"],
-            "total_size_bytes": stats["total_size_bytes"],
+            "path": str(tar_path), "size_mb": tar_size_mb,
+            "total_files": stats["total_files"], "total_size_bytes": stats["total_size_bytes"],
         },
         "content_counts": {
             "kitti_images_train": stats["kitti_images_train"],
@@ -302,10 +267,8 @@ def main():
             "other_files": stats["other_files"],
         },
         "exclusion_audit": {
-            "waymo_data_files_in_zip": zip_waymo_count,
-            "pretrained_weights_in_zip": zip_weight_count,
-            "waymo_files_found_locally": stats["waymo_files_found_locally"],
-            "waymo_files_blocked": stats["waymo_files_blocked"],
+            "waymo_data_files_in_tar": tar_waymo_count,
+            "pretrained_weights_in_tar": tar_weight_count,
         },
         "validation_checks": {k: {"expected": v["expected"], "actual": v["actual"], "passed": v["passed"]} for k, v in validation_checks.items()},
         "errors_count": errors_count,
@@ -319,16 +282,13 @@ def main():
 
     print("\n" + "-" * 65)
     print(f"Package Status: {final_status}")
-    print(f"  Package: {zip_path} ({zip_size_mb} MB)")
+    print(f"  Package: {tar_path} ({tar_size_mb} MB)")
     print(f"  Files: {stats['total_files']}")
-    print(f"  Waymo data files in ZIP: {zip_waymo_count} (must be 0)")
-    print(f"  Pretrained weights in ZIP: {zip_weight_count} (must be 0)")
+    print(f"  Waymo data files in TAR: {tar_waymo_count} (must be 0)")
+    print(f"  Pretrained weights in TAR: {tar_weight_count} (must be 0)")
     print("=" * 65)
 
-    if final_status == "FAILED":
-        sys.exit(1)
-    else:
-        sys.exit(0)
+    sys.exit(0 if final_status == "PASSED" else 1)
 
 
 if __name__ == "__main__":
