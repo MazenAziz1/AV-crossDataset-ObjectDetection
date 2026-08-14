@@ -30,14 +30,29 @@ def main():
     image_ids = gt_data["images"]
 
     # Generate predictions
-    from scripts.milestone_4.adapters.yolo_adapter import run_yolo_predictions
-
     print(f"Running inference with checkpoint: {args.checkpoint}")
-    predictions = run_yolo_predictions(
-        checkpoint_path=args.checkpoint,
-        images_dir=images_dir,
-        image_ids=image_ids,
-    )
+    if args.detector == "yolo":
+        from scripts.milestone_4.adapters.yolo_adapter import run_yolo_predictions
+        predictions = run_yolo_predictions(
+            checkpoint_path=args.checkpoint,
+            images_dir=images_dir,
+            image_ids=image_ids,
+        )
+    elif args.detector == "rtdetr":
+        from scripts.milestone_4.adapters.rtdetr_adapter import run_rtdetr_predictions
+        predictions = run_rtdetr_predictions(
+            checkpoint_path=args.checkpoint,
+            images_dir=images_dir,
+            image_ids=image_ids,
+        )
+    else:
+        from scripts.milestone_4.adapters.torchvision_adapter import run_torchvision_predictions
+        predictions = run_torchvision_predictions(
+            checkpoint_path=args.checkpoint,
+            detector=args.detector,
+            images_dir=images_dir,
+            image_ids=image_ids,
+        )
     print(f"Raw predictions: {len(predictions)}")
 
     # DontCare suppression
@@ -57,6 +72,11 @@ def main():
 
     metrics, per_class = evaluate_predictions(gt_json, predictions)
 
+    # Operating-point metrics (confidence >= 0.25, IoU >= 0.50)
+    from scripts.milestone_4.evaluation.operating_point_metrics import compute_operating_point_metrics
+
+    operating_point = compute_operating_point_metrics(gt_json, predictions)
+
     result = {
         "detector": args.detector,
         "checkpoint": str(args.checkpoint),
@@ -65,6 +85,7 @@ def main():
         "dontcare_suppressed": suppress_count,
         "metrics": metrics,
         "per_class": per_class,
+        "operating_point": operating_point,
     }
 
     out_dir = Path(args.output_dir) / "metrics" / "kitti_validation"
@@ -81,6 +102,12 @@ def main():
     print("  Per-class mAP@0.50:0.95:")
     for cat_id, info in sorted(per_class.items()):
         print(f"    {info['name']:12s} = {info['AP_50_95']:.4f}")
+    print("\n  Operating point (conf>=0.25, IoU>=0.50):")
+    print(f"    Precision = {operating_point['precision']:.4f}")
+    print(f"    Recall    = {operating_point['recall']:.4f}")
+    print(f"    F1        = {operating_point['f1_score']:.4f}")
+    print(f"    Detections/image = {operating_point['detections_per_image']:.4f}")
+    print(f"    False positives/image = {operating_point['false_positives_per_image']:.4f}")
     print(f"\nSaved to: {out_path}")
     print("=" * 50)
 

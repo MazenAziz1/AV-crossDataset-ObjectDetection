@@ -14,25 +14,38 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 def benchmark_model(checkpoint_path, detector, warmup_runs=10, benchmark_runs=100,
                     imgsz=640, output_dir="outputs/milestone_4"):
-    from ultralytics import YOLO
-
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model = YOLO(str(checkpoint_path))
-    model.model.to(device)
-    model.model.eval()
+    if detector == "yolo":
+        from ultralytics import YOLO
+        net = YOLO(str(checkpoint_path)).model
+        list_input = False
+    elif detector == "rtdetr":
+        from ultralytics import RTDETR
+        net = RTDETR(str(checkpoint_path)).model
+        list_input = False
+    elif detector in ("faster_rcnn", "retinanet"):
+        from scripts.milestone_4.adapters.torchvision_adapter import _build_model, _load_state
+        net = _load_state(checkpoint_path, _build_model(detector, device), device)
+        list_input = True
+    else:
+        raise ValueError(f"Unsupported detector for benchmarking: {detector}")
+
+    net.to(device)
+    net.eval()
 
     # --- Parameter count ---
-    param_count = sum(p.numel() for p in model.model.parameters())
+    param_count = sum(p.numel() for p in net.parameters())
 
     # --- Checkpoint size ---
     checkpoint_size_mb = round(os.path.getsize(checkpoint_path) / (1024 * 1024), 2)
 
     # --- Create a dummy input ---
-    dummy = torch.randn(1, 3, imgsz, imgsz).to(device)
+    # torchvision detection models expect a list of CHW tensors
+    dummy = [torch.randn(3, imgsz, imgsz).to(device)] if list_input else torch.randn(1, 3, imgsz, imgsz).to(device)
 
     # Warmup
     for _ in range(warmup_runs):
-        _ = model.model(dummy)
+        _ = net(dummy)
 
     # --- Inference latency (pure forward, no preprocessing) ---
     torch.cuda.synchronize()
@@ -40,7 +53,7 @@ def benchmark_model(checkpoint_path, detector, warmup_runs=10, benchmark_runs=10
     for _ in range(benchmark_runs):
         torch.cuda.synchronize()
         t0 = time.perf_counter()
-        _ = model.model(dummy)
+        _ = net(dummy)
         torch.cuda.synchronize()
         latencies.append((time.perf_counter() - t0) * 1000)
 

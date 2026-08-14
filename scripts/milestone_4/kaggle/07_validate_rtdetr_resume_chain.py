@@ -7,7 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 
 def main():
-    project_root = Path(__file__).resolve().parents[2]
+    project_root = Path(__file__).resolve().parents[3]
     reports_dir = project_root / "outputs" / "milestone_4" / "reports"
     manifests_dir = project_root / "outputs" / "milestone_4" / "manifests"
     os.makedirs(reports_dir, exist_ok=True)

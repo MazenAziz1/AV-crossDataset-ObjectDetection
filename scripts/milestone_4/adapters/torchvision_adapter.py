@@ -30,7 +30,7 @@ def _build_model(detector, device):
 
 
 def _load_state(checkpoint_path, model, device):
-    ckpt = torch.load(checkpoint_path, map_location=device)
+    ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
     if "model_state_dict" in ckpt:
         model.load_state_dict(ckpt["model_state_dict"])
     elif "model" in ckpt and isinstance(ckpt["model"], dict):
@@ -59,6 +59,10 @@ def run_torchvision_predictions(checkpoint_path, detector, images_dir, image_ids
 
         image = Image.open(img_path).convert("RGB")
         image = F.to_tensor(image).to(device)
+        # Match training-time preprocessing (Albumentations A.Normalize). The torchvision
+        # model additionally normalizes internally; this duplication existed during training
+        # and is replicated here so evaluation uses the model's trained input distribution.
+        image = F.normalize(image, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 
         with torch.no_grad():
             output = model([image])[0]
