@@ -1,0 +1,55 @@
+# Milestone 6 dataset configuration
+# Purpose: Waymo external validation subset for cross-dataset generalization analysis.
+# Created automatically by scripts/milestone_6/01_create_milestone_6_configs.py
+
+milestone: 6
+dataset_name: waymo_external_subset
+task: external_validation
+created_at: "2026-08-15T00:19:50"
+
+source:
+  dataset_family: Waymo
+  role: external_validation_only
+  training_allowed: false
+  retraining_allowed: false
+  fine_tuning_allowed: false
+  purpose: >
+    Evaluate KITTI-trained object detectors directly on an external Waymo subset
+    to measure cross-dataset generalization and domain-shift degradation.
+
+paths:
+  image_dir: "data/processed/milestone_3/images/waymo/external"
+  label_dir: "data/processed/milestone_3/labels/waymo/external"
+
+handoff_counts:
+  images: 996
+  labels: 996
+  matched_image_label_pairs: 996
+  total_annotations: 24819
+
+label_format:
+  format: yolo_normalized
+  fields:
+    - class_id
+    - x_center
+    - y_center
+    - width
+    - height
+  coordinate_range: "[0, 1]"
+  bbox_interpretation: center_x_center_y_width_height_normalized_by_image_size
+
+class_mapping:
+  0: Vehicle
+  1: Pedestrian
+  2: Cyclist
+
+class_distribution:
+  Vehicle: 16928
+  Pedestrian: 7127
+  Cyclist: 764
+
+notes:
+  - This subset is not used for training.
+  - This subset is not used for hyperparameter selection.
+  - Empty-label files are allowed only if the corresponding image contains no target objects.
+  - The class mapping must remain identical to the Milestone 5 KITTI evaluation.

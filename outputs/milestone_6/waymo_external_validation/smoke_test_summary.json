@@ -1,0 +1,493 @@
+{
+  "created_at": "2026-08-15T00:21:20",
+  "status": "PASSED",
+  "device": "cuda",
+  "cuda_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "sample_size": 5,
+  "checkpoint_registry": "outputs\\milestone_4\\locked_final_checkpoints\\final_checkpoint_registry.json",
+  "detectors": {
+    "yolo": {
+      "status": "PASSED",
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\yolo\\yolo_final_20260813_153831\\weights\\best.pt",
+      "sample_images": 5,
+      "mean_elapsed_ms": 245.62625999678858,
+      "records": [
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847392672581.png",
+          "num_predictions": 12,
+          "sample_predicted_classes": [
+            2,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            2,
+            0,
+            0
+          ],
+          "elapsed_ms": 1100.4894999787211
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393172585.png",
+          "num_predictions": 14,
+          "sample_predicted_classes": [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "elapsed_ms": 58.73200000496581
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393672620.png",
+          "num_predictions": 27,
+          "sample_predicted_classes": [
+            0,
+            2,
+            1,
+            0,
+            2,
+            2,
+            2,
+            0,
+            0,
+            1
+          ],
+          "elapsed_ms": 27.764099999330938
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394172576.png",
+          "num_predictions": 5,
+          "sample_predicted_classes": [
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "elapsed_ms": 21.81970002129674
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394672600.png",
+          "num_predictions": 5,
+          "sample_predicted_classes": [
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "elapsed_ms": 19.32599997962825
+        }
+      ]
+    },
+    "rtdetr": {
+      "status": "PASSED",
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\rtdetr\\rtdetr_final_20260813_215051\\weights\\best.pt",
+      "sample_images": 5,
+      "mean_elapsed_ms": 131.91144000156783,
+      "records": [
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847392672581.png",
+          "num_predictions": 300,
+          "sample_predicted_classes": [
+            2,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "elapsed_ms": 480.9233999985736
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393172585.png",
+          "num_predictions": 300,
+          "sample_predicted_classes": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "elapsed_ms": 45.84869998507202
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393672620.png",
+          "num_predictions": 300,
+          "sample_predicted_classes": [
+            0,
+            2,
+            0,
+            0,
+            1,
+            1,
+            2,
+            1,
+            0,
+            2
+          ],
+          "elapsed_ms": 44.18740002438426
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394172576.png",
+          "num_predictions": 300,
+          "sample_predicted_classes": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "elapsed_ms": 44.86190000898205
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394672600.png",
+          "num_predictions": 300,
+          "sample_predicted_classes": [
+            0,
+            0,
+            0,
+            1,
+            2,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "elapsed_ms": 43.73579999082722
+        }
+      ]
+    },
+    "retinanet": {
+      "status": "PASSED",
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\retinanet\\retinanet_final_resume_if_needed_20260814_100422\\best.pth",
+      "sample_images": 5,
+      "mean_elapsed_ms": 66.2582999910228,
+      "records": [
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847392672581.png",
+          "num_predictions": 15,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            1,
+            1,
+            2,
+            3,
+            3,
+            2,
+            2,
+            3,
+            1
+          ],
+          "sample_scores": [
+            0.9999997615814209,
+            0.9633277654647827,
+            0.9037256836891174,
+            0.8674573302268982,
+            0.7187431454658508,
+            0.4670208990573883,
+            0.37852752208709717,
+            0.1881525218486786,
+            0.17181396484375,
+            0.11251134425401688
+          ],
+          "elapsed_ms": 124.21999999787658
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393172585.png",
+          "num_predictions": 18,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            3,
+            2,
+            3,
+            1,
+            1,
+            3,
+            2,
+            2,
+            1
+          ],
+          "sample_scores": [
+            0.9999992847442627,
+            0.99998939037323,
+            0.9339231848716736,
+            0.9037914276123047,
+            0.6908115744590759,
+            0.4884221851825714,
+            0.38922470808029175,
+            0.2714729905128479,
+            0.25081729888916016,
+            0.20387551188468933
+          ],
+          "elapsed_ms": 49.85409998334944
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393672620.png",
+          "num_predictions": 18,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            1,
+            3,
+            2,
+            2,
+            1,
+            1,
+            2,
+            2,
+            2
+          ],
+          "sample_scores": [
+            0.9999978542327881,
+            0.9999767541885376,
+            0.9922742247581482,
+            0.9900103211402893,
+            0.9019360542297363,
+            0.7946316003799438,
+            0.6993816494941711,
+            0.3900175392627716,
+            0.38376477360725403,
+            0.3823033571243286
+          ],
+          "elapsed_ms": 52.54959999001585
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394172576.png",
+          "num_predictions": 12,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            1,
+            1,
+            3,
+            2,
+            2,
+            2,
+            1,
+            2,
+            3
+          ],
+          "sample_scores": [
+            0.9997828602790833,
+            0.9992833733558655,
+            0.9988738894462585,
+            0.9966123700141907,
+            0.9871429800987244,
+            0.6083396077156067,
+            0.540678858757019,
+            0.45926663279533386,
+            0.35662025213241577,
+            0.11516133695840836
+          ],
+          "elapsed_ms": 51.66779999854043
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394672600.png",
+          "num_predictions": 15,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            1,
+            2,
+            1,
+            1,
+            2
+          ],
+          "sample_scores": [
+            0.9999998807907104,
+            0.9998452663421631,
+            0.9773633480072021,
+            0.9273711442947388,
+            0.6954107880592346,
+            0.5393924713134766,
+            0.5352580547332764,
+            0.3285364806652069,
+            0.06678184121847153,
+            0.06423573195934296
+          ],
+          "elapsed_ms": 52.99999998533167
+        }
+      ]
+    },
+    "faster_rcnn": {
+      "status": "PASSED",
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\faster_rcnn\\faster_rcnn_final_resume_if_needed_20260814_100004\\best.pth",
+      "sample_images": 5,
+      "mean_elapsed_ms": 71.37121999403462,
+      "records": [
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847392672581.png",
+          "num_predictions": 19,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            2,
+            1,
+            2,
+            2,
+            3,
+            2,
+            1,
+            2,
+            2
+          ],
+          "sample_scores": [
+            0.99997878074646,
+            0.9850013256072998,
+            0.9655236005783081,
+            0.9494614005088806,
+            0.7877306342124939,
+            0.7643781900405884,
+            0.6663260459899902,
+            0.666293203830719,
+            0.454653263092041,
+            0.3976324200630188
+          ],
+          "elapsed_ms": 131.8905999942217
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393172585.png",
+          "num_predictions": 21,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            2,
+            3,
+            1,
+            2,
+            3,
+            2,
+            1,
+            2,
+            1
+          ],
+          "sample_scores": [
+            0.9999794960021973,
+            0.9982415437698364,
+            0.9887261986732483,
+            0.9742200970649719,
+            0.9101600050926208,
+            0.8634536862373352,
+            0.8364084362983704,
+            0.7428667545318604,
+            0.697652280330658,
+            0.5917859077453613
+          ],
+          "elapsed_ms": 52.3076000099536
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393672620.png",
+          "num_predictions": 18,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            2,
+            3,
+            1,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "sample_scores": [
+            0.9999817609786987,
+            0.9988976716995239,
+            0.9866776466369629,
+            0.9818058609962463,
+            0.9795545935630798,
+            0.9770272970199585,
+            0.9763147830963135,
+            0.9555176496505737,
+            0.6510863304138184,
+            0.636061429977417
+          ],
+          "elapsed_ms": 54.9825000052806
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394172576.png",
+          "num_predictions": 17,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            2,
+            1,
+            2,
+            2,
+            1,
+            2,
+            2,
+            2,
+            3
+          ],
+          "sample_scores": [
+            0.9999436140060425,
+            0.9986206293106079,
+            0.9985106587409973,
+            0.9942637085914612,
+            0.9777544140815735,
+            0.944122314453125,
+            0.9308505058288574,
+            0.8477417230606079,
+            0.8213139176368713,
+            0.5756193399429321
+          ],
+          "elapsed_ms": 57.032199983950704
+        },
+        {
+          "image": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394672600.png",
+          "num_predictions": 17,
+          "sample_predicted_classes_raw_torchvision": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "sample_scores": [
+            0.9995976090431213,
+            0.9979422688484192,
+            0.9972375631332397,
+            0.9966468214988708,
+            0.9940029978752136,
+            0.982108473777771,
+            0.9069202542304993,
+            0.6459559202194214,
+            0.6201371550559998,
+            0.5435038208961487
+          ],
+          "elapsed_ms": 60.64319997676648
+        }
+      ]
+    }
+  },
+  "errors": []
+}

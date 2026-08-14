@@ -1,0 +1,61 @@
+# Milestone 6 external validation policy
+# Purpose: ensure fair cross-dataset comparison without retraining.
+
+milestone: 6
+policy_name: waymo_external_validation_policy
+created_at: "2026-08-15T00:19:50"
+
+core_rule:
+  description: >
+    All models evaluated in Milestone 6 must be the locked KITTI-trained checkpoints
+    produced in Milestone 4 and evaluated in Milestone 5.
+  retraining: forbidden
+  fine_tuning: forbidden
+  architecture_changes: forbidden
+  threshold_tuning_on_waymo: forbidden
+  data_leakage_from_waymo_to_training: forbidden
+
+models:
+  - yolo
+  - rtdetr
+  - retinanet
+  - faster_rcnn
+
+checkpoint_source:
+  registry: "outputs/milestone_4/locked_final_checkpoints/final_checkpoint_registry.json"
+  checkpoint_selection: best_checkpoint
+  selection_basis: Milestone 4/5 KITTI validation performance and locked checkpoint registry
+
+evaluation_dataset:
+  name: waymo_external_subset
+  config: "configs/datasets/milestone_6/waymo_external_subset.yaml"
+
+baseline_dataset:
+  name: kitti_validation
+  baseline_results: "outputs/milestone_5/final_kitti_validation/tables/comparison_summary_full.csv"
+
+input_policy:
+  image_size: 640
+  preprocessing: same_as_milestone_5_evaluator
+  class_mapping:
+    0: Vehicle
+    1: Pedestrian
+    2: Cyclist
+
+metrics:
+  primary:
+    - mAP50_95
+  secondary:
+    - mAP50
+    - per_class_AP50
+    - per_class_AP50_95
+    - mean_inference_ms
+
+fairness_rules:
+  - Use the same Waymo image-label subset for all detectors.
+  - Use the same IoU thresholds as the Milestone 5 KITTI evaluator.
+  - Use the same class mapping as Milestone 5.
+  - Do not retrain, fine-tune, calibrate, or tune thresholds on Waymo.
+  - Use one locked checkpoint per detector.
+  - Report both aggregate and class-wise results.
+  - Compare against Milestone 5 KITTI validation metrics using the same metric names.

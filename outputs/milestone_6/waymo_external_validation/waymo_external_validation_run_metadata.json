@@ -1,0 +1,59 @@
+{
+  "created_at": "2026-08-15T00:23:38",
+  "dataset": "Waymo external subset",
+  "num_images": 996,
+  "class_mapping": {
+    "0": "Vehicle",
+    "1": "Pedestrian",
+    "2": "Cyclist"
+  },
+  "iou_thresholds": [
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95
+  ],
+  "confidence_threshold": 0.001,
+  "image_size": 640,
+  "policy": "No retraining. Locked Milestone 4/5 KITTI-trained checkpoints only.",
+  "detectors": {
+    "yolo": {
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\yolo\\yolo_final_20260813_153831\\weights\\best.pt",
+      "metrics_file": "outputs\\milestone_6\\waymo_external_validation\\metrics\\yolo_waymo_metrics.json",
+      "num_predictions": 10082,
+      "mAP50": 0.10944381252963946,
+      "mAP50_95": 0.05392357750270183,
+      "mean_inference_ms": 20.026075301037814
+    },
+    "rtdetr": {
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\rtdetr\\rtdetr_final_20260813_215051\\weights\\best.pt",
+      "metrics_file": "outputs\\milestone_6\\waymo_external_validation\\metrics\\rtdetr_waymo_metrics.json",
+      "num_predictions": 298800,
+      "mAP50": 0.1661427445516064,
+      "mAP50_95": 0.07683540775318816,
+      "mean_inference_ms": 48.509080923132245
+    },
+    "retinanet": {
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\retinanet\\retinanet_final_resume_if_needed_20260814_100422\\best.pth",
+      "metrics_file": "outputs\\milestone_6\\waymo_external_validation\\metrics\\retinanet_waymo_metrics.json",
+      "num_predictions": 8891,
+      "mAP50": 0.1680492610231091,
+      "mAP50_95": 0.07876431005530476,
+      "mean_inference_ms": 51.93624979920169
+    },
+    "faster_rcnn": {
+      "checkpoint": "outputs\\milestone_4\\checkpoints\\faster_rcnn\\faster_rcnn_final_resume_if_needed_20260814_100004\\best.pth",
+      "metrics_file": "outputs\\milestone_6\\waymo_external_validation\\metrics\\faster_rcnn_waymo_metrics.json",
+      "num_predictions": 10913,
+      "mAP50": 0.12197032983940426,
+      "mAP50_95": 0.05449312875806523,
+      "mean_inference_ms": 58.87573373528645
+    }
+  }
+}

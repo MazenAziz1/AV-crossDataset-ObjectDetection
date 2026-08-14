@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-08-15T00:46:34",
+  "status": "PASSED",
+  "errors": [],
+  "warnings": [
+    "4 raw prediction JSONL files exist locally. Do not commit them unless intentionally required."
+  ],
+  "git_status_short": {
+    "command": "git status --short",
+    "return_code": 0,
+    "stdout": "?? configs/datasets/milestone_6/\n?? configs/evaluation/\n?? docs/milestone_6/\n?? scripts/milestone_6/",
+    "stderr": ""
+  },
+  "expected_detectors": [
+    "faster_rcnn",
+    "retinanet",
+    "rtdetr",
+    "yolo"
+  ]
+}

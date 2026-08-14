@@ -1,0 +1,34 @@
+[
+  {
+    "detector":"faster_rcnn",
+    "largest_absolute_degradation_class":"Vehicle",
+    "largest_absolute_degradation":0.626474,
+    "largest_absolute_degradation_percent":87.246378,
+    "lowest_generalization_ratio_class":"Cyclist",
+    "lowest_class_generalization_ratio":0.050803
+  },
+  {
+    "detector":"retinanet",
+    "largest_absolute_degradation_class":"Vehicle",
+    "largest_absolute_degradation":0.575204,
+    "largest_absolute_degradation_percent":83.207798,
+    "lowest_generalization_ratio_class":"Cyclist",
+    "lowest_class_generalization_ratio":0.123671
+  },
+  {
+    "detector":"rtdetr",
+    "largest_absolute_degradation_class":"Vehicle",
+    "largest_absolute_degradation":0.645308,
+    "largest_absolute_degradation_percent":84.106664,
+    "lowest_generalization_ratio_class":"Cyclist",
+    "lowest_class_generalization_ratio":0.067613
+  },
+  {
+    "detector":"yolo",
+    "largest_absolute_degradation_class":"Vehicle",
+    "largest_absolute_degradation":0.755319,
+    "largest_absolute_degradation_percent":88.699583,
+    "lowest_generalization_ratio_class":"Cyclist",
+    "lowest_class_generalization_ratio":0.040838
+  }
+]

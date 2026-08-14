@@ -1,0 +1,45 @@
+# Milestone 6 generalization metric configuration
+# Purpose: compare KITTI in-domain results against Waymo external validation results.
+
+milestone: 6
+config_name: generalization_metrics
+created_at: "2026-08-15T00:19:50"
+
+baseline:
+  dataset: KITTI
+  source_table: "outputs/milestone_5/final_kitti_validation/tables/comparison_summary_full.csv"
+
+external:
+  dataset: Waymo
+  expected_output_table: "outputs/milestone_6/waymo_external_validation/tables/waymo_external_summary.csv"
+
+primary_generalization_formula:
+  name: Generalization Ratio
+  formula: "mAP_Waymo / mAP_KITTI"
+  interpretation:
+    near_1: stronger cross-dataset stability
+    below_1: degradation under domain shift
+    above_1: possible improvement or dataset-composition effect requiring discussion
+
+computed_fields:
+  aggregate:
+    - kitti_mAP50
+    - waymo_mAP50
+    - mAP50_drop
+    - mAP50_generalization_ratio
+    - kitti_mAP50_95
+    - waymo_mAP50_95
+    - mAP50_95_drop
+    - mAP50_95_generalization_ratio
+  class_wise:
+    - Vehicle_AP50_95_drop
+    - Pedestrian_AP50_95_drop
+    - Cyclist_AP50_95_drop
+    - largest_degraded_class
+
+paper_outputs:
+  - KITTI_vs_Waymo_comparison_table
+  - Generalization_Ratio_table
+  - Class_wise_degradation_chart
+  - Domain_shift_analysis_subsection
+  - External_validation_discussion_draft

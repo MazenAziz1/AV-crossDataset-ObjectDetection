@@ -1,0 +1,5 @@
+detector,largest_absolute_degradation_class,largest_absolute_degradation,largest_absolute_degradation_percent,lowest_generalization_ratio_class,lowest_class_generalization_ratio
+faster_rcnn,Vehicle,0.626474,87.246378,Cyclist,0.050803
+retinanet,Vehicle,0.575204,83.207798,Cyclist,0.123671
+rtdetr,Vehicle,0.645308,84.106664,Cyclist,0.067613
+yolo,Vehicle,0.755319,88.699583,Cyclist,0.040838

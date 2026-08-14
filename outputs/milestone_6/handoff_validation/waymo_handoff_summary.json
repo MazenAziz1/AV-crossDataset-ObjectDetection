@@ -1,0 +1,103 @@
+{
+  "created_at": "2026-08-15T00:18:18",
+  "status": "PASSED",
+  "project": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research",
+  "image_dir": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\images\\waymo\\external",
+  "label_dir": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\labels\\waymo\\external",
+  "num_images": 996,
+  "num_labels": 996,
+  "num_matched_pairs": 996,
+  "num_images_without_labels": 0,
+  "num_labels_without_images": 0,
+  "total_annotations": 24819,
+  "class_mapping": {
+    "0": "Vehicle",
+    "1": "Pedestrian",
+    "2": "Cyclist"
+  },
+  "class_counts": {
+    "0": 16928,
+    "1": 7127,
+    "2": 764
+  },
+  "num_empty_label_files": 12,
+  "sample_empty_label_files": [
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\12358364923781697038_2232_990_2252_990_1507079387356946.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\12358364923781697038_2232_990_2252_990_1507079387856968.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\12358364923781697038_2232_990_2252_990_1507079388356895.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\12358364923781697038_2232_990_2252_990_1507079391357765.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\12358364923781697038_2232_990_2252_990_1507079391858607.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\12358364923781697038_2232_990_2252_990_1507079392360167.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\2736377008667623133_2676_410_2696_410_1511721501983799.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\2736377008667623133_2676_410_2696_410_1511721502487018.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\2736377008667623133_2676_410_2696_410_1511721502990824.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\3039251927598134881_1240_610_1260_610_1507246326398277.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\3039251927598134881_1240_610_1260_610_1507246326897947.txt",
+    "data\\processed\\milestone_3\\labels\\waymo\\external\\4409585400955983988_3500_470_3520_470_1507165532986381.txt"
+  ],
+  "label_files_with_issues": {},
+  "sample_image_info": [
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847392672581.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393172585.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847393672620.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394172576.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847394672600.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847395172640.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847395672605.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847396172563.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847396672632.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    },
+    {
+      "file": "data\\processed\\milestone_3\\images\\waymo\\external\\10289507859301986274_4200_000_4220_000_1557847397172702.png",
+      "width": 640,
+      "height": 640,
+      "mode": "RGB"
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}
