@@ -22,8 +22,15 @@ def main():
 
     detectors = ["yolo", "faster_rcnn", "retinanet", "rtdetr"]
 
+    train_metrics_file = metrics_dir.parent / "training_metrics.json"
+    train_metrics = {}
+    if train_metrics_file.exists():
+        with open(train_metrics_file) as f:
+            train_metrics = json.load(f).get("detectors", {})
+
     accuracy_rows = []
     efficiency_rows = []
+    operating_point_rows = []
 
     for det in detectors:
         metric_file = metrics_dir / f"{det}_metrics.json"
@@ -34,8 +41,11 @@ def main():
                 m = json.load(f)
             metrics = m["metrics"]
             per_class = m["per_class"]
+            tm = train_metrics.get(det, {})
             row = {
                 "detector": det,
+                "train_mAP_50_95": round(tm["mAP_50_95"], 4) if tm.get("mAP_50_95") is not None else "",
+                "train_mAP_50": round(tm["mAP_50"], 4) if tm.get("mAP_50") is not None else "",
                 "mAP_50_95": round(metrics["mAP_50_95"], 4),
                 "mAP_50": round(metrics["mAP_50"], 4),
                 "mAP_75": round(metrics["mAP_75"], 4),
@@ -47,6 +57,17 @@ def main():
                 "Cyclist_AP": round(per_class.get("3", {}).get("AP_50_95", 0), 4),
             }
             accuracy_rows.append(row)
+
+            op = m.get("operating_point", {})
+            if op:
+                operating_point_rows.append({
+                    "detector": det,
+                    "precision": op.get("precision", ""),
+                    "recall": op.get("recall", ""),
+                    "f1_score": op.get("f1_score", ""),
+                    "detections_per_image": op.get("detections_per_image", ""),
+                    "false_positives_per_image": op.get("false_positives_per_image", ""),
+                })
 
         if bench_file.exists():
             with open(bench_file) as f:
@@ -66,7 +87,7 @@ def main():
     if accuracy_rows:
         acc_path = output_dir / "figures" / "accuracy_comparison.csv"
         acc_path.parent.mkdir(parents=True, exist_ok=True)
-        fieldnames = ["detector", "mAP_50_95", "mAP_50", "mAP_75", "AP_small", "AP_medium", "AP_large", "Vehicle_AP", "Pedestrian_AP", "Cyclist_AP"]
+        fieldnames = ["detector", "train_mAP_50_95", "train_mAP_50", "mAP_50_95", "mAP_50", "mAP_75", "AP_small", "AP_medium", "AP_large", "Vehicle_AP", "Pedestrian_AP", "Cyclist_AP"]
         with open(acc_path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
@@ -84,13 +105,49 @@ def main():
             writer.writerows(efficiency_rows)
         print(f"Efficiency table: {eff_path}")
 
+    # Write training vs local validation comparison
+    tv_rows = []
+    for a in accuracy_rows:
+        tv = a.get("train_mAP_50_95")
+        val = a["mAP_50_95"]
+        tv_rows.append({
+            "detector": a["detector"],
+            "train_mAP_50_95": a["train_mAP_50_95"],
+            "local_val_mAP_50_95": val,
+            "delta_mAP_50_95": round(val - tv, 4) if isinstance(tv, (int, float)) else "",
+            "train_mAP_50": a["train_mAP_50"],
+            "local_val_mAP_50": a["mAP_50"],
+        })
+    if tv_rows:
+        tv_path = output_dir / "figures" / "training_vs_validation_comparison.csv"
+        tv_path.parent.mkdir(parents=True, exist_ok=True)
+        tv_fieldnames = ["detector", "train_mAP_50_95", "local_val_mAP_50_95", "delta_mAP_50_95", "train_mAP_50", "local_val_mAP_50"]
+        with open(tv_path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=tv_fieldnames)
+            writer.writeheader()
+            writer.writerows(tv_rows)
+        print(f"Training vs validation table: {tv_path}")
+
+    # Write operating point comparison (conf >= 0.25, IoU >= 0.50)
+    if operating_point_rows:
+        op_path = output_dir / "figures" / "operating_point_comparison.csv"
+        op_path.parent.mkdir(parents=True, exist_ok=True)
+        op_fieldnames = ["detector", "precision", "recall", "f1_score", "detections_per_image", "false_positives_per_image"]
+        with open(op_path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=op_fieldnames)
+            writer.writeheader()
+            writer.writerows(operating_point_rows)
+        print(f"Operating point table: {op_path}")
+
     # Print summary
     print("\n" + "=" * 70)
-    print(f"{'Detector':12s} {'mAP50-95':>10s} {'mAP50':>8s} {'FPS':>8s}")
+    print(f"{'Detector':12s} {'train50-95':>11s} {'mAP50-95':>10s} {'mAP50':>8s} {'FPS':>8s}")
     print("-" * 70)
     for a in accuracy_rows:
         fps = next((e['frames_per_second'] for e in efficiency_rows if e['detector'] == a['detector']), 'N/A')
-        print(f"{a['detector']:12s} {a['mAP_50_95']:>10.4f} {a['mAP_50']:>8.4f} {fps:>8}")
+        tv = a['train_mAP_50_95']
+        tv_s = f"{tv:.4f}" if isinstance(tv, (int, float)) else "n/a"
+        print(f"{a['detector']:12s} {tv_s:>11} {a['mAP_50_95']:>10.4f} {a['mAP_50']:>8.4f} {fps:>8}")
     print("=" * 70)
 
 
