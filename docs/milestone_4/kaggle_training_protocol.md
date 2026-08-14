@@ -17,7 +17,7 @@ This protocol defines the shared training configuration used by both Kaggle comp
 
 | Parameter | Value |
 |-----------|-------|
-| Target epochs | 150 |
+| Target epochs | 200 |
 | Early stopping patience | 20 epochs |
 | Early stopping metric | `mAP@0.50:0.95` |
 | Min delta for improvement | 0.001 |
@@ -64,7 +64,7 @@ All four detectors are trained with an **effective batch size of 16** via gradie
 | Optimizer | AdamW |
 | Learning rate | 1e-4 |
 | Weight decay | 1e-4 |
-| LR scheduler | CosineAnnealingLR (T_max = 150) |
+| LR scheduler | CosineAnnealingLR (T_max = 200) |
 | Warmup iterations | 500 |
 
 ---

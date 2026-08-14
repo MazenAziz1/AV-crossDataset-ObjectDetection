@@ -20,15 +20,15 @@ This document defines how two legitimate Kaggle GPU compute slots are allocated 
 
 | Detector | Architecture | Target Epochs | Early Stopping Patience |
 |----------|-------------|---------------|-------------------------|
-| YOLOv8s | Single-stage CNN | 150 | 20 |
-| Faster R-CNN | Two-stage CNN (ResNet-50-FPN) | 150 | 20 |
-| RetinaNet | Single-stage CNN (ResNet-50-FPN V2) | 150 | 20 |
+| YOLOv8s | Single-stage CNN | 200 | 20 |
+| Faster R-CNN | Two-stage CNN (ResNet-50-FPN) | 200 | 20 |
+| RetinaNet | Single-stage CNN (ResNet-50-FPN V2) | 200 | 20 |
 
 ### Slot B: Secondary Compute Slot
 
 | Detector | Architecture | Target Epochs | Resume Strategy |
 |----------|-------------|---------------|-----------------|
-| RT-DETR-L | Vision Transformer (DETR) | 150 | Multi-session resume |
+| RT-DETR-L | Vision Transformer (DETR) | 200 | Multi-session resume |
 
 > **Note**: RT-DETR-L is isolated to Slot B because it is the most VRAM-intensive model (~3.2 GB), is the most likely to require multiple sessions, and benefits from dedicated resume-chain tracking.
 
@@ -47,7 +47,7 @@ This document defines how two legitimate Kaggle GPU compute slots are allocated 
 RT-DETR is treated as an **interruption-expected** training run. The resume chain works as follows:
 
 1. **Session N starts** with `--resume latest` and reads `resume_state.json` to determine the last completed epoch.
-2. **Training continues** from epoch `last_epoch + 1` toward the target of 150.
+2. **Training continues** from epoch `last_epoch + 1` toward the target of 200.
 3. **Every 5 epochs**: A hard checkpoint is saved and validation is run.
 4. **Before session timeout**: The runtime guard triggers a graceful save:
    - `last.pt` (latest checkpoint)
@@ -84,6 +84,6 @@ Between sessions, epoch numbering must be contiguous with no gaps. The resume ch
 
 - [x] Slot assignments frozen (Slot A: YOLO, Faster R-CNN, RetinaNet / Slot B: RT-DETR)
 - [x] Session limits defined (10.5 hours safe stop)
-- [x] RT-DETR resume policy defined (target 150 epochs, checkpoint every 5 epochs)
+- [x] RT-DETR resume policy defined (target 200 epochs, checkpoint every 5 epochs)
 - [x] Waymo exclusion rule enforced
 - [x] Config file frozen: `configs/models/milestone_4/kaggle_compute_plan.yaml`
