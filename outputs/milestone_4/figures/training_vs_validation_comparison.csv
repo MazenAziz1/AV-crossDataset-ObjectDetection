@@ -1,0 +1,5 @@
+detector,train_mAP_50_95,local_val_mAP_50_95,delta_mAP_50_95,train_mAP_50,local_val_mAP_50
+yolo,0.69,0.6899,-0.0001,0.927,0.9248
+faster_rcnn,0.5905,0.5892,-0.0013,0.87,0.879
+retinanet,0.5311,0.5375,0.0064,0.8413,0.839
+rtdetr,0.603,0.6057,0.0027,0.904,0.9058

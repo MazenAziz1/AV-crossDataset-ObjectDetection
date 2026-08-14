@@ -1,0 +1,5 @@
+model_name,filename,file_path,file_size_mb,sha256_hash,timestamp
+yolov8s,yolov8s.pt,D:\MCs\advances object detection and recognition\project\AV-crossDataset-ObjectDetection\outputs\milestone_4\pretrained\yolov8s.pt,21.54,1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a,2026-06-24T20:26:55.517413+00:00
+rtdetr-l,rtdetr-l.pt,D:\MCs\advances object detection and recognition\project\AV-crossDataset-ObjectDetection\outputs\milestone_4\pretrained\rtdetr-l.pt,63.43,6de60b10d4bc566f00cda0f5b4d64afe4b66d48dc9695d2171effb7859d8e73f,2026-06-24T20:27:22.077469+00:00
+fasterrcnn_resnet50_fpn,torchvision_internal_hub,https://download.pytorch.org/models/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth,0.0,torch_hub_verified,2026-06-24T20:28:21.026806+00:00
+retinanet_resnet50_fpn_v2,torchvision_internal_hub,https://download.pytorch.org/models/retinanet_resnet50_fpn_v2_coco-5905b1c5.pth,0.0,torch_hub_verified,2026-06-24T20:29:22.937836+00:00

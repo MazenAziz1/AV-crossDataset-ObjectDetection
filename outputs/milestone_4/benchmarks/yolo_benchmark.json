@@ -1,0 +1,14 @@
+{
+  "detector": "yolo",
+  "device": "cuda",
+  "parameter_count": 11136761,
+  "checkpoint_size_mb": 21.5,
+  "gpu_memory_peak_mb": 84.9,
+  "latency_preprocessing_ms": 1.745,
+  "latency_inference_ms": 10.551,
+  "latency_postprocessing_ms": 0.058,
+  "latency_total_ms": 12.355,
+  "frames_per_second": 94.77,
+  "warmup_runs": 10,
+  "benchmark_runs": 100
+}

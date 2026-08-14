@@ -1,0 +1,9 @@
+detector,slot,session_id,run_type,start_epoch,end_epoch,target_epochs,exit_reason,completion_status
+yolo,slot_a,yolo_final_session_001,final,1,200,200,completed,complete
+faster_rcnn,slot_a,faster_rcnn_final_session_001,final,1,76,200,quota_stop,incomplete
+faster_rcnn,slot_a,faster_rcnn_final_session_002,final,77,96,200,early_stop,complete
+retinanet,slot_a,retinanet_final_session_001,final,1,63,200,runtime_guard_stop,incomplete
+retinanet,slot_a,retinanet_final_session_002,final,64,101,200,early_stop,complete
+rtdetr,slot_b,rtdetr_final_session_001,final,1,5,200,runtime_guard_stop,incomplete
+rtdetr,slot_b,rtdetr_final_session_002,final,6,102,200,runtime_guard_stop,incomplete
+rtdetr,slot_b,rtdetr_final_session_003,final,103,131,200,early_stop,complete

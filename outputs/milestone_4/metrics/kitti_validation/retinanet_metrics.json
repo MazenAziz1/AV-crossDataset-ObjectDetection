@@ -1,0 +1,47 @@
+{
+  "detector": "retinanet",
+  "checkpoint": "outputs\\milestone_4\\checkpoints\\retinanet\\final\\best.pt",
+  "partition": "kitti_val",
+  "num_predictions": 20728,
+  "dontcare_suppressed": 326,
+  "metrics": {
+    "mAP_50_95": 0.5375448197028951,
+    "mAP_50": 0.8390278538468965,
+    "mAP_75": 0.5773662452284443,
+    "AP_small": 0.46670523802179675,
+    "AP_medium": 0.6219749760656845,
+    "AP_large": 0.623768586675731,
+    "AR_max_1": 0.2694694948436729,
+    "AR_max_10": 0.5931394102758534,
+    "AR_max_100": 0.6116377379134597
+  },
+  "per_class": {
+    "1": {
+      "name": "Vehicle",
+      "AP_50_95": 0.7031775803753625,
+      "AP_50": 0.9303473711454372
+    },
+    "2": {
+      "name": "Pedestrian",
+      "AP_50_95": 0.3914596747088664,
+      "AP_50": 0.7585391773925113
+    },
+    "3": {
+      "name": "Cyclist",
+      "AP_50_95": 0.5179972040244568,
+      "AP_50": 0.8281970130027407
+    }
+  },
+  "operating_point": {
+    "conf_threshold": 0.25,
+    "iou_threshold": 0.5,
+    "precision": 0.7773,
+    "recall": 0.9072,
+    "f1_score": 0.8373,
+    "detections_per_image": 6.0789,
+    "false_positives_per_image": 1.3536,
+    "true_positives": 7069,
+    "false_positives": 2025,
+    "false_negatives": 723
+  }
+}

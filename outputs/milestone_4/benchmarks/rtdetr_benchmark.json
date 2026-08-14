@@ -1,0 +1,14 @@
+{
+  "detector": "rtdetr",
+  "device": "cuda",
+  "parameter_count": 32812241,
+  "checkpoint_size_mb": 63.15,
+  "gpu_memory_peak_mb": 244.25,
+  "latency_preprocessing_ms": 1.826,
+  "latency_inference_ms": 53.404,
+  "latency_postprocessing_ms": 0.061,
+  "latency_total_ms": 55.291,
+  "frames_per_second": 18.73,
+  "warmup_runs": 10,
+  "benchmark_runs": 100
+}

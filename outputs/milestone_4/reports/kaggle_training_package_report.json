@@ -1,0 +1,58 @@
+{
+  "milestone": 4,
+  "step": 6,
+  "purpose": "Create self-contained Kaggle training package with KITTI data only",
+  "timestamp": "2026-08-12T00:05:04.285583+00:00",
+  "package": {
+    "path": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\kaggle_packages\\milestone4_kaggle_training_package.tar.gz",
+    "size_mb": 1710.65,
+    "total_files": 15004,
+    "total_size_bytes": 1855847483
+  },
+  "content_counts": {
+    "kitti_images_train": 5985,
+    "kitti_images_val": 1496,
+    "kitti_labels_train": 5985,
+    "kitti_labels_val": 1496,
+    "coco_annotations": 2,
+    "sidecar_files": 4,
+    "config_files": 17,
+    "script_files": 12,
+    "doc_files": 6,
+    "other_files": 1
+  },
+  "exclusion_audit": {
+    "waymo_data_files_in_tar": 0,
+    "pretrained_weights_in_tar": 0
+  },
+  "validation_checks": {
+    "kitti_train_images_count": {
+      "expected": 5985,
+      "actual": 5985,
+      "passed": true
+    },
+    "kitti_val_images_count": {
+      "expected": 1496,
+      "actual": 1496,
+      "passed": true
+    },
+    "coco_annotations_count": {
+      "expected": 2,
+      "actual": 2,
+      "passed": true
+    },
+    "tar_waymo_data_files": {
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    "tar_pretrained_weights": {
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    }
+  },
+  "errors_count": 0,
+  "warnings_count": 0,
+  "final_status": "PASSED"
+}

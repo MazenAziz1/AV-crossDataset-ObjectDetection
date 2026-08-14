@@ -1,0 +1,5 @@
+detector,parameters,checkpoint_size_mb,gpu_memory_peak_mb,latency_total_ms,inference_ms,frames_per_second
+yolo,11136761,21.5,84.9,12.355,10.551,94.77
+faster_rcnn,41309411,315.68,708.17,91.222,88.988,11.24
+retinanet,36392072,278.0,889.96,75.248,72.992,13.7
+rtdetr,32812241,63.15,244.25,55.291,53.404,18.73

@@ -1,0 +1,47 @@
+{
+  "detector": "yolo",
+  "checkpoint": "outputs\\milestone_4\\checkpoints\\yolo\\final\\best.pt",
+  "partition": "kitti_val",
+  "num_predictions": 19212,
+  "dontcare_suppressed": 351,
+  "metrics": {
+    "mAP_50_95": 0.6899380300687701,
+    "mAP_50": 0.924841871900142,
+    "mAP_75": 0.7797015378166099,
+    "AP_small": 0.6452328546340838,
+    "AP_medium": 0.7523060137261094,
+    "AP_large": 0.7176450605053415,
+    "AR_max_1": 0.31909512136127627,
+    "AR_max_10": 0.718299144132313,
+    "AR_max_100": 0.7436278912059262
+  },
+  "per_class": {
+    "1": {
+      "name": "Vehicle",
+      "AP_50_95": 0.8489325501535021,
+      "AP_50": 0.9747497822178449
+    },
+    "2": {
+      "name": "Pedestrian",
+      "AP_50_95": 0.5298272013214034,
+      "AP_50": 0.868609777050778
+    },
+    "3": {
+      "name": "Cyclist",
+      "AP_50_95": 0.6910543387314045,
+      "AP_50": 0.9311660564318033
+    }
+  },
+  "operating_point": {
+    "conf_threshold": 0.25,
+    "iou_threshold": 0.5,
+    "precision": 0.9258,
+    "recall": 0.9474,
+    "f1_score": 0.9364,
+    "detections_per_image": 5.3302,
+    "false_positives_per_image": 0.3957,
+    "true_positives": 7382,
+    "false_positives": 592,
+    "false_negatives": 410
+  }
+}

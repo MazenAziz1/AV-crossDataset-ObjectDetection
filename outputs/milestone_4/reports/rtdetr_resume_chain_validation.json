@@ -1,0 +1,10 @@
+{
+  "status": "PASSED",
+  "reason": "",
+  "checks": {
+    "epoch_continuity": "PASSED",
+    "gaps": [],
+    "sessions": 3,
+    "final_epoch": 131
+  }
+}

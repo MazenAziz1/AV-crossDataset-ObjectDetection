@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-08-14T22:16:33.463808+00:00",
+  "locked_checkpoints": 4,
+  "expected_checkpoints": 4,
+  "issues": 0,
+  "registry": [
+    {
+      "detector": "yolo",
+      "checkpoint_path": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\yolo\\final\\best.pt",
+      "file_size_mb": 21.5,
+      "sha256": "b2f4a3066c767edeee90e02b54ed71022319b30196585046697677cca8ff146c",
+      "load_test": "PASSED",
+      "locked_at": "2026-08-14T22:16:31.387648+00:00"
+    },
+    {
+      "detector": "faster_rcnn",
+      "checkpoint_path": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\faster_rcnn\\final\\best.pt",
+      "file_size_mb": 315.68,
+      "sha256": "1d0bebabe7f171f060e48b47a361c7207ff7f700f74bcb45c36b4d9d938be223",
+      "load_test": "PASSED",
+      "locked_at": "2026-08-14T22:16:32.297184+00:00"
+    },
+    {
+      "detector": "retinanet",
+      "checkpoint_path": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\retinanet\\final\\best.pt",
+      "file_size_mb": 278.0,
+      "sha256": "dc44dfcf5a743980b86c5e4deb0f9e53efe7b648c94aeadfa8c28212552fa633",
+      "load_test": "PASSED",
+      "locked_at": "2026-08-14T22:16:33.297144+00:00"
+    },
+    {
+      "detector": "rtdetr",
+      "checkpoint_path": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\rtdetr\\final\\best.pt",
+      "file_size_mb": 63.15,
+      "sha256": "d79a9d88b5c249b6757372be825b635d096eebb5cf322ce26b664c9c44475aee",
+      "load_test": "PASSED",
+      "locked_at": "2026-08-14T22:16:33.463808+00:00"
+    }
+  ]
+}

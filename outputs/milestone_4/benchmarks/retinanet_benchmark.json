@@ -1,0 +1,14 @@
+{
+  "detector": "retinanet",
+  "device": "cuda",
+  "parameter_count": 36392072,
+  "checkpoint_size_mb": 278.0,
+  "gpu_memory_peak_mb": 889.96,
+  "latency_preprocessing_ms": 2.205,
+  "latency_inference_ms": 72.992,
+  "latency_postprocessing_ms": 0.051,
+  "latency_total_ms": 75.248,
+  "frames_per_second": 13.7,
+  "warmup_runs": 10,
+  "benchmark_runs": 100
+}

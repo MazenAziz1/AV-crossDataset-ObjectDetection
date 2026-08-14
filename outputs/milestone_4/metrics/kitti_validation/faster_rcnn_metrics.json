@@ -1,0 +1,47 @@
+{
+  "detector": "faster_rcnn",
+  "checkpoint": "outputs\\milestone_4\\checkpoints\\faster_rcnn\\final\\best.pt",
+  "partition": "kitti_val",
+  "num_predictions": 9178,
+  "dontcare_suppressed": 140,
+  "metrics": {
+    "mAP_50_95": 0.5891821731631266,
+    "mAP_50": 0.8789726665481264,
+    "mAP_75": 0.6665302037491956,
+    "AP_small": 0.5582588905045003,
+    "AP_medium": 0.6279547423510996,
+    "AP_large": 0.6061500159666177,
+    "AR_max_1": 0.28951098486366134,
+    "AR_max_10": 0.6405353884446241,
+    "AR_max_100": 0.6542324445229268
+  },
+  "per_class": {
+    "1": {
+      "name": "Vehicle",
+      "AP_50_95": 0.741442850353514,
+      "AP_50": 0.9456823174172558
+    },
+    "2": {
+      "name": "Pedestrian",
+      "AP_50_95": 0.4317417445521849,
+      "AP_50": 0.8101838408272458
+    },
+    "3": {
+      "name": "Cyclist",
+      "AP_50_95": 0.5943619245836808,
+      "AP_50": 0.8810518413998779
+    }
+  },
+  "operating_point": {
+    "conf_threshold": 0.25,
+    "iou_threshold": 0.5,
+    "precision": 0.8756,
+    "recall": 0.928,
+    "f1_score": 0.9011,
+    "detections_per_image": 5.5201,
+    "false_positives_per_image": 0.6865,
+    "true_positives": 7231,
+    "false_positives": 1027,
+    "false_negatives": 561
+  }
+}

@@ -25,6 +25,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
+# MS Office / Word lock files
+~$*
+
 # Datasets — ignore large/raw files, keep documentation and metadata
 
 # Generic external dataset directories
@@ -69,14 +72,27 @@ data/processed/milestone_3/annotations/yolo/
 *.ckpt
 *.weights
 
-# Training outputs
+# Training outputs (transient/generated)
 runs/
-outputs/
 results/
 logs/
 checkpoints/
 wandb/
 mlruns/
+
+# Milestone 4 generated artifacts (weights, logs, raw predictions, runtime, cache, packages, downloads)
+# Kept trackable: metrics/, benchmarks/, figures/, reports/, manifests/, README.md
+/outputs/milestone_4/checkpoints/
+/outputs/milestone_4/pretrained/
+/outputs/milestone_4/logs/
+/outputs/milestone_4/predictions/
+/outputs/milestone_4/runtime/
+/outputs/milestone_4/cache/
+/outputs/milestone_4/kaggle_packages/
+/outputs/milestone_4/kaggle_downloads/
+
+# Accidental duplicate output tree (stale path-bug artifact)
+/scripts/outputs/
 
 # FiftyOne database/cache
 .fiftyone/

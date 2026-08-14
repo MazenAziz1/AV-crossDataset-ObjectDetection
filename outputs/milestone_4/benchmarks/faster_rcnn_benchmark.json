@@ -1,0 +1,14 @@
+{
+  "detector": "faster_rcnn",
+  "device": "cuda",
+  "parameter_count": 41309411,
+  "checkpoint_size_mb": 315.68,
+  "gpu_memory_peak_mb": 708.17,
+  "latency_preprocessing_ms": 2.172,
+  "latency_inference_ms": 88.988,
+  "latency_postprocessing_ms": 0.062,
+  "latency_total_ms": 91.222,
+  "frames_per_second": 11.24,
+  "warmup_runs": 10,
+  "benchmark_runs": 100
+}

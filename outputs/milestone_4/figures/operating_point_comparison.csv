@@ -1,0 +1,5 @@
+detector,precision,recall,f1_score,detections_per_image,false_positives_per_image
+yolo,0.9258,0.9474,0.9364,5.3302,0.3957
+faster_rcnn,0.8756,0.928,0.9011,5.5201,0.6865
+retinanet,0.7773,0.9072,0.8373,6.0789,1.3536
+rtdetr,0.4817,0.9691,0.6435,10.4786,5.4311
