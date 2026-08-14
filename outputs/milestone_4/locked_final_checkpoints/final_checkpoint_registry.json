@@ -1,0 +1,60 @@
+{
+  "created_at_local": "2026-08-14T22:34:53",
+  "status": "LOCKED",
+  "project_root": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research",
+  "note": "Final checkpoints imported from verified Kaggle ZIP packages. Use best checkpoint for final local evaluation.",
+  "models": {
+    "yolo": {
+      "run_id": "yolo_final_20260813_153831",
+      "canonical_checkpoint": "outputs\\milestone_4\\checkpoints\\yolo\\yolo_final_20260813_153831\\weights\\best.pt",
+      "resume_checkpoint": "outputs\\milestone_4\\checkpoints\\yolo\\yolo_final_20260813_153831\\weights\\last.pt",
+      "report": "outputs\\milestone_4\\reports\\yolo_final_20260813_153831_training_report.json",
+      "manifest": "outputs\\milestone_4\\manifests\\yolo_final_20260813_153831_session_manifest.json",
+      "verified_zip_sha256": "64006500112291690c42d254011f4a6725177a86df36663db9e4185336a5e38d",
+      "best_checkpoint_sha256": "ede748e1d6122a3b7ab56e70cbf280156f530d1d49e812b3b4eaf457a799f261",
+      "last_checkpoint_sha256": "f779a76c2977029277229a7cf5ae56ac89421e37f96d1d67c0382fd1f9d82ae7",
+      "final_status": "PASSED",
+      "result_status": "TRAINING_FINISHED",
+      "last_epoch_completed": null
+    },
+    "rtdetr": {
+      "run_id": "rtdetr_final_resume_if_needed_20260814_100816",
+      "canonical_checkpoint": "outputs\\milestone_4\\checkpoints\\rtdetr\\rtdetr_final_20260813_215051\\weights\\best.pt",
+      "resume_checkpoint": "outputs\\milestone_4\\checkpoints\\rtdetr\\rtdetr_final_20260813_215051\\weights\\last.pt",
+      "report": "outputs\\milestone_4\\reports\\rtdetr_final_resume_if_needed_20260814_100816_training_report.json",
+      "manifest": "outputs\\milestone_4\\manifests\\rtdetr_final_resume_if_needed_20260814_100816_session_manifest.json",
+      "verified_zip_sha256": "ea91fc6541f1fa868504e643b4eaf585e710b32916be63c8249c4fab9c9c1ae7",
+      "best_checkpoint_sha256": "c075d80823a580c9369859e36536a8c5507a4ee4f00487e0c90ee01c23fc6eb5",
+      "last_checkpoint_sha256": "2fa1835803f87c9bad67057502999b7ccda65ea244ccff75f317d474e47111f5",
+      "final_status": "PASSED",
+      "result_status": "TRAINING_FINISHED",
+      "last_epoch_completed": null
+    },
+    "retinanet": {
+      "run_id": "retinanet_final_resume_if_needed_20260814_100422",
+      "canonical_checkpoint": "outputs\\milestone_4\\checkpoints\\retinanet\\retinanet_final_resume_if_needed_20260814_100422\\best.pth",
+      "resume_checkpoint": "outputs\\milestone_4\\checkpoints\\retinanet\\retinanet_final_resume_if_needed_20260814_100422\\last.pth",
+      "report": "outputs\\milestone_4\\reports\\retinanet_final_resume_if_needed_20260814_100422_training_report.json",
+      "manifest": "outputs\\milestone_4\\manifests\\retinanet_final_resume_if_needed_20260814_100422_session_manifest.json",
+      "verified_zip_sha256": "435534a09f7b7245bff1c782ca7f8781d16279e4b24d6d01899710339db8d234",
+      "best_checkpoint_sha256": "fb1abedb441cdddcac699519445126889669782fa0cc7db89922e1fcc0fb4121",
+      "last_checkpoint_sha256": "ba6b3f7a206468bd759e2e3f0a0150ac5839ec8ca24b4fac7744d424e6d2deee",
+      "final_status": "PASSED",
+      "result_status": "TRAINING_FINISHED",
+      "last_epoch_completed": 120
+    },
+    "faster_rcnn": {
+      "run_id": "faster_rcnn_final_resume_if_needed_20260814_100004",
+      "canonical_checkpoint": "outputs\\milestone_4\\checkpoints\\faster_rcnn\\faster_rcnn_final_resume_if_needed_20260814_100004\\best.pth",
+      "resume_checkpoint": "outputs\\milestone_4\\checkpoints\\faster_rcnn\\faster_rcnn_final_resume_if_needed_20260814_100004\\last.pth",
+      "report": "outputs\\milestone_4\\reports\\faster_rcnn_final_resume_if_needed_20260814_100004_training_report.json",
+      "manifest": "outputs\\milestone_4\\manifests\\faster_rcnn_final_resume_if_needed_20260814_100004_session_manifest.json",
+      "verified_zip_sha256": "e074de8390506ff7d1e5b3be7dc238985de4bba6d0f481692782250cf13a0288",
+      "best_checkpoint_sha256": "2748e67138e7a8de29722a3c66aa0d7d7b0984c2d759aa7c4100148646b23961",
+      "last_checkpoint_sha256": "2748e67138e7a8de29722a3c66aa0d7d7b0984c2d759aa7c4100148646b23961",
+      "final_status": "PASSED",
+      "result_status": "TRAINING_FINISHED",
+      "last_epoch_completed": 120
+    }
+  }
+}

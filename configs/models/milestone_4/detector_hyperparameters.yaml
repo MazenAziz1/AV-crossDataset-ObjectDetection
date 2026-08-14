@@ -1,0 +1,35 @@
+status: frozen
+fairness_constants:
+  image_size: 640
+  batch_size: 16
+  epochs: 120
+  patience: 20
+  seed: 42
+class_contract:
+  torchvision_num_classes: 4
+  torchvision_background_id: 0
+  yolo_num_classes: 3
+  class_names:
+  - Vehicle
+  - Pedestrian
+  - Cyclist
+detectors:
+  yolo:
+    model: yolo26s.pt
+    optimizer: auto
+    learning_rate: ultralytics_auto
+  rtdetr:
+    model: rtdetr-l.pt
+    optimizer: auto
+    learning_rate: ultralytics_auto
+  faster_rcnn:
+    model: fasterrcnn_resnet50_fpn
+    optimizer: SGD
+    learning_rate: 0.005
+    momentum: 0.9
+    weight_decay: 0.0005
+  retinanet:
+    model: retinanet_resnet50_fpn
+    optimizer: AdamW
+    learning_rate: 0.0001
+    weight_decay: 0.0001

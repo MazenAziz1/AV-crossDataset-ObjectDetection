@@ -1,0 +1,58 @@
+status: frozen
+scope: milestone_4_5_kitti_only_final_training
+fairness_constants:
+  image_size: 640
+  batch_size: 16
+  epochs: 120
+  patience: 20
+  seed: 42
+slots:
+  slot_a:
+  - yolo
+  - faster_rcnn
+  - retinanet
+  slot_b:
+  - rtdetr
+run_types:
+  smoke:
+    train_images: 16
+    val_images: 16
+    epochs: 1
+  tiny_overfit:
+    train_images: 32
+    val_images: 32
+    epochs: 3
+  pilot:
+    train_images: 512
+    val_images: 256
+    epochs: 5
+  final:
+    train_images: all
+    val_images: all
+    epochs: 120
+  final_session_1:
+    train_images: all
+    val_images: all
+    epochs: 120
+  final_resume_if_needed:
+    train_images: all
+    val_images: all
+    epochs: 120
+detectors:
+  yolo:
+    family: ultralytics
+    model: yolo26s.pt
+    slot: slot_a
+  rtdetr:
+    family: ultralytics
+    model: rtdetr-l.pt
+    slot: slot_b
+  faster_rcnn:
+    family: torchvision
+    model: fasterrcnn_resnet50_fpn
+    slot: slot_a
+  retinanet:
+    family: torchvision
+    model: retinanet_resnet50_fpn
+    slot: slot_a
+waymo_allowed: false

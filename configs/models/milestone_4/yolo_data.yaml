@@ -1,0 +1,9 @@
+path: /kaggle/working/project/milestone4_kaggle_training_package/data/processed/milestone_3
+train: images/kitti/train
+val: images/kitti/val
+test: images/kitti/val
+nc: 3
+names:
+  0: Vehicle
+  1: Pedestrian
+  2: Cyclist

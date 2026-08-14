@@ -1,0 +1,17 @@
+status: frozen
+comparison_scope: kitti_validation_only_for_milestone_4_5
+isolate_architectural_efficiency: true
+fixed_constants:
+  image_size: 640
+  batch_size: 16
+  epochs: 120
+  patience: 20
+  seed: 42
+allowed_differences:
+- optimizer
+- learning_rate
+- native_detector_family_training_loop
+forbidden_during_final_training:
+- waymo
+- dynamic_time_budget_epochs
+- device_0_1_for_torchvision_data_parallel
