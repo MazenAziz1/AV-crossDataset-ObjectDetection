@@ -1,0 +1,83 @@
+{
+  "milestone": 7,
+  "step": 2,
+  "created_at": "2026-08-15T19:23:40.060197+00:00",
+  "confidence_threshold": 0.25,
+  "tp_iou_threshold": 0.5,
+  "localization_iou_low": 0.1,
+  "total_records": 148920,
+  "counts_by_error_type": {
+    "true_positive": 46763,
+    "localization_error": 7497,
+    "false_positive": 2286,
+    "over_detection": 7224,
+    "false_negative": 83681,
+    "class_confusion": 1469
+  },
+  "counts_by_dataset_detector_error": {
+    "kitti__yolo": {
+      "true_positive": 7382,
+      "localization_error": 272,
+      "false_positive": 163,
+      "over_detection": 142,
+      "false_negative": 410,
+      "class_confusion": 15
+    },
+    "kitti__rtdetr": {
+      "true_positive": 7551,
+      "over_detection": 5646,
+      "localization_error": 1620,
+      "class_confusion": 82,
+      "false_positive": 777,
+      "false_negative": 241
+    },
+    "kitti__retinanet": {
+      "true_positive": 7069,
+      "over_detection": 274,
+      "localization_error": 1165,
+      "false_negative": 723,
+      "class_confusion": 161,
+      "false_positive": 425
+    },
+    "kitti__faster_rcnn": {
+      "true_positive": 7231,
+      "localization_error": 592,
+      "false_positive": 241,
+      "false_negative": 561,
+      "class_confusion": 96,
+      "over_detection": 98
+    },
+    "waymo__yolo": {
+      "false_negative": 22098,
+      "true_positive": 2721,
+      "localization_error": 132,
+      "class_confusion": 56,
+      "false_positive": 20,
+      "over_detection": 27
+    },
+    "waymo__rtdetr": {
+      "false_negative": 21050,
+      "true_positive": 3769,
+      "over_detection": 743,
+      "localization_error": 446,
+      "class_confusion": 132,
+      "false_positive": 40
+    },
+    "waymo__retinanet": {
+      "false_negative": 19048,
+      "true_positive": 5771,
+      "localization_error": 2007,
+      "false_positive": 328,
+      "class_confusion": 561,
+      "over_detection": 216
+    },
+    "waymo__faster_rcnn": {
+      "false_negative": 19550,
+      "false_positive": 292,
+      "localization_error": 1263,
+      "true_positive": 5269,
+      "class_confusion": 366,
+      "over_detection": 78
+    }
+  }
+}

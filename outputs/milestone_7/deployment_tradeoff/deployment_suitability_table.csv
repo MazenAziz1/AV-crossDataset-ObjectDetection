@@ -1,0 +1,5 @@
+detector,KITTI_mAP50_95,Waymo_mAP50_95,waymo_mean_inference_ms,KITTI_safety_fn_rate,Waymo_safety_fn_rate,KITTI_small_recall,Waymo_small_recall
+yolo,0.6899,0.0654,34.21,0.1515,0.9259,0.9323,0.0293
+rtdetr,0.6057,0.0714,62.57,0.0765,0.9056,0.9643,0.0467
+retinanet,0.5375,0.0969,77.5,0.1939,0.8107,0.8812,0.1268
+faster_rcnn,0.5892,0.0771,92.07,0.1591,0.844,0.9251,0.0973

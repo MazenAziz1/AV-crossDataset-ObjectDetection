@@ -1,0 +1,89 @@
+{
+  "failure_case_policy": {
+    "metadata": {
+      "milestone": 7,
+      "status": "frozen",
+      "date_frozen": "2026-08-15"
+    },
+    "matching": {
+      "tp_iou_threshold": 0.5,
+      "confidence_threshold_operating_point": 0.25,
+      "note": "Confidence threshold matches the frozen Milestone 5/6 operating point."
+    },
+    "failure_types": {
+      "missed_detection": "ground-truth object with no matched prediction (false negative)",
+      "false_positive": "prediction with no ground-truth overlap (IoU < 0.10 against any GT)",
+      "localization_error": "correct class but 0.10 <= IoU < 0.50 against an unmatched same-class GT",
+      "class_confusion": "prediction overlaps a ground-truth object of a different class (IoU >= 0.10)",
+      "over_detection": "extra prediction overlapping an already-matched GT of the same class (IoU >= 0.50)"
+    },
+    "thresholds": {
+      "localization_ioi_low": 0.1,
+      "localization_iou_high": 0.5,
+      "confusion_iou_low": 0.1,
+      "over_detection_iou": 0.5
+    },
+    "datasets": [
+      "kitti",
+      "waymo"
+    ],
+    "detectors": [
+      "yolo",
+      "rtdetr",
+      "retinanet",
+      "faster_rcnn"
+    ],
+    "classes": {
+      "1": "Vehicle",
+      "2": "Pedestrian",
+      "3": "Cyclist"
+    }
+  },
+  "safety_error_policy": {
+    "metadata": {
+      "milestone": 7,
+      "status": "frozen",
+      "date_frozen": "2026-08-15"
+    },
+    "safety_priority_classes": {
+      "2": "Pedestrian",
+      "3": "Cyclist"
+    },
+    "fn_rate_definition": "false_negatives / (true_positives + false_negatives) per (detector, dataset, class)",
+    "top_safety_critical_images": 10,
+    "top_image_criterion": "highest count of pedestrian + cyclist missed detections per image",
+    "datasets": [
+      "kitti",
+      "waymo"
+    ],
+    "detectors": [
+      "yolo",
+      "rtdetr",
+      "retinanet",
+      "faster_rcnn"
+    ]
+  },
+  "object_size_bins": {
+    "metadata": {
+      "milestone": 7,
+      "status": "frozen",
+      "source": "reused verbatim from configs/evaluation/milestone_5/evaluation_policy.yaml scale_ranges",
+      "source_date_frozen": "2026-06-24"
+    },
+    "unit": "absolute_pixels_squared",
+    "bins": {
+      "small": {
+        "min_area": 0,
+        "max_area": 1024
+      },
+      "medium": {
+        "min_area": 1024,
+        "max_area": 9216
+      },
+      "large": {
+        "min_area": 9216,
+        "max_area": 99999999
+      }
+    }
+  }
+}

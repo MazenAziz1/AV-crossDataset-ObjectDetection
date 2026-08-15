@@ -1,0 +1,389 @@
+{
+  "milestone": 7,
+  "step": 5,
+  "failure_type_summary": [
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "true_positive": 7231.0,
+      "false_negative": 561.0,
+      "false_positive": 241.0,
+      "localization_error": 592.0,
+      "class_confusion": 96.0,
+      "over_detection": 98.0
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "true_positive": 7069.0,
+      "false_negative": 723.0,
+      "false_positive": 425.0,
+      "localization_error": 1165.0,
+      "class_confusion": 161.0,
+      "over_detection": 274.0
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "true_positive": 7551.0,
+      "false_negative": 241.0,
+      "false_positive": 777.0,
+      "localization_error": 1620.0,
+      "class_confusion": 82.0,
+      "over_detection": 5646.0
+    },
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "true_positive": 7382.0,
+      "false_negative": 410.0,
+      "false_positive": 163.0,
+      "localization_error": 272.0,
+      "class_confusion": 15.0,
+      "over_detection": 142.0
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "true_positive": 5269.0,
+      "false_negative": 19550.0,
+      "false_positive": 292.0,
+      "localization_error": 1263.0,
+      "class_confusion": 366.0,
+      "over_detection": 78.0
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "true_positive": 5771.0,
+      "false_negative": 19048.0,
+      "false_positive": 328.0,
+      "localization_error": 2007.0,
+      "class_confusion": 561.0,
+      "over_detection": 216.0
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "true_positive": 3769.0,
+      "false_negative": 21050.0,
+      "false_positive": 40.0,
+      "localization_error": 446.0,
+      "class_confusion": 132.0,
+      "over_detection": 743.0
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "true_positive": 2721.0,
+      "false_negative": 22098.0,
+      "false_positive": 20.0,
+      "localization_error": 132.0,
+      "class_confusion": 56.0,
+      "over_detection": 27.0
+    }
+  ],
+  "class_confusion_summary": [
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 20
+    },
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 5
+    },
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 44
+    },
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 17
+    },
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "class_name": "Vehicle",
+      "gt_class_name": "Cyclist",
+      "count": 7
+    },
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 3
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 34
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 14
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 59
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 33
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "class_name": "Vehicle",
+      "gt_class_name": "Cyclist",
+      "count": 10
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 11
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 14
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 2
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 21
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 32
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "Vehicle",
+      "gt_class_name": "Cyclist",
+      "count": 10
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 3
+    },
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 4
+    },
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 3
+    },
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 3
+    },
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "class_name": "Vehicle",
+      "gt_class_name": "Cyclist",
+      "count": 2
+    },
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 3
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 70
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 14
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 104
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 154
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 24
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 148
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 39
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 126
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 223
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Vehicle",
+      "gt_class_name": "Cyclist",
+      "count": 6
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 19
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 49
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 6
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 24
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 48
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "Vehicle",
+      "gt_class_name": "Pedestrian",
+      "count": 5
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Cyclist",
+      "gt_class_name": "Pedestrian",
+      "count": 43
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Cyclist",
+      "gt_class_name": "Vehicle",
+      "count": 2
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Cyclist",
+      "count": 10
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Pedestrian",
+      "gt_class_name": "Vehicle",
+      "count": 1
+    }
+  ]
+}

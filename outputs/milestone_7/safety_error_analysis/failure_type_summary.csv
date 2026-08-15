@@ -1,0 +1,9 @@
+dataset,detector,true_positive,false_negative,false_positive,localization_error,class_confusion,over_detection
+kitti,faster_rcnn,7231.0,561.0,241.0,592.0,96.0,98.0
+kitti,retinanet,7069.0,723.0,425.0,1165.0,161.0,274.0
+kitti,rtdetr,7551.0,241.0,777.0,1620.0,82.0,5646.0
+kitti,yolo,7382.0,410.0,163.0,272.0,15.0,142.0
+waymo,faster_rcnn,5269.0,19550.0,292.0,1263.0,366.0,78.0
+waymo,retinanet,5771.0,19048.0,328.0,2007.0,561.0,216.0
+waymo,rtdetr,3769.0,21050.0,40.0,446.0,132.0,743.0
+waymo,yolo,2721.0,22098.0,20.0,132.0,56.0,27.0
