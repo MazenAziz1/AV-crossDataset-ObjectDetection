@@ -12,6 +12,7 @@ def main():
     parser.add_argument("--checkpoint", required=True, help="Path to .pt checkpoint")
     parser.add_argument("--partition", default="kitti_val")
     parser.add_argument("--output-dir", default="outputs/milestone_5")
+    parser.add_argument("--limit", type=int, default=None, help="Limit number of images (for smoke testing).")
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parents[2]
@@ -28,6 +29,9 @@ def main():
     with open(gt_json) as f:
         gt_data = json.load(f)
     image_ids = gt_data["images"]
+    image_id_to_file = {img["id"]: img["file_name"] for img in image_ids}
+    if args.limit is not None:
+        image_ids = image_ids[: args.limit]
 
     # Generate predictions
     print(f"Running inference with checkpoint: {args.checkpoint}")
@@ -66,6 +70,13 @@ def main():
         )
         print(f"DontCare suppressed: {suppress_count} predictions removed")
         print(f"Predictions after suppression: {len(predictions)}")
+
+    # Persist the evaluated predictions for Milestone 7 (read-only: metrics unchanged).
+    from scripts.milestone_5.prediction_export import save_predictions_jsonl
+
+    pred_path = Path(args.output_dir) / "predictions" / "kitti_validation" / f"{args.detector}_predictions.jsonl"
+    n_pred = save_predictions_jsonl(predictions, image_id_to_file, args.detector, "kitti", pred_path)
+    print(f"Saved {n_pred} predictions to: {pred_path}")
 
     # Evaluate
     from scripts.milestone_5.evaluation.coco_evaluator import evaluate_predictions

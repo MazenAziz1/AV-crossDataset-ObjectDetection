@@ -91,6 +91,10 @@ mlruns/
 /outputs/milestone_4/kaggle_packages/
 /outputs/milestone_4/kaggle_downloads/
 
+# Milestone 5/6 raw prediction exports (JSONL) generated for Milestone 7 analysis
+/outputs/milestone_5/predictions/
+/outputs/milestone_6/waymo_external_validation/predictions/
+
 # Accidental duplicate output tree (stale path-bug artifact)
 /scripts/outputs/
 

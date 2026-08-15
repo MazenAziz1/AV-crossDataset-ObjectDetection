@@ -39,6 +39,7 @@ def main():
         coco = json.load(f)
 
     image_id_map = {img["file_name"]: img["id"] for img in coco["images"]}
+    id_to_file = {v: k for k, v in image_id_map.items()}
     all_images = sorted(images_dir.glob("*.png"))
     if args.limit is not None:
         all_images = all_images[:args.limit]
@@ -69,6 +70,14 @@ def main():
                 ignore_data = json.load(f)
             predictions, suppress_count = suppress_dontcare_predictions(
                 predictions, ignore_data["regions"], min_iou_overlap=0.5)
+
+        # Persist the evaluated predictions for Milestone 7 (read-only: metrics unchanged).
+        from scripts.milestone_5.prediction_export import save_predictions_jsonl
+
+        pred_dir = project_root / "outputs" / "milestone_6" / "waymo_external_validation" / "predictions"
+        pred_path = pred_dir / f"{detector}_waymo_predictions.jsonl"
+        n_pred = save_predictions_jsonl(predictions, id_to_file, detector, "waymo", pred_path)
+        print(f"[{detector}] saved {n_pred} predictions to: {pred_path}")
 
         # Reuse the Milestone 5 pycocotools evaluator.
         from scripts.milestone_5.evaluation.coco_evaluator import evaluate_predictions
