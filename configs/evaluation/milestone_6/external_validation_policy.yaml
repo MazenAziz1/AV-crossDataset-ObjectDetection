@@ -1,0 +1,63 @@
+# Milestone 6 - External Validation Policy
+# Status: Frozen
+#
+# Defines the no-retraining external validation policy for applying the locked
+# KITTI-trained detectors directly to the Waymo external subset.
+
+metadata:
+  milestone: 6
+  status: frozen
+  date_frozen: "2026-08-15"
+
+no_retraining_policy:
+  training: false
+  fine_tuning: false
+  hyperparameter_selection: false
+  threshold_tuning_on_waymo: false
+  checkpoint_selection_on_waymo: false
+  evaluation_only: true
+
+locked_checkpoints:
+  registry: "outputs/milestone_4/manifests/final_checkpoint_registry.csv"
+  yolo: "outputs/milestone_4/checkpoints/yolo/final/best.pt"
+  rtdetr: "outputs/milestone_4/checkpoints/rtdetr/final/best.pt"
+  retinanet: "outputs/milestone_4/checkpoints/retinanet/final/best.pt"
+  faster_rcnn: "outputs/milestone_4/checkpoints/faster_rcnn/final/best.pt"
+  all_trained_on: "KITTI (Milestone 4/5)"
+  none_trained_on: "Waymo"
+
+evaluation:
+  input_size: [640, 640]
+  # Low threshold to capture complete precision-recall curves for AP.
+  confidence_threshold_curve: 0.001
+  # Fixed operating point (defined before any Waymo result) for Precision/Recall/F1.
+  operating_point_confidence: 0.25
+  operating_point_iou: 0.50
+  iou_range: [0.50, 0.95]
+  iou_step: 0.05
+  metrics:
+    - "mAP50"
+    - "mAP50_95"
+    - "per_class_AP"
+    - "mean_inference_time_ms"
+  ultralytics_nms_iou: 0.70
+  ultralytics_max_det: 300
+
+class_mapping:
+  # Canonical evaluation ids are COCO category ids (1,2,3).
+  coco_category_id:
+    1: "Vehicle"
+    2: "Pedestrian"
+    3: "Cyclist"
+  adapter_contract:
+    yolo_and_rtdetr: "internal class id (0,1,2) is mapped to COCO id via +1"
+    torchvision: "label (1,2,3) equals COCO id; label 0 is background and ignored"
+
+hardware:
+  device: "cuda"  # falls back to cpu if unavailable
+  benchmark_device_note: "Inference time is measured per real Waymo image during evaluation."
+
+methodology_consistency:
+  - "Reuses the Milestone 4/5 COCO + pycocotools evaluator."
+  - "No thresholds are tuned using Waymo results."
+  - "KITTI baseline is the frozen Milestone 4/5 kitti_validation metrics."

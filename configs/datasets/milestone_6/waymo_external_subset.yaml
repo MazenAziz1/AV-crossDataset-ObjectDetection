@@ -1,0 +1,64 @@
+# Milestone 6 - Waymo External Subset Configuration
+# Status: Frozen
+#
+# This file documents the frozen Waymo external subset used for cross-dataset
+# validation. It references the Milestone 3 canonical COCO annotation and the
+# processed 640x640 images. No Waymo data is used for training or tuning.
+
+metadata:
+  milestone: 6
+  status: frozen
+  date_frozen: "2026-08-15"
+
+dataset:
+  name: "Waymo external representative subset"
+  source_dataset: "Waymo Open Dataset v2.0.1"
+  source_split: "validation"
+  role: "external_validation_without_retraining"
+  camera_id: 1
+  camera_name: "FRONT"
+
+paths:
+  canonical_coco_annotations: "data/processed/milestone_3/annotations/coco/waymo_external.json"
+  ignore_regions: "data/processed/milestone_3/annotations/ignore_regions/waymo_external_ignore.json"
+  images_dir: "data/processed/milestone_3/images/waymo/external"
+  yolo_label_mirror: "data/processed/milestone_3/annotations/yolo/yolo/waymo/external"
+  raw_subset: "data/waymo/representative_subset"
+
+selection:
+  number_of_segments: 25
+  frame_sampling_interval: 5
+  frame_sampling_rule: "every_5th_front_frame_starting_at_first"
+  number_of_selected_images: 996
+  images_without_target_boxes: 12
+  number_of_target_boxes: 24819
+  frozen_before_model_evaluation: true
+
+classes:
+  # COCO category ids are the canonical evaluation ids (Milestone 3 contract).
+  # YOLO / RT-DETR internal class indices are 0-indexed (0,1,2).
+  # Torchvision detection models use background=0 and labels 1,2,3.
+  coco_category_id:
+    1: "Vehicle"
+    2: "Pedestrian"
+    3: "Cyclist"
+  yolo_class_id:
+    0: "Vehicle"
+    1: "Pedestrian"
+    2: "Cyclist"
+  torchvision_label:
+    0: "background"
+    1: "Vehicle"
+    2: "Pedestrian"
+    3: "Cyclist"
+
+exclusion:
+  excluded_non_target_classes:
+    - "Sign"
+  evaluation_ignore_classes: []
+  negative_image_policy: "preserve_images_with_empty_annotations"
+
+notes:
+  - "Waymo validation is used only for external evaluation; never for training."
+  - "Signs are excluded from the harmonized three-class task."
+  - "There are no DontCare-style ignore regions for Waymo (empty ignore sidecar)."

@@ -1,0 +1,54 @@
+[
+  {
+    "detector": "yolo",
+    "num_images": 996,
+    "mAP50": 0.141989,
+    "mAP50_95": 0.065426,
+    "mean_inference_ms": 34.2107,
+    "Vehicle_AP50": 0.170978,
+    "Vehicle_AP50_95": 0.105584,
+    "Pedestrian_AP50": 0.113385,
+    "Pedestrian_AP50_95": 0.049069,
+    "Cyclist_AP50": 0.141605,
+    "Cyclist_AP50_95": 0.041624
+  },
+  {
+    "detector": "rtdetr",
+    "num_images": 996,
+    "mAP50": 0.150873,
+    "mAP50_95": 0.071436,
+    "mean_inference_ms": 62.5657,
+    "Vehicle_AP50": 0.210791,
+    "Vehicle_AP50_95": 0.115588,
+    "Pedestrian_AP50": 0.119626,
+    "Pedestrian_AP50_95": 0.057818,
+    "Cyclist_AP50": 0.122202,
+    "Cyclist_AP50_95": 0.0409
+  },
+  {
+    "detector": "retinanet",
+    "num_images": 996,
+    "mAP50": 0.214527,
+    "mAP50_95": 0.09687,
+    "mean_inference_ms": 77.504,
+    "Vehicle_AP50": 0.269802,
+    "Vehicle_AP50_95": 0.143864,
+    "Pedestrian_AP50": 0.172826,
+    "Pedestrian_AP50_95": 0.074647,
+    "Cyclist_AP50": 0.200952,
+    "Cyclist_AP50_95": 0.072099
+  },
+  {
+    "detector": "faster_rcnn",
+    "num_images": 996,
+    "mAP50": 0.174806,
+    "mAP50_95": 0.077069,
+    "mean_inference_ms": 92.07,
+    "Vehicle_AP50": 0.244247,
+    "Vehicle_AP50_95": 0.122632,
+    "Pedestrian_AP50": 0.145499,
+    "Pedestrian_AP50_95": 0.070195,
+    "Cyclist_AP50": 0.134672,
+    "Cyclist_AP50_95": 0.038379
+  }
+]

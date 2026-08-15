@@ -1,0 +1,58 @@
+{
+  "milestone": 6,
+  "phase": 4,
+  "purpose": "Smoke test: load all four locked checkpoints and run a tiny Waymo sample",
+  "timestamp": "2026-08-15T00:25:02.490356+00:00",
+  "smoke_image_count": 20,
+  "status": "PASSED",
+  "detectors": {
+    "yolo": {
+      "checkpoint": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\yolo\\final\\best.pt",
+      "num_images": 20,
+      "num_predictions": 518,
+      "category_ids_seen": [
+        1,
+        2,
+        3
+      ],
+      "bbox_and_score_valid": true,
+      "mean_inference_ms": 83.552
+    },
+    "faster_rcnn": {
+      "checkpoint": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\faster_rcnn\\final\\best.pt",
+      "num_images": 20,
+      "num_predictions": 271,
+      "category_ids_seen": [
+        1,
+        2,
+        3
+      ],
+      "bbox_and_score_valid": true,
+      "mean_inference_ms": 98.387
+    },
+    "retinanet": {
+      "checkpoint": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\retinanet\\final\\best.pt",
+      "num_images": 20,
+      "num_predictions": 1049,
+      "category_ids_seen": [
+        1,
+        2,
+        3
+      ],
+      "bbox_and_score_valid": true,
+      "mean_inference_ms": 79.344
+    },
+    "rtdetr": {
+      "checkpoint": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\rtdetr\\final\\best.pt",
+      "num_images": 20,
+      "num_predictions": 5968,
+      "category_ids_seen": [
+        1,
+        2,
+        3
+      ],
+      "bbox_and_score_valid": true,
+      "mean_inference_ms": 156.102
+    }
+  }
+}

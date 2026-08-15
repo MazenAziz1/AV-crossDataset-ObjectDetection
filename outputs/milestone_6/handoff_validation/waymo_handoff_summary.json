@@ -1,0 +1,34 @@
+{
+  "milestone": 6,
+  "phase": 1,
+  "purpose": "Validate Waymo external subset before external evaluation",
+  "timestamp": "2026-08-15T00:22:23.792695+00:00",
+  "status": "PASSED",
+  "errors_count": 0,
+  "warnings_count": 0,
+  "checks": {
+    "coco_num_images": 996,
+    "coco_num_annotations": 24819,
+    "coco_categories": "PASSED",
+    "png_image_count": 996,
+    "image_coco_pairing": "PASSED",
+    "image_dimensions_sample": "PASSED (640x640)",
+    "yolo_label_count": 996,
+    "yolo_pairing": "PASSED",
+    "yolo_bbox_and_class_sample": "PASSED",
+    "ignore_classes": []
+  },
+  "issues": [],
+  "class_mapping": {
+    "coco_category_id": {
+      "1": "Vehicle",
+      "2": "Pedestrian",
+      "3": "Cyclist"
+    },
+    "yolo_class_id": {
+      "0": "Vehicle",
+      "1": "Pedestrian",
+      "2": "Cyclist"
+    }
+  }
+}

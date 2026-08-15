@@ -1,0 +1,19 @@
+{
+  "milestone": 6,
+  "phase": 6,
+  "created_at": "2026-08-15T00:33:31.148100+00:00",
+  "best_generalizing_detector": "retinanet",
+  "worst_generalizing_detector": "yolo",
+  "largest_degraded_class": "Vehicle",
+  "class_mean_absolute_drop_ap50_95": {
+    "Vehicle": 0.63407,
+    "Cyclist": 0.551769,
+    "Pedestrian": 0.397848
+  },
+  "detector_ranking_by_mAP50_95_generalization": [
+    "retinanet",
+    "faster_rcnn",
+    "rtdetr",
+    "yolo"
+  ]
+}

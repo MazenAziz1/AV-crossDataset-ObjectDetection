@@ -1,0 +1,69 @@
+{
+  "milestone": 6,
+  "phase": 9,
+  "timestamp": "2026-08-15T00:36:18.117153+00:00",
+  "status": "PASSED",
+  "checks": [
+    {
+      "name": "required_configs_exist",
+      "status": "PASSED",
+      "detail": "missing=[]"
+    },
+    {
+      "name": "waymo_handoff_summary",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "waymo_format_inspection",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "waymo_metrics_all_detectors",
+      "status": "PASSED",
+      "detail": "missing=[]"
+    },
+    {
+      "name": "table_kitti_vs_waymo_comparison.csv",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "table_generalization_ratio_table.csv",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "table_class_wise_degradation.csv",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "generalization_summary_json",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "figures_exist",
+      "status": "PASSED",
+      "detail": "missing=[]"
+    },
+    {
+      "name": "docx_report",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "markdown_report",
+      "status": "PASSED",
+      "detail": ""
+    },
+    {
+      "name": "no_forbidden_artifacts",
+      "status": "PASSED",
+      "detail": "forbidden=[]"
+    }
+  ],
+  "failures": []
+}

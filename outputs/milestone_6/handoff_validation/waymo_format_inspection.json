@@ -1,0 +1,103 @@
+{
+  "milestone": 6,
+  "phase": 3,
+  "purpose": "Confirm exact Waymo label format and class mapping before adapting the evaluator",
+  "image": {
+    "sample_image_id": 1000001,
+    "sample_file_name": "13415985003725220451_6163_000_6183_000_1518657647337560.png",
+    "width": 640,
+    "height": 640,
+    "file_extension_on_disk": ".png"
+  },
+  "coco_annotation_format": {
+    "coordinate_system": "xywh_absolute_float_pixels",
+    "category_ids": {
+      "1": "Vehicle",
+      "2": "Pedestrian",
+      "3": "Cyclist"
+    },
+    "sample_annotation": {
+      "id": 1,
+      "image_id": 1000001,
+      "category_id": 1,
+      "bbox": [
+        65.369565,
+        335.4462849766,
+        19.57929,
+        6.74222325
+      ],
+      "area": 132.0079442565,
+      "iscrowd": 0,
+      "source_dataset": "Waymo",
+      "source_image_id": "13415985003725220451_6163_000_6183_000_1518657647337560",
+      "source_class": "Vehicle",
+      "clipping_applied": false
+    }
+  },
+  "yolo_label_format": {
+    "schema": "class_id x_center y_center width height",
+    "coordinate_system": "normalized_0_to_1",
+    "sample_lines": [
+      {
+        "file": "10289507859301986274_4200_000_4220_000_1557847392672581.txt",
+        "first_lines": [
+          "0 0.5986946875 0.4500625071 0.0319085250 0.0135799036",
+          "0 0.3256635937 0.4731072517 0.0378296094 0.0260075995",
+          "0 0.3220451094 0.4568113654 0.0220398594 0.0102055137",
+          "0 0.6013263125 0.4536838547 0.0092106875 0.0036213113",
+          "0 0.3712260362 0.4775507236 0.0794369172 0.1015577842"
+        ]
+      },
+      {
+        "file": "10289507859301986274_4200_000_4220_000_1557847393172585.txt",
+        "first_lines": [
+          "0 0.5977078281 0.4470996523 0.0378296094 0.0164605060",
+          "0 0.3072422188 0.4701443607 0.0148028906 0.0204110274",
+          "0 0.3128344219 0.4546714850 0.0046053438 0.0092178833",
+          "0 0.6042868906 0.4500625434 0.0092106875 0.0036213113",
+          "0 0.3562562344 0.4823251351 0.1088834844 0.1227953746"
+        ]
+      },
+      {
+        "file": "10289507859301986274_4200_000_4220_000_1557847393672620.txt",
+        "first_lines": [
+          "0 0.5996815469 0.4507209636 0.0332242656 0.0138268250",
+          "0 0.6042868906 0.4536838547 0.0118423125 0.0036213113",
+          "0 0.3302689375 0.4941766994 0.1605291250 0.1478153437",
+          "0 0.8807632422 0.5698950269 0.2384735156 0.1725061027",
+          "0 0.9648930039 0.4839711857 0.0702139922 0.0322625917"
+        ]
+      }
+    ]
+  },
+  "class_id_mapping": {
+    "coco_category_id": {
+      "Vehicle": 1,
+      "Pedestrian": 2,
+      "Cyclist": 3
+    },
+    "yolo_class_id": {
+      "Vehicle": 0,
+      "Pedestrian": 1,
+      "Cyclist": 2
+    },
+    "torchvision_label": {
+      "background": 0,
+      "Vehicle": 1,
+      "Pedestrian": 2,
+      "Cyclist": 3
+    },
+    "waymo_original_type_ids": {
+      "Vehicle": "Vehicle",
+      "Pedestrian": "Pedestrian",
+      "Cyclist": "Cyclist",
+      "Sign_excluded": "Sign"
+    }
+  },
+  "conversion_rule_for_evaluator": {
+    "ground_truth": "COCO category ids (1,2,3) are used directly by pycocotools.",
+    "ultralytics_yolo_rtdetr": "predicted internal class id (0,1,2) -> COCO id via +1.",
+    "torchvision": "predicted label (1,2,3) equals COCO id; label 0 (background) ignored."
+  },
+  "verdict": "No silent conversion required; the Milestone 3 frozen mapping is respected."
+}

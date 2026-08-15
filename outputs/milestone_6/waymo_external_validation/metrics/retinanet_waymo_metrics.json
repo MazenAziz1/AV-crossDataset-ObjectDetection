@@ -1,0 +1,57 @@
+{
+  "detector": "retinanet",
+  "checkpoint": "D:\\MCs\\advances object detection and recognition\\project\\AV-crossDataset-ObjectDetection\\outputs\\milestone_4\\checkpoints\\retinanet\\final\\best.pt",
+  "partition": "waymo_external",
+  "dataset": "Waymo external representative subset",
+  "policy": "no_retraining_locked_kitti_checkpoint",
+  "num_images": 996,
+  "num_predictions": 28036,
+  "ignore_suppressed": 0,
+  "confidence_threshold_curve": 0.001,
+  "input_size": [
+    640,
+    640
+  ],
+  "mean_inference_ms": 77.504,
+  "median_inference_ms": 76.616,
+  "metrics": {
+    "mAP_50_95": 0.0968696864261754,
+    "mAP_50": 0.21452673766027394,
+    "mAP_75": 0.074898044709686,
+    "AP_small": 0.048322274273677454,
+    "AP_medium": 0.36477128659258207,
+    "AP_large": 0.6197600495493885,
+    "AR_max_1": 0.05098664741964355,
+    "AR_max_10": 0.11582564369960666,
+    "AR_max_100": 0.12960555587495728
+  },
+  "per_class": {
+    "1": {
+      "name": "Vehicle",
+      "AP_50_95": 0.14386352532097674,
+      "AP_50": 0.2698022494024269
+    },
+    "2": {
+      "name": "Pedestrian",
+      "AP_50_95": 0.07464693454260994,
+      "AP_50": 0.17282589399755177
+    },
+    "3": {
+      "name": "Cyclist",
+      "AP_50_95": 0.07209859941493955,
+      "AP_50": 0.2009520695808432
+    }
+  },
+  "operating_point": {
+    "conf_threshold": 0.25,
+    "iou_threshold": 0.5,
+    "precision": 0.6497,
+    "recall": 0.2325,
+    "f1_score": 0.3425,
+    "detections_per_image": 8.9187,
+    "false_positives_per_image": 3.1245,
+    "true_positives": 5771,
+    "false_positives": 3112,
+    "false_negatives": 19048
+  }
+}

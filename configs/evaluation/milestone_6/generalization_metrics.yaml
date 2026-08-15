@@ -1,0 +1,42 @@
+# Milestone 6 - Generalization Metrics Configuration
+# Status: Frozen
+#
+# Defines the KITTI-vs-Waymo comparison columns and Generalization Ratio formulas
+# used in the cross-dataset generalization analysis.
+
+metadata:
+  milestone: 6
+  status: frozen
+  date_frozen: "2026-08-15"
+
+inputs:
+  kitti_baseline: "outputs/milestone_4/metrics/kitti_validation/{detector}_metrics.json"
+  waymo_results: "outputs/milestone_6/waymo_external_validation/metrics/{detector}_waymo_metrics.json"
+
+comparison:
+  detector_level_metrics:
+    - "mAP50"
+    - "mAP50_95"
+  class_level_metrics:
+    - "AP50"
+    - "AP50_95"
+  classes:
+    - "Vehicle"
+    - "Pedestrian"
+    - "Cyclist"
+
+formulas:
+  absolute_drop: "KITTI_metric - Waymo_metric"
+  drop_percent: "100.0 * absolute_drop / KITTI_metric"
+  generalization_ratio: "Waymo_metric / KITTI_metric"
+
+outputs:
+  kitti_vs_waymo_comparison: "outputs/milestone_6/generalization_analysis/tables/kitti_vs_waymo_comparison.csv"
+  generalization_ratio_table: "outputs/milestone_6/generalization_analysis/tables/generalization_ratio_table.csv"
+  class_wise_degradation: "outputs/milestone_6/generalization_analysis/tables/class_wise_degradation.csv"
+  summary: "outputs/milestone_6/generalization_analysis/generalization_analysis_summary.json"
+
+summary_derivations:
+  best_generalizing_detector: "highest mAP50_95 generalization_ratio"
+  worst_generalizing_detector: "lowest mAP50_95 generalization_ratio"
+  largest_degraded_class: "class with largest mean absolute_drop (AP50_95) across detectors"
