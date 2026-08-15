@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 
 def benchmark_model(checkpoint_path, detector, warmup_runs=10, benchmark_runs=100,
-                    imgsz=640, output_dir="outputs/milestone_4"):
+                    imgsz=640, output_dir="outputs/milestone_5"):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if detector == "yolo":
         from ultralytics import YOLO
@@ -24,7 +24,7 @@ def benchmark_model(checkpoint_path, detector, warmup_runs=10, benchmark_runs=10
         net = RTDETR(str(checkpoint_path)).model
         list_input = False
     elif detector in ("faster_rcnn", "retinanet"):
-        from scripts.milestone_4.adapters.torchvision_adapter import _build_model, _load_state
+        from scripts.milestone_5.adapters.torchvision_adapter import _build_model, _load_state
         net = _load_state(checkpoint_path, _build_model(detector, device), device)
         list_input = True
     else:
@@ -117,7 +117,7 @@ def main():
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--runs", type=int, default=100)
-    parser.add_argument("--output-dir", default="outputs/milestone_4")
+    parser.add_argument("--output-dir", default="outputs/milestone_5")
     args = parser.parse_args()
 
     result = benchmark_model(

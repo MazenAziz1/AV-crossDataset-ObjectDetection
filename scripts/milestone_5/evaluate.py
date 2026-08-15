@@ -11,7 +11,7 @@ def main():
     parser.add_argument("--detector", required=True, choices=["yolo", "rtdetr", "faster_rcnn", "retinanet"])
     parser.add_argument("--checkpoint", required=True, help="Path to .pt checkpoint")
     parser.add_argument("--partition", default="kitti_val")
-    parser.add_argument("--output-dir", default="outputs/milestone_4")
+    parser.add_argument("--output-dir", default="outputs/milestone_5")
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parents[2]
@@ -32,21 +32,21 @@ def main():
     # Generate predictions
     print(f"Running inference with checkpoint: {args.checkpoint}")
     if args.detector == "yolo":
-        from scripts.milestone_4.adapters.yolo_adapter import run_yolo_predictions
+        from scripts.milestone_5.adapters.yolo_adapter import run_yolo_predictions
         predictions = run_yolo_predictions(
             checkpoint_path=args.checkpoint,
             images_dir=images_dir,
             image_ids=image_ids,
         )
     elif args.detector == "rtdetr":
-        from scripts.milestone_4.adapters.rtdetr_adapter import run_rtdetr_predictions
+        from scripts.milestone_5.adapters.rtdetr_adapter import run_rtdetr_predictions
         predictions = run_rtdetr_predictions(
             checkpoint_path=args.checkpoint,
             images_dir=images_dir,
             image_ids=image_ids,
         )
     else:
-        from scripts.milestone_4.adapters.torchvision_adapter import run_torchvision_predictions
+        from scripts.milestone_5.adapters.torchvision_adapter import run_torchvision_predictions
         predictions = run_torchvision_predictions(
             checkpoint_path=args.checkpoint,
             detector=args.detector,
@@ -58,7 +58,7 @@ def main():
     # DontCare suppression
     suppress_count = 0
     if ignore_json.exists():
-        from scripts.milestone_4.evaluation.ignore_region_suppression import suppress_dontcare_predictions
+        from scripts.milestone_5.evaluation.ignore_region_suppression import suppress_dontcare_predictions
         with open(ignore_json) as f:
             ignore_data = json.load(f)
         predictions, suppress_count = suppress_dontcare_predictions(
@@ -68,12 +68,12 @@ def main():
         print(f"Predictions after suppression: {len(predictions)}")
 
     # Evaluate
-    from scripts.milestone_4.evaluation.coco_evaluator import evaluate_predictions
+    from scripts.milestone_5.evaluation.coco_evaluator import evaluate_predictions
 
     metrics, per_class = evaluate_predictions(gt_json, predictions)
 
     # Operating-point metrics (confidence >= 0.25, IoU >= 0.50)
-    from scripts.milestone_4.evaluation.operating_point_metrics import compute_operating_point_metrics
+    from scripts.milestone_5.evaluation.operating_point_metrics import compute_operating_point_metrics
 
     operating_point = compute_operating_point_metrics(gt_json, predictions)
 

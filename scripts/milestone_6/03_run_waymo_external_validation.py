@@ -64,17 +64,17 @@ def main():
         # DontCare-style ignore suppression (empty for Waymo; Sign is excluded, not suppressed).
         suppress_count = 0
         if ignore_path.exists():
-            from scripts.milestone_4.evaluation.ignore_region_suppression import suppress_dontcare_predictions
+            from scripts.milestone_5.evaluation.ignore_region_suppression import suppress_dontcare_predictions
             with open(ignore_path, encoding="utf-8") as f:
                 ignore_data = json.load(f)
             predictions, suppress_count = suppress_dontcare_predictions(
                 predictions, ignore_data["regions"], min_iou_overlap=0.5)
 
-        # Reuse the Milestone 4/5 pycocotools evaluator.
-        from scripts.milestone_4.evaluation.coco_evaluator import evaluate_predictions
+        # Reuse the Milestone 5 pycocotools evaluator.
+        from scripts.milestone_5.evaluation.coco_evaluator import evaluate_predictions
         metrics, per_class = evaluate_predictions(coco_gt_path, predictions)
 
-        from scripts.milestone_4.evaluation.operating_point_metrics import compute_operating_point_metrics
+        from scripts.milestone_5.evaluation.operating_point_metrics import compute_operating_point_metrics
         operating_point = compute_operating_point_metrics(coco_gt_path, predictions)
 
         mean_inference_ms = float(sum(times_ms) / len(times_ms)) if times_ms else 0.0

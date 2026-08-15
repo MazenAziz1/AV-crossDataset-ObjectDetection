@@ -10,9 +10,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 def main():
     parser = argparse.ArgumentParser(description="Generate cross-model comparison outputs")
-    parser.add_argument("--metrics-dir", default="outputs/milestone_4/metrics/kitti_validation")
-    parser.add_argument("--benchmarks-dir", default="outputs/milestone_4/benchmarks")
-    parser.add_argument("--output-dir", default="outputs/milestone_4")
+    parser.add_argument("--metrics-dir", default="outputs/milestone_5/metrics/kitti_validation")
+    parser.add_argument("--benchmarks-dir", default="outputs/milestone_5/benchmarks")
+    parser.add_argument("--output-dir", default="outputs/milestone_5")
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parents[2]

@@ -1,6 +1,6 @@
 import json
 
-from scripts.milestone_4.evaluation.ignore_region_suppression import compute_iou
+from scripts.milestone_5.evaluation.ignore_region_suppression import compute_iou
 
 
 def compute_operating_point_metrics(gt_json_path, predictions, conf_threshold=0.25, iou_threshold=0.50):

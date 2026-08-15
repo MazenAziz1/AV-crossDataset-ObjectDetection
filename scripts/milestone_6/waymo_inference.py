@@ -119,7 +119,7 @@ def predict_torchvision(detector, checkpoint_path, image_paths, image_id_map, de
 
     image_id_map: dict mapping file_name (with extension) -> COCO image id.
     """
-    from scripts.milestone_4.adapters.torchvision_adapter import _build_model, _load_state
+    from scripts.milestone_5.adapters.torchvision_adapter import _build_model, _load_state
     from torchvision.transforms import functional as F
     from PIL import Image
 

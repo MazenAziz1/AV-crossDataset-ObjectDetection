@@ -32,9 +32,9 @@ def r2(x):
 
 def main():
     root = Path(__file__).resolve().parents[2]
-    metrics_dir = root / "outputs" / "milestone_4" / "metrics" / "kitti_validation"
-    benchmarks_dir = root / "outputs" / "milestone_4" / "benchmarks"
-    out_path = root / "docs" / "milestone_4" / "model_training_and_kitti_evaluation_draft.docx"
+    metrics_dir = root / "outputs" / "milestone_5" / "metrics" / "kitti_validation"
+    benchmarks_dir = root / "outputs" / "milestone_5" / "benchmarks"
+    out_path = root / "docs" / "milestone_5" / "model_training_and_kitti_evaluation_draft.docx"
 
     metrics = {d: json.load(open(metrics_dir / f"{d}_metrics.json")) for d in DETECTORS}
     benchmarks = {d: json.load(open(benchmarks_dir / f"{d}_benchmark.json")) for d in DETECTORS}

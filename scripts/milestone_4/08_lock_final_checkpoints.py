@@ -56,7 +56,7 @@ def main():
                 load_ok = True
             else:
                 import torch
-                from scripts.milestone_4.adapters.torchvision_adapter import _build_model, _load_state
+                from scripts.milestone_5.adapters.torchvision_adapter import _build_model, _load_state
                 m = _build_model(det, "cuda" if torch.cuda.is_available() else "cpu")
                 _load_state(best_pt, m, "cuda" if torch.cuda.is_available() else "cpu")
                 load_ok = True

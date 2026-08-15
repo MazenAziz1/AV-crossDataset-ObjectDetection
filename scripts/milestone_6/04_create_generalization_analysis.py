@@ -43,7 +43,7 @@ def main():
     print("=" * 79)
 
     project_root = Path(__file__).resolve().parents[2]
-    kitti_dir = project_root / "outputs" / "milestone_4" / "metrics" / "kitti_validation"
+    kitti_dir = project_root / "outputs" / "milestone_5" / "metrics" / "kitti_validation"
     waymo_dir = project_root / "outputs" / "milestone_6" / "waymo_external_validation" / "metrics"
     out_dir = project_root / "outputs" / "milestone_6" / "generalization_analysis"
     tables_dir = out_dir / "tables"

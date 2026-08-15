@@ -58,6 +58,6 @@ hardware:
   benchmark_device_note: "Inference time is measured per real Waymo image during evaluation."
 
 methodology_consistency:
-  - "Reuses the Milestone 4/5 COCO + pycocotools evaluator."
+  - "Reuses the Milestone 5 COCO + pycocotools evaluator."
   - "No thresholds are tuned using Waymo results."
-  - "KITTI baseline is the frozen Milestone 4/5 kitti_validation metrics."
+  - "KITTI baseline is the frozen Milestone 5 kitti_validation metrics."

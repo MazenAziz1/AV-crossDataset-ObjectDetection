@@ -10,7 +10,7 @@ metadata:
   date_frozen: "2026-08-15"
 
 inputs:
-  kitti_baseline: "outputs/milestone_4/metrics/kitti_validation/{detector}_metrics.json"
+  kitti_baseline: "outputs/milestone_5/metrics/kitti_validation/{detector}_metrics.json"
   waymo_results: "outputs/milestone_6/waymo_external_validation/metrics/{detector}_waymo_metrics.json"
 
 comparison:

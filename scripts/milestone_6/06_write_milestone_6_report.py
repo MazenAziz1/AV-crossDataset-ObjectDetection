@@ -24,7 +24,7 @@ def r2(x):
 
 def main():
     root = Path(__file__).resolve().parents[2]
-    kitti_dir = root / "outputs" / "milestone_4" / "metrics" / "kitti_validation"
+    kitti_dir = root / "outputs" / "milestone_5" / "metrics" / "kitti_validation"
     waymo_dir = root / "outputs" / "milestone_6" / "waymo_external_validation" / "metrics"
     ga_dir = root / "outputs" / "milestone_6" / "generalization_analysis"
     handoff_dir = root / "outputs" / "milestone_6" / "handoff_validation"
