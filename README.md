@@ -90,19 +90,22 @@ class_names:
 
 ---
 
-## 3. Repository Layout
+## 3. Repository Layout (close enough but not similar)
 
 ```text
 .
 ├── configs/
 │   ├── datasets/
 │   │   └── milestone_3/
+|   |   └── milestone_6/
 │   ├── models/
 │   │   └── milestone_4/
 │   └── analysis/
-│       └── milestone_7/
+│   |    └── milestone_7/
+|   └── evaluation/
+│       └── milestone_6/
 ├── data/
-│   ├── kitti/raw/                      # not tracked in Git
+│   ├── kitti raw/                      # not tracked in Git
 │   ├── waymo/raw/                      # not tracked in Git
 │   └── processed/milestone_3/          # generated dataset handoff
 ├── docs/
@@ -130,7 +133,7 @@ class_names:
 └── README.md
 ```
 
-> **Important path note:** some later scripts contain a hard-coded Windows project root such as `C:\Users\Mazen\Desktop\AAST\Research\Autonomous research`. If your clone is in another location, update the `PROJECT = Path(...)` line inside the relevant scripts before running them.
+> **Important path note:** some later scripts contain a hard-coded Windows project root. If your clone is in another location, update the `PROJECT = Path(...)` line inside the relevant scripts before running them.
 
 ---
 
@@ -153,114 +156,63 @@ All paper figures are included below so the root README gives a visual overview 
 
 ### Figure 1. Dataset preparation and evaluation protocol
 
-![Figure 1](docs/milestone_8/readme_figures/figure_01_dataset_preparation_evaluation_protocol.png)
+![Figure 1](docs\figures\figure_01_dataset_preparation_evaluation_protocol.png)
 
 ### Figure 2. Unified preprocessing and validation pipeline
 
-![Figure 2](docs/milestone_8/readme_figures/figure_02_unified_preprocessing_validation_pipeline.png)
+![Figure 2](docs\figures\figure_02_unified_preprocessing_validation_pipeline.png)
 
 ### Figure 3. KITTI in-domain mAP50-95 across eight detector instances
 
-![Figure 3](docs/milestone_8/readme_figures/figure_03_kitti_map50_95_eight_instances.png)
+![Figure 3](docs\figures\figure_03_kitti_map50_95_eight_instances.png)
 
 ### Figure 4. Waymo external mAP50-95 across eight detector instances
 
-![Figure 4](docs/milestone_8/readme_figures/figure_04_waymo_map50_95_eight_instances.png)
+![Figure 4](docs\figures\figure_04_waymo_map50_95_eight_instances.png)
 
 ### Figure 5. Waymo class-wise AP50-95 across eight detector instances
 
-![Figure 5](docs/milestone_8/readme_figures/figure_05_waymo_classwise_ap50_95.png)
+![Figure 5](docs\figures\figure_05_waymo_classwise_ap50_95.png)
 
 ### Figure 6. KITTI-to-Waymo mAP50-95 generalization ratio
 
-![Figure 6](docs/milestone_8/readme_figures/figure_06_generalization_ratio.png)
+![Figure 6](docs\figures\figure_06_generalization_ratio.png)
 
 ### Figure 7. Waymo vulnerable-road-user false-negative rate
 
-![Figure 7](docs/milestone_8/readme_figures/figure_07_waymo_vru_fnr.png)
+![Figure 7](docs\figures\figure_07_waymo_vru_fnr.png)
 
 ### Figure 8. Waymo small vulnerable-road-user recall
 
-![Figure 8](docs/milestone_8/readme_figures/figure_08_waymo_small_vru_recall.png)
+![Figure 8](docs\figures\figure_08_waymo_small_vru_recall.png)
 
 ### Figure 9. Waymo failure-event burden
 
-![Figure 9](docs/milestone_8/readme_figures/figure_09_waymo_failure_event_burden.png)
+![Figure 9](docs\figures\figure_09_waymo_failure_event_burden.png)
 
 ### Figure 10. Representative visual safety check
 
-![Figure 10](docs/milestone_8/readme_figures/figure_10_visual_safety_check.png)
+![Figure 10](docs\figures\figure_10_visual_safety_check.png)
 
 ### Figure 11. Safety-weighted deployment-support score
 
-![Figure 11](docs/milestone_8/readme_figures/figure_11_deployment_support_score.png)
+![Figure 11](docs\figures\figure_11_deployment_support_score.png)
 
 ### Figure 12. Waymo inference latency
 
-![Figure 12](docs/milestone_8/readme_figures/figure_12_waymo_latency.png)
+![Figure 12](docs\figures\figure_12_waymo_latency.png)
 
 ### Figure 13. Waymo accuracy-latency trade-off
 
-![Figure 13](docs/milestone_8/readme_figures/figure_13_accuracy_latency_tradeoff.png)
+![Figure 13](docs\figures\figure_13_accuracy_latency_tradeoff.png)
 
 ---
 
-## 6. Environment Setup Commands
+## 6. Environment Setup Commands 
 
 The commands below use **Windows CMD** and assume they are executed from the repository root unless otherwise stated.
 
-### 6.1 Create the virtual environment
-
-Needed files/folders before this command:
-
-- Python installed and available as `python`.
-- Repository folder exists locally.
-
-Command:
-
-```cmd
-python -m venv AVenv
-```
-
-### 6.2 Activate the virtual environment
-
-Needed files/folders before this command:
-
-- `AVenv\Scripts\activate.bat` exists. It is created by the previous command.
-
-Command:
-
-```cmd
-AVenv\Scripts\activate
-```
-
-### 6.3 Install dependencies
-
-Needed files/folders before this command:
-
-- `requirements.txt` exists at the repository root.
-- The virtual environment is activated.
-
-Command:
-
-```cmd
-python -m pip install -r requirements.txt
-```
-
-### 6.4 Confirm important packages
-
-Needed files/folders before this command:
-
-- The virtual environment is activated.
-- `torch`, `torchvision`, `ultralytics`, `cv2`, `numpy`, `pandas`, and `yaml` are installed.
-
-Command:
-
-```cmd
-python -c "import torch, torchvision, ultralytics, cv2, numpy, pandas, yaml; print(torch.__version__, torchvision.__version__, ultralytics.__version__)"
-```
-
----
+> Go and checkout the **setUP_Steps.md** file in the root, as it will provide all the environment configuration steps in detail.
 
 ## 7. Milestone 2 Commands — Dataset Inspection and Selection
 
@@ -1009,66 +961,9 @@ python scripts\milestone_7\09_final_audit.py
 
 ---
 
-## 13. Milestone 8 Commands — Paper Assets and Final Manuscript
+## 13. Git Safety Commands Used in This Project
 
-### 13.1 Add paper algorithm drafts
-
-Needed files/folders before this command:
-
-- `docs\milestone_8` folder exists or can be created
-- The paper methodology has settled on the two main algorithms: cross-dataset evaluation and safety-oriented failure mining
-
-Command:
-
-```cmd
-python _write_m8_algorithms.py
-```
-
-### 13.2 Add the final integrated manuscript to Git
-
-Needed files/folders before this command:
-
-- Final manuscript DOCX exists in `docs\milestone_8`
-- Root `.gitignore` does not accidentally ignore DOCX files under `docs`
-
-Command:
-
-```cmd
-git add docs\milestone_8\Integrated_Eight_Instance_Cross_Dataset_Object_Detection_Submission_Ready_Manuscript_v3.docx
-```
-
-### 13.3 Commit the final integrated manuscript
-
-Needed files/folders before this command:
-
-- The manuscript is staged with `git add`
-- `git status --short` shows the intended DOCX only, or other intended paper assets
-
-Command:
-
-```cmd
-git commit -m "Add integrated eight-instance submission manuscript"
-```
-
-### 13.4 Push the manuscript commit
-
-Needed files/folders before this command:
-
-- A local commit exists
-- Remote `origin` is configured
-- You have permission to push to the repository
-
-Command:
-
-```cmd
-git push origin main
-```
-
----
-
-## 14. Git Safety Commands Used in This Project
-
-### 14.1 Check the working tree
+### 13.1 Check the working tree
 
 Needed files/folders before this command:
 
@@ -1080,7 +975,7 @@ Command:
 git status --short
 ```
 
-### 14.2 Check staged files for forbidden large artifacts
+### 13.2 Check staged files for forbidden large artifacts
 
 Needed files/folders before this command:
 
@@ -1099,7 +994,7 @@ Expected output:
 No output means the staged set passed this safety check.
 ```
 
-### 14.3 Commit safe generated analysis artifacts
+### 13.3 Commit safe generated analysis artifacts
 
 Needed files/folders before this command:
 
@@ -1113,7 +1008,7 @@ Command:
 git commit -m "Add Milestone 7 generated analysis artifacts"
 ```
 
-### 14.4 Push to GitHub
+### 13.4 Push to GitHub
 
 Needed files/folders before this command:
 
@@ -1129,7 +1024,7 @@ git push origin main
 
 ---
 
-## 15. Files That Should Usually Stay Out of Git
+## 14. Files That Should Usually Stay Out of Git
 
 These files are large, regenerated, or not suitable for direct repository tracking:
 
@@ -1158,7 +1053,7 @@ README.md
 
 ---
 
-## 16. How to Reproduce the Main Experimental Flow
+## 15. How to Reproduce the Main Experimental Flow
 
 At a high level, the reproducible route is:
 
@@ -1177,31 +1072,16 @@ At a high level, the reproducible route is:
 
 ---
 
-## 17. Citation / Manuscript
+## 16. Citation / Manuscript
 
-The integrated manuscript is stored under:
-
-```text
-docs/milestone_8/
-```
-
-Suggested working title:
+working title:
 
 ```text
 Beyond In-Domain Accuracy: Eight-Instance Cross-Dataset Generalization, Safety-Oriented Failure Analysis, and Deployment Trade-offs for Autonomous-Driving Object Detection
 ```
 
-Before submission, update:
-
-- Author names and affiliations
-- Funding statement
-- Data availability statement
-- Code availability / repository URL
-- Ethical/deployment disclaimer if required by the target journal
-- Journal-specific reference style and template formatting
-
 ---
 
-## 18. Practical Interpretation
+## 17. Practical Interpretation
 
 This repository should not be read as claiming that any evaluated detector is deployment-ready. The main contribution is a reproducible, safety-aware, target-free evaluation framework showing that in-domain accuracy alone is not enough to support autonomous-driving perception robustness claims.
