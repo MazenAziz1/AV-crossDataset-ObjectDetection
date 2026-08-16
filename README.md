@@ -156,55 +156,55 @@ All paper figures are included below so the root README gives a visual overview 
 
 ### Figure 1. Dataset preparation and evaluation protocol
 
-![Figure 1]("C:\Users\Mazen\Desktop\AAST\Research\Autonomous research\docs\figures\figure_01_dataset_preparation_evaluation_protocol.png")
+![Figure 1. Dataset preparation and evaluation protocol](docs/figures/figure_01_dataset_preparation_evaluation_protocol.png)
 
 ### Figure 2. Unified preprocessing and validation pipeline
 
-![Figure 2](docs\figures\figure_02_unified_preprocessing_validation_pipeline.png)
+![Figure 2. Unified preprocessing and validation pipeline](docs/figures/figure_02_unified_preprocessing_validation_pipeline.png)
 
 ### Figure 3. KITTI in-domain mAP50-95 across eight detector instances
 
-![Figure 3](docs\figures\figure_03_kitti_map50_95_eight_instances.png)
+![Figure 3. KITTI mAP50-95 across eight detector instances](docs/figures/figure_03_kitti_map50_95_eight_instances.png)
 
 ### Figure 4. Waymo external mAP50-95 across eight detector instances
 
-![Figure 4](docs\figures\figure_04_waymo_map50_95_eight_instances.png)
+![Figure 4. Waymo mAP50-95 across eight detector instances](docs/figures/figure_04_waymo_map50_95_eight_instances.png)
 
 ### Figure 5. Waymo class-wise AP50-95 across eight detector instances
 
-![Figure 5](docs\figures\figure_05_waymo_classwise_ap50_95.png)
+![Figure 5. Waymo class-wise AP50-95](docs/figures/figure_05_waymo_classwise_ap50_95.png)
 
 ### Figure 6. KITTI-to-Waymo mAP50-95 generalization ratio
 
-![Figure 6](docs\figures\figure_06_generalization_ratio.png)
+![Figure 6. Generalization ratio](docs/figures/figure_06_generalization_ratio.png)
 
 ### Figure 7. Waymo vulnerable-road-user false-negative rate
 
-![Figure 7](docs\figures\figure_07_waymo_vru_fnr.png)
+![Figure 7. Waymo VRU false-negative rate](docs/figures/figure_07_waymo_vru_fnr.png)
 
 ### Figure 8. Waymo small vulnerable-road-user recall
 
-![Figure 8](docs\figures\figure_08_waymo_small_vru_recall.png)
+![Figure 8. Waymo small-VRU recall](docs/figures/figure_08_waymo_small_vru_recall.png)
 
 ### Figure 9. Waymo failure-event burden
 
-![Figure 9](docs\figures\figure_09_waymo_failure_event_burden.png)
+![Figure 9. Waymo failure-event burden](docs/figures/figure_09_waymo_failure_event_burden.png)
 
 ### Figure 10. Representative visual safety check
 
-![Figure 10](docs\figures\figure_10_visual_safety_check.png)
+![Figure 10. Visual safety check](docs/figures/figure_10_visual_safety_check.png)
 
 ### Figure 11. Safety-weighted deployment-support score
 
-![Figure 11](docs\figures\figure_11_deployment_support_score.png)
+![Figure 11. Deployment-support score](docs/figures/figure_11_deployment_support_score.png)
 
 ### Figure 12. Waymo inference latency
 
-![Figure 12](docs\figures\figure_12_waymo_latency.png)
+![Figure 12. Waymo latency](docs/figures/figure_12_waymo_latency.png)
 
 ### Figure 13. Waymo accuracy-latency trade-off
 
-![Figure 13](docs\figures\figure_13_accuracy_latency_tradeoff.png)
+![Figure 13. Accuracy-latency trade-off](docs/figures/figure_13_accuracy_latency_tradeoff.png)
 
 ---
 
