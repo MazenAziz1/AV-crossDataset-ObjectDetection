@@ -1,0 +1,118 @@
+{
+  "created_at": "2026-08-15T12:37:34",
+  "status": "PASSED",
+  "milestone": 7,
+  "step": "Build detection error index",
+  "matching_policy": {
+    "primary_iou_threshold": 0.5,
+    "localization_iou_range": [
+      0.1,
+      0.5
+    ],
+    "class_confusion_iou_min": 0.3,
+    "duplicate_iou_min": 0.5,
+    "prediction_confidence_min": 0.001
+  },
+  "object_size_policy": {
+    "method": "target_box_normalized_area_quantiles",
+    "definition": "normalized_area = bbox_area / image_area",
+    "small": "normalized_area <= 0.004157071390230814",
+    "medium": "0.004157071390230814 < normalized_area <= 0.015589650670960799",
+    "large": "normalized_area > 0.015589650670960799",
+    "target_boxes_used": 39086
+  },
+  "dataset_summary": {
+    "kitti": {
+      "images": 1496,
+      "annotations": 7792,
+      "class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "size_counts": {
+        "medium": 1740,
+        "small": 4981,
+        "large": 1071
+      }
+    },
+    "waymo": {
+      "images": 996,
+      "annotations": 24819,
+      "class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "size_counts": {
+        "small": 21933,
+        "medium": 1978,
+        "large": 908
+      }
+    }
+  },
+  "prediction_stats": {
+    "kitti_yolo": {
+      "prediction_file": "outputs\\milestone_5\\final_kitti_validation\\predictions\\yolo_predictions_full.jsonl",
+      "total_predictions": 26254,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 1496
+    },
+    "kitti_rtdetr": {
+      "prediction_file": "outputs\\milestone_5\\final_kitti_validation\\predictions\\rtdetr_predictions_full.jsonl",
+      "total_predictions": 448800,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 1496
+    },
+    "kitti_retinanet": {
+      "prediction_file": "outputs\\milestone_5\\final_kitti_validation\\predictions\\retinanet_predictions_full.jsonl",
+      "total_predictions": 419107,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 1496
+    },
+    "kitti_faster_rcnn": {
+      "prediction_file": "outputs\\milestone_5\\final_kitti_validation\\predictions\\faster_rcnn_predictions_full.jsonl",
+      "total_predictions": 36738,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 1496
+    },
+    "waymo_yolo": {
+      "prediction_file": "outputs\\milestone_6\\waymo_external_validation\\predictions\\yolo_waymo_predictions.jsonl",
+      "total_predictions": 10082,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 996
+    },
+    "waymo_rtdetr": {
+      "prediction_file": "outputs\\milestone_6\\waymo_external_validation\\predictions\\rtdetr_waymo_predictions.jsonl",
+      "total_predictions": 298800,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 996
+    },
+    "waymo_retinanet": {
+      "prediction_file": "outputs\\milestone_6\\waymo_external_validation\\predictions\\retinanet_waymo_predictions.jsonl",
+      "total_predictions": 8891,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 996
+    },
+    "waymo_faster_rcnn": {
+      "prediction_file": "outputs\\milestone_6\\waymo_external_validation\\predictions\\faster_rcnn_waymo_predictions.jsonl",
+      "total_predictions": 10913,
+      "skipped_predictions": 0,
+      "images_with_prediction_records": 996
+    }
+  },
+  "total_error_index_rows": 1401946,
+  "outputs": {
+    "detection_error_index_csv": "outputs\\milestone_7\\safety_error_analysis\\detection_error_index.csv",
+    "detection_error_index_json": "outputs\\milestone_7\\safety_error_analysis\\detection_error_index.json",
+    "detection_error_summary_csv": "outputs\\milestone_7\\safety_error_analysis\\detection_error_summary.csv",
+    "detection_core_tp_fp_fn_summary_csv": "outputs\\milestone_7\\safety_error_analysis\\detection_core_tp_fp_fn_summary.csv",
+    "detection_error_index_md": "outputs\\milestone_7\\safety_error_analysis\\DETECTION_ERROR_INDEX.md"
+  },
+  "notes": [
+    "The CSV contains the full event-level detection error index.",
+    "The JSON is a compact manifest/summary, not a duplicate of the full CSV.",
+    "False positives are counted using the same low confidence threshold used for AP-style ranking.",
+    "Object size bins follow target-box normalized-area quantiles computed from 39086 target boxes."
+  ]
+}

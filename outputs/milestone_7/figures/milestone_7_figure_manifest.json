@@ -1,0 +1,51 @@
+{
+  "created_at": "2026-08-15T12:57:45",
+  "status": "PASSED",
+  "figure_count": 10,
+  "figures": [
+    {
+      "name": "deployment_tradeoff_score",
+      "path": "outputs\\milestone_7\\figures\\deployment_tradeoff_score.png"
+    },
+    {
+      "name": "waymo_vru_false_negative_rate",
+      "path": "outputs\\milestone_7\\figures\\waymo_vru_false_negative_rate.png"
+    },
+    {
+      "name": "waymo_small_vru_false_negative_rate",
+      "path": "outputs\\milestone_7\\figures\\waymo_small_vru_false_negative_rate.png"
+    },
+    {
+      "name": "waymo_small_object_recall_by_class",
+      "path": "outputs\\milestone_7\\figures\\waymo_small_object_recall_by_class.png"
+    },
+    {
+      "name": "small_object_recall_kitti_vs_waymo",
+      "path": "outputs\\milestone_7\\figures\\small_object_recall_kitti_vs_waymo.png"
+    },
+    {
+      "name": "generalization_ratio_map50_95",
+      "path": "outputs\\milestone_7\\figures\\generalization_ratio_map50_95.png"
+    },
+    {
+      "name": "waymo_accuracy_speed_tradeoff",
+      "path": "outputs\\milestone_7\\figures\\waymo_accuracy_speed_tradeoff.png"
+    },
+    {
+      "name": "waymo_failure_type_burden",
+      "path": "outputs\\milestone_7\\figures\\waymo_failure_type_burden.png"
+    },
+    {
+      "name": "kitti_failure_type_burden",
+      "path": "outputs\\milestone_7\\figures\\kitti_failure_type_burden.png"
+    },
+    {
+      "name": "waymo_external_map50_95",
+      "path": "outputs\\milestone_7\\figures\\waymo_external_map50_95.png"
+    }
+  ],
+  "notes": [
+    "Figures summarize Milestone 7 object-size, safety, failure-case, and deployment trade-off analyses.",
+    "Failure-case visual panels are stored under outputs/milestone_7/failure_cases/panels."
+  ]
+}

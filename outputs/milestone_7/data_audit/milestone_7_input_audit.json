@@ -1,0 +1,457 @@
+{
+  "created_at": "2026-08-15T09:02:12",
+  "status": "PASSED",
+  "errors": [],
+  "warnings": [],
+  "paths": {
+    "kitti_val_images": {
+      "path": "data\\processed\\milestone_3\\images\\kitti\\val",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "kitti_val_labels": {
+      "path": "data\\processed\\milestone_3\\labels\\kitti\\val",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "waymo_external_images": {
+      "path": "data\\processed\\milestone_3\\images\\waymo\\external",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "waymo_external_labels": {
+      "path": "data\\processed\\milestone_3\\labels\\waymo\\external",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "m5_kitti_summary_csv": {
+      "path": "outputs\\milestone_5\\final_kitti_validation\\tables\\comparison_summary_full.csv",
+      "exists": true,
+      "is_dir": false,
+      "is_file": true
+    },
+    "m5_kitti_metrics_dir": {
+      "path": "outputs\\milestone_5\\final_kitti_validation\\metrics",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "m5_kitti_predictions_dir": {
+      "path": "outputs\\milestone_5\\final_kitti_validation\\predictions",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "m6_waymo_summary_csv": {
+      "path": "outputs\\milestone_6\\waymo_external_validation\\tables\\waymo_external_summary.csv",
+      "exists": true,
+      "is_dir": false,
+      "is_file": true
+    },
+    "m6_waymo_metrics_dir": {
+      "path": "outputs\\milestone_6\\waymo_external_validation\\metrics",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "m6_waymo_predictions_dir": {
+      "path": "outputs\\milestone_6\\waymo_external_validation\\predictions",
+      "exists": true,
+      "is_dir": true,
+      "is_file": false
+    },
+    "m6_generalization_ratio_csv": {
+      "path": "outputs\\milestone_6\\generalization_analysis\\tables\\generalization_ratio_table.csv",
+      "exists": true,
+      "is_dir": false,
+      "is_file": true
+    },
+    "m6_generalization_summary_json": {
+      "path": "outputs\\milestone_6\\generalization_analysis\\generalization_analysis_summary.json",
+      "exists": true,
+      "is_dir": false,
+      "is_file": true
+    },
+    "locked_checkpoint_registry": {
+      "path": "outputs\\milestone_4\\locked_final_checkpoints\\final_checkpoint_registry.json",
+      "exists": true,
+      "is_dir": false,
+      "is_file": true
+    }
+  },
+  "datasets": {
+    "kitti_val": {
+      "num_images": 1496,
+      "num_labels": 1496,
+      "matched_pairs": 1496,
+      "total_annotations": 7792,
+      "class_counts": {
+        "0": 6472,
+        "1": 980,
+        "2": 340
+      },
+      "invalid_label_lines": [],
+      "num_invalid_label_lines": 0
+    },
+    "waymo_external": {
+      "num_images": 996,
+      "num_labels": 996,
+      "matched_pairs": 996,
+      "total_annotations": 24819,
+      "class_counts": {
+        "0": 16928,
+        "1": 7127,
+        "2": 764
+      },
+      "invalid_label_lines": [],
+      "num_invalid_label_lines": 0
+    }
+  },
+  "summary_tables": {
+    "m5_kitti_summary": {
+      "exists": true,
+      "rows": 4,
+      "columns": [
+        "detector",
+        "num_images",
+        "mAP50",
+        "mAP50_95",
+        "mean_inference_ms",
+        "Vehicle_AP50",
+        "Vehicle_AP50_95",
+        "Pedestrian_AP50",
+        "Pedestrian_AP50_95",
+        "Cyclist_AP50",
+        "Cyclist_AP50_95"
+      ],
+      "detectors": [
+        "faster_rcnn",
+        "retinanet",
+        "rtdetr",
+        "yolo"
+      ]
+    },
+    "m6_waymo_summary": {
+      "exists": true,
+      "rows": 4,
+      "columns": [
+        "detector",
+        "num_images",
+        "mAP50",
+        "mAP50_95",
+        "mean_inference_ms",
+        "Vehicle_AP50",
+        "Vehicle_AP50_95",
+        "Pedestrian_AP50",
+        "Pedestrian_AP50_95",
+        "Cyclist_AP50",
+        "Cyclist_AP50_95"
+      ],
+      "detectors": [
+        "faster_rcnn",
+        "retinanet",
+        "rtdetr",
+        "yolo"
+      ]
+    },
+    "m6_generalization_ratio": {
+      "exists": true,
+      "rows": 4,
+      "columns": [
+        "rank_by_mAP50_95_generalization",
+        "detector",
+        "KITTI_mAP50_95",
+        "Waymo_mAP50_95",
+        "mAP50_95_absolute_drop",
+        "mAP50_95_drop_percent",
+        "mAP50_95_generalization_ratio",
+        "KITTI_mAP50",
+        "Waymo_mAP50",
+        "mAP50_absolute_drop",
+        "mAP50_drop_percent",
+        "mAP50_generalization_ratio"
+      ],
+      "detectors": [
+        "faster_rcnn",
+        "retinanet",
+        "rtdetr",
+        "yolo"
+      ]
+    }
+  },
+  "prediction_inventory": [
+    {
+      "dataset": "kitti",
+      "detector": "yolo",
+      "exists": true,
+      "path": "outputs\\milestone_5\\final_kitti_validation\\predictions\\yolo_predictions_full.jsonl",
+      "records": 1496,
+      "file_size_mb": 3.43,
+      "sample_keys": [
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        2,
+        1,
+        27
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "exists": true,
+      "path": "outputs\\milestone_5\\final_kitti_validation\\predictions\\rtdetr_predictions_full.jsonl",
+      "records": 1496,
+      "file_size_mb": 57.045,
+      "sample_keys": [
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        300,
+        300,
+        300
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "kitti",
+      "detector": "retinanet",
+      "exists": true,
+      "path": "outputs\\milestone_5\\final_kitti_validation\\predictions\\retinanet_predictions_full.jsonl",
+      "records": 1496,
+      "file_size_mb": 50.582,
+      "sample_keys": [
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        300,
+        207,
+        300
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "kitti",
+      "detector": "faster_rcnn",
+      "exists": true,
+      "path": "outputs\\milestone_5\\final_kitti_validation\\predictions\\faster_rcnn_predictions_full.jsonl",
+      "records": 1496,
+      "file_size_mb": 4.772,
+      "sample_keys": [
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ],
+        [
+          "detector",
+          "image_id",
+          "inference_ms",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        11,
+        6,
+        39
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "exists": true,
+      "path": "outputs\\milestone_6\\waymo_external_validation\\predictions\\yolo_waymo_predictions.jsonl",
+      "records": 996,
+      "file_size_mb": 3.648,
+      "sample_keys": [
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        12,
+        14,
+        27
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "exists": true,
+      "path": "outputs\\milestone_6\\waymo_external_validation\\predictions\\rtdetr_waymo_predictions.jsonl",
+      "records": 996,
+      "file_size_mb": 103.168,
+      "sample_keys": [
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        300,
+        300,
+        300
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "exists": true,
+      "path": "outputs\\milestone_6\\waymo_external_validation\\predictions\\retinanet_waymo_predictions.jsonl",
+      "records": 996,
+      "file_size_mb": 3.245,
+      "sample_keys": [
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        15,
+        18,
+        18
+      ],
+      "sample_parse_errors": []
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "exists": true,
+      "path": "outputs\\milestone_6\\waymo_external_validation\\predictions\\faster_rcnn_waymo_predictions.jsonl",
+      "records": 996,
+      "file_size_mb": 3.929,
+      "sample_keys": [
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ],
+        [
+          "image_id",
+          "image_path",
+          "predictions"
+        ]
+      ],
+      "sample_prediction_counts": [
+        19,
+        21,
+        18
+      ],
+      "sample_parse_errors": []
+    }
+  ],
+  "outputs": {
+    "audit_json": "outputs\\milestone_7\\data_audit\\milestone_7_input_audit.json",
+    "audit_md": "outputs\\milestone_7\\data_audit\\MILESTONE_7_INPUT_AUDIT.md",
+    "prediction_inventory_csv": "outputs\\milestone_7\\data_audit\\prediction_inventory.csv"
+  },
+  "recovery_if_predictions_missing": {
+    "kitti": "Re-run: python scripts\\milestone_5\\03_run_final_kitti_validation.py",
+    "waymo": "Re-run: python scripts\\milestone_6\\03_run_waymo_external_validation.py"
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "created_at": "2026-08-15T12:39:34",
+  "status": "PASSED",
+  "input": "outputs\\milestone_7\\safety_error_analysis\\detection_error_index.csv",
+  "rows_read": 1401946,
+  "gt_events_used": 130444,
+  "ignored_rows": 1271502,
+  "object_size_policy": {
+    "method": "target_box_normalized_area_quantiles",
+    "normalized_area_definition": "bbox_area / image_area",
+    "small": "normalized_area <= 0.004157071390230814",
+    "medium": "0.004157071390230814 < normalized_area <= 0.015589650670960799",
+    "large": "normalized_area > 0.015589650670960799",
+    "target_boxes_used": 39086
+  },
+  "dataset_object_size_distribution_from_error_index_manifest": {
+    "kitti": {
+      "images": 1496,
+      "annotations": 7792,
+      "class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "size_counts": {
+        "medium": 1740,
+        "small": 4981,
+        "large": 1071
+      }
+    },
+    "waymo": {
+      "images": 996,
+      "annotations": 24819,
+      "class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "size_counts": {
+        "small": 21933,
+        "medium": 1978,
+        "large": 908
+      }
+    }
+  },
+  "best_small_object_recall_by_dataset_all_classes": {
+    "kitti": {
+      "dataset": "kitti",
+      "detector": "rtdetr",
+      "class_name": "All_Classes",
+      "object_size_bin": "small",
+      "tp": 4947,
+      "fn": 34,
+      "gt_objects": 4981,
+      "recall": 0.993174,
+      "false_negative_rate": 0.006826,
+      "mean_normalized_area": 0.00149714
+    },
+    "waymo": {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "All_Classes",
+      "object_size_bin": "small",
+      "tp": 4780,
+      "fn": 17153,
+      "gt_objects": 21933,
+      "recall": 0.217936,
+      "false_negative_rate": 0.782064,
+      "mean_normalized_area": 0.00061331
+    }
+  },
+  "worst_waymo_small_vulnerable_rows": [
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Pedestrian",
+      "object_size_bin": "small",
+      "tp": 380,
+      "fn": 6366,
+      "gt_objects": 6746,
+      "recall": 0.05633,
+      "false_negative_rate": 0.94367,
+      "mean_normalized_area": 0.00050774
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Vulnerable_Road_Users",
+      "object_size_bin": "small",
+      "tp": 435,
+      "fn": 6995,
+      "gt_objects": 7430,
+      "recall": 0.058546,
+      "false_negative_rate": 0.941454,
+      "mean_normalized_area": 0.00050921
+    },
+    {
+      "dataset": "waymo",
+      "detector": "yolo",
+      "class_name": "Cyclist",
+      "object_size_bin": "small",
+      "tp": 55,
+      "fn": 629,
+      "gt_objects": 684,
+      "recall": 0.080409,
+      "false_negative_rate": 0.919591,
+      "mean_normalized_area": 0.00052367
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Cyclist",
+      "object_size_bin": "small",
+      "tp": 69,
+      "fn": 615,
+      "gt_objects": 684,
+      "recall": 0.100877,
+      "false_negative_rate": 0.899123,
+      "mean_normalized_area": 0.00052367
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Vulnerable_Road_Users",
+      "object_size_bin": "small",
+      "tp": 804,
+      "fn": 6626,
+      "gt_objects": 7430,
+      "recall": 0.10821,
+      "false_negative_rate": 0.89179,
+      "mean_normalized_area": 0.00050921
+    },
+    {
+      "dataset": "waymo",
+      "detector": "faster_rcnn",
+      "class_name": "Pedestrian",
+      "object_size_bin": "small",
+      "tp": 735,
+      "fn": 6011,
+      "gt_objects": 6746,
+      "recall": 0.108953,
+      "false_negative_rate": 0.891047,
+      "mean_normalized_area": 0.00050774
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Cyclist",
+      "object_size_bin": "small",
+      "tp": 82,
+      "fn": 602,
+      "gt_objects": 684,
+      "recall": 0.119883,
+      "false_negative_rate": 0.880117,
+      "mean_normalized_area": 0.00052367
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Vulnerable_Road_Users",
+      "object_size_bin": "small",
+      "tp": 947,
+      "fn": 6483,
+      "gt_objects": 7430,
+      "recall": 0.127456,
+      "false_negative_rate": 0.872544,
+      "mean_normalized_area": 0.00050921
+    },
+    {
+      "dataset": "waymo",
+      "detector": "retinanet",
+      "class_name": "Pedestrian",
+      "object_size_bin": "small",
+      "tp": 865,
+      "fn": 5881,
+      "gt_objects": 6746,
+      "recall": 0.128224,
+      "false_negative_rate": 0.871776,
+      "mean_normalized_area": 0.00050774
+    },
+    {
+      "dataset": "waymo",
+      "detector": "rtdetr",
+      "class_name": "Pedestrian",
+      "object_size_bin": "small",
+      "tp": 1505,
+      "fn": 5241,
+      "gt_objects": 6746,
+      "recall": 0.223095,
+      "false_negative_rate": 0.776905,
+      "mean_normalized_area": 0.00050774
+    }
+  ],
+  "outputs": {
+    "object_size_summary_csv": "outputs\\milestone_7\\object_size_analysis\\object_size_summary.csv",
+    "small_object_failure_csv": "outputs\\milestone_7\\object_size_analysis\\small_object_failure_summary.csv",
+    "object_size_dataset_comparison_csv": "outputs\\milestone_7\\object_size_analysis\\object_size_dataset_comparison.csv",
+    "summary_md": "outputs\\milestone_7\\object_size_analysis\\MILESTONE_7_OBJECT_SIZE_ANALYSIS.md"
+  }
+}

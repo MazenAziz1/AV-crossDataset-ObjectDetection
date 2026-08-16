@@ -1,0 +1,48 @@
+{
+  "created_at": "2026-08-16T09:11:49",
+  "status": "PASSED",
+  "errors": [],
+  "warnings": [
+    "Found 160 individual gallery PNGs. Keep local/regeneratable; do not commit if ignored.",
+    "Large detection_error_index.csv exists locally. It should stay ignored, not committed."
+  ],
+  "docx_reports": [
+    "docs\\milestone_7\\Milestone_7_Robustness_Failure_Case_Safety_Injection_Ready_Report.docx"
+  ],
+  "figure_png_count": 10,
+  "failure_panel_count": 3,
+  "individual_gallery_image_count_local": 160,
+  "gallery_summary": {
+    "generated_count": 160,
+    "type_counts": {
+      "safety_composite": 16,
+      "false_negative": 16,
+      "class_confusion": 32,
+      "duplicate_detection": 32,
+      "false_positive": 32,
+      "localization_error": 32
+    },
+    "dataset_counts": {
+      "waymo": 96,
+      "kitti": 64
+    },
+    "panels": {
+      "waymo_panel": "outputs\\milestone_7\\failure_cases\\panels\\failure_case_panel_waymo.png",
+      "kitti_panel": "outputs\\milestone_7\\failure_cases\\panels\\failure_case_panel_kitti.png",
+      "safety_vru_panel": "outputs\\milestone_7\\failure_cases\\panels\\failure_case_panel_safety_vru.png"
+    }
+  },
+  "commit_policy": {
+    "commit": [
+      "scripts/milestone_7",
+      "configs/analysis/milestone_7",
+      "docs/milestone_7",
+      "outputs/milestone_7 summaries, figures, panels, manifests, and audit files"
+    ],
+    "do_not_commit": [
+      "outputs/milestone_7/safety_error_analysis/detection_error_index.csv",
+      "outputs/milestone_7/report_bundle/*.zip",
+      "outputs/milestone_7/failure_cases/images/*.png"
+    ]
+  }
+}
