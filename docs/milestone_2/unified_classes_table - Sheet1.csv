@@ -1,0 +1,9 @@
+KITTI,Waymo,Unified class,Action,label
+"Car, Van, Truck",Vehicle,Vehicle,Mapped,0
+Pedestrian,Pedestrian,Pedestrian,Mapped,1
+Person_sitting,—,Pedestrian,Mapped,1
+Cyclist,Cyclist,Cyclist,Mapped,2
+Tram,—,—,ignore,—
+—,Sign,—,ignore,—
+Misc,—,—,ignore,—
+DontCare,—,—,ignore,—
