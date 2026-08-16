@@ -156,7 +156,7 @@ All paper figures are included below so the root README gives a visual overview 
 
 ### Figure 1. Dataset preparation and evaluation protocol
 
-![Figure 1](docs\figures\figure_01_dataset_preparation_evaluation_protocol.png)
+![Figure 1](C:\Users\Mazen\Desktop\AAST\Research\Autonomous research\docs\figures\figure_01_dataset_preparation_evaluation_protocol.png)
 
 ### Figure 2. Unified preprocessing and validation pipeline
 
