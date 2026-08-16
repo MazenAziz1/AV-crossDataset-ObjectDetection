@@ -82,7 +82,7 @@ def main():
     doc.add_heading("2.2 Kaggle compute allocation", level=2)
     doc.add_paragraph(
         "Slot A ran YOLOv8s, Faster R-CNN, and RetinaNet. Slot B ran RT-DETR-L as an interruption-expected "
-        "run across a multi-session resume chain. All models used an effective batch size of 16, a 10.5-hour "
+        "run across a multi-session resume chain. All models used an effective batch size of 32 (RT-DETR-L: 16), a 10.5-hour "
         "runtime guard, and checkpoint/resume-state packaging between sessions."
     )
 

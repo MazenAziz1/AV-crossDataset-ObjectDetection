@@ -30,7 +30,7 @@ This document defines how two legitimate Kaggle GPU compute slots are allocated 
 |----------|-------------|---------------|-----------------|
 | RT-DETR-L | Vision Transformer (DETR) | 200 | Multi-session resume |
 
-> **Note**: RT-DETR-L is isolated to Slot B because it is the most VRAM-intensive model (~3.2 GB), is the most likely to require multiple sessions, and benefits from dedicated resume-chain tracking.
+> **Note**: RT-DETR-L is isolated to Slot B for dedicated multi-session resume-chain tracking, since it is the most likely detector to require multiple sessions.
 
 ---
 

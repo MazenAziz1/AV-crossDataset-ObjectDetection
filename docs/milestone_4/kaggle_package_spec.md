@@ -16,7 +16,7 @@ Define the exact file inclusion and exclusion rules for the Kaggle training pack
 
 | Source | Files |
 |--------|-------|
-| `configs/models/milestone_4/` | All 7 YAML files (protocol, registry, evaluation, class contract, compute plan, training policy, kaggle training policy) |
+| `configs/models/milestone_4/` | All 10 YAML files (experiment protocol, model registry, class contract, compute plan, shared training policy, kaggle training policy, yolo, faster_rcnn, retinanet, rtdetr) |
 | `configs/datasets/milestone_3/` | All 6 YAML files (dataset registry, KITTI/Waymo config, class mapping, COCO paths, preprocessing, augmentation) |
 
 ### 2.2 Scripts
@@ -155,13 +155,13 @@ milestone4_kaggle_training_package/
 
 ## 6. Completion Gate
 
-- [ ] All KITTI train images (5,985) included
-- [ ] All KITTI val images (1,496) included
-- [ ] All KITTI labels included
-- [ ] All COCO annotations included
-- [ ] All ignore/excluded sidecars included
-- [ ] All configs included
-- [ ] All scripts included
-- [ ] Waymo file count in package = 0
-- [ ] Pretrained weights excluded
-- [ ] Package specification approved and frozen
+- [x] All KITTI train images (5,985) included
+- [x] All KITTI val images (1,496) included
+- [x] All KITTI labels included
+- [x] All COCO annotations included
+- [x] All ignore/excluded sidecars included
+- [x] All configs included
+- [x] All scripts included
+- [x] Waymo file count in package = 0
+- [x] Pretrained weights excluded
+- [x] Package specification approved and frozen

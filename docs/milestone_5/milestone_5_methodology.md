@@ -123,7 +123,7 @@ RT-DETR-L emits many low-confidence detections (DETR-style 300 queries), so at a
 | RetinaNet | Torchvision | 200 / 101 | patience 20 | 81 |
 | Faster R-CNN | Torchvision | 200 / 96 | patience 20 | pre-resume (≤76) |
 
-- Input 640×640, seed 42 (deterministic), effective batch 16, Kaggle Tesla T4.
+- Input 640×640, seed 42 (deterministic), effective batch 32 (RT-DETR-L: 16), Kaggle Tesla T4.
 - RT-DETR, RetinaNet, and Faster R-CNN used multi-session resume chains (validated contiguous, no gaps).
 
 ---
