@@ -1,0 +1,146 @@
+% ============================================================
+% Milestone 8 paper algorithm drafts
+% Suggested LaTeX packages:
+% \usepackage{algorithm}
+% \usepackage{algorithmic}
+% ============================================================
+
+% ------------------------------------------------------------
+% Algorithm 1
+% Methodology / Experimental Protocol
+% ------------------------------------------------------------
+\begin{algorithm}[t]
+\caption{Unified Cross-Dataset Generalization Evaluation}
+\label{alg:cross_dataset_generalization}
+\small
+\begin{algorithmic}[1]
+\REQUIRE Trained detectors $\mathcal{M}$; KITTI validation set $\mathcal{D}_{K}$; Waymo external subset $\mathcal{D}_{W}$; shared classes $\mathcal{C}=\{\mathrm{Vehicle},\mathrm{Pedestrian},\mathrm{Cyclist}\}$
+\ENSURE KITTI results, Waymo results, generalization ratios, degradation analysis, and latency/FPS summary
+
+\STATE Normalize KITTI and Waymo labels into the shared class set $\mathcal{C}$.
+\STATE Freeze the evaluation protocol, including class mapping, validation split, metrics, checkpoint selection, and input resolution.
+\FOR{each detector $m \in \mathcal{M}$}
+    \STATE Load the locked final checkpoint of detector $m$.
+    \FOR{each dataset $\mathcal{D} \in \{\mathcal{D}_{K}, \mathcal{D}_{W}\}$}
+        \STATE Run inference on every image in $\mathcal{D}$.
+        \STATE Store predicted boxes, confidence scores, classes, and per-image inference time.
+        \STATE Compute class-wise $AP_{50}$ and $AP_{50:95}$ for each class $c \in \mathcal{C}$.
+        \STATE Compute aggregate $mAP_{50}$, $mAP_{50:95}$, mean inference time, and FPS.
+    \ENDFOR
+    \FOR{each metric $q$}
+        \STATE Compute absolute degradation $\Delta_{m,q}=q(m,\mathcal{D}_{K})-q(m,\mathcal{D}_{W})$.
+        \IF{$q(m,\mathcal{D}_{K})>0$}
+            \STATE Compute generalization ratio $GR_{m,q}=q(m,\mathcal{D}_{W})/q(m,\mathcal{D}_{K})$.
+        \ELSE
+            \STATE Mark $GR_{m,q}$ as undefined.
+        \ENDIF
+    \ENDFOR
+    \STATE Identify the class with the largest external-domain degradation for detector $m$.
+\ENDFOR
+\STATE Rank detectors by external accuracy, generalization stability, degradation, and speed.
+\RETURN Comparison tables, degradation tables, and deployment-speed summary.
+\end{algorithmic}
+\end{algorithm}
+
+
+% ------------------------------------------------------------
+% Algorithm 2
+% Safety-Oriented Failure Analysis subsection
+% ------------------------------------------------------------
+\begin{algorithm}[t]
+\caption{Safety-Oriented Failure Mining and Error Categorization}
+\label{alg:safety_failure_mining}
+\small
+\begin{algorithmic}[1]
+\REQUIRE Ground-truth boxes $\mathcal{G}$; detector predictions $\mathcal{P}$; class set $\mathcal{C}$; IoU thresholds $\tau_{TP}=0.50$, $\tau_{loc}^{min}=0.10$, $\tau_{loc}^{max}=0.50$, $\tau_{conf}=0.30$, $\tau_{dup}=0.50$
+\ENSURE Detection-error index with true positives, false positives, false negatives, localization errors, class confusions, duplicate detections, size bins, and safety-risk labels
+
+\FOR{each dataset $\mathcal{D}$}
+    \FOR{each detector $m$}
+        \FOR{each image $I \in \mathcal{D}$}
+            \STATE Load ground-truth boxes $\mathcal{G}_{I}$ and predictions $\mathcal{P}_{I,m}$.
+            \STATE Convert boxes to a common $(x_1,y_1,x_2,y_2)$ format.
+            \STATE Compute normalized ground-truth area as box area divided by image area.
+            \STATE Assign each ground-truth object to a small, medium, or large size bin.
+            \STATE Initialize matched ground-truth and matched-prediction sets.
+
+            \FOR{each class $c \in \mathcal{C}$}
+                \STATE Sort predictions of class $c$ by descending confidence.
+                \FOR{each prediction $p$ of class $c$}
+                    \STATE Find the unmatched ground-truth box $g$ of class $c$ with maximum IoU to $p$.
+                    \IF{$IoU(p,g) \geq \tau_{TP}$}
+                        \STATE Mark $(p,g)$ as a true positive.
+                        \STATE Add $p$ and $g$ to the matched sets.
+                    \ENDIF
+                \ENDFOR
+            \ENDFOR
+
+            \FOR{each unmatched ground-truth box $g$}
+                \STATE Record $g$ as a false negative.
+                \STATE Find the best same-class unmatched prediction $p_{same}$.
+                \IF{$\tau_{loc}^{min} \leq IoU(g,p_{same}) < \tau_{loc}^{max}$}
+                    \STATE Record a localization error.
+                \ENDIF
+                \STATE Find the best wrong-class unmatched prediction $p_{wrong}$.
+                \IF{$IoU(g,p_{wrong}) \geq \tau_{conf}$}
+                    \STATE Record a class-confusion error.
+                \ENDIF
+            \ENDFOR
+
+            \FOR{each unmatched prediction $p$}
+                \STATE Record $p$ as a false positive.
+                \STATE Find the best same-class ground-truth box $g_{same}$.
+                \IF{$g_{same}$ was already matched and $IoU(p,g_{same}) \geq \tau_{dup}$}
+                    \STATE Record $p$ as a duplicate detection.
+                \ENDIF
+            \ENDFOR
+
+            \FOR{each recorded error event $e$}
+                \IF{$e$ is a pedestrian or cyclist false negative}
+                    \STATE Assign safety risk level critical.
+                \ELSIF{$e$ is a pedestrian/cyclist class confusion}
+                    \STATE Assign safety risk level high.
+                \ELSIF{$e$ is a pedestrian/cyclist localization error}
+                    \STATE Assign safety risk level medium.
+                \ELSE
+                    \STATE Assign risk level according to class and error type.
+                \ENDIF
+            \ENDFOR
+        \ENDFOR
+    \ENDFOR
+\ENDFOR
+\STATE Aggregate errors by dataset, detector, class, object-size bin, failure type, and safety-risk level.
+\STATE Select representative failure cases for visual inspection and figure panels.
+\RETURN Detection-error index, safety false-negative tables, object-size tables, failure summaries, and gallery candidates.
+\end{algorithmic}
+\end{algorithm}
+
+
+% ------------------------------------------------------------
+% Algorithm 3
+% Discussion or Appendix
+% ------------------------------------------------------------
+\begin{algorithm}[t]
+\caption{Safety-Weighted Deployment Suitability Ranking}
+\label{alg:deployment_suitability}
+\small
+\begin{algorithmic}[1]
+\REQUIRE Waymo $mAP_{50:95}$, generalization ratio, vulnerable-road-user false-negative rate, small vulnerable-road-user false-negative rate, and Waymo FPS for each detector
+\ENSURE Safety-weighted detector ranking and practical recommendation
+
+\STATE Set weights $w_{map}=0.25$, $w_{gen}=0.20$, $w_{vru}=0.30$, $w_{small}=0.15$, and $w_{speed}=0.10$.
+\FOR{each detector $m$}
+    \STATE Normalize Waymo $mAP_{50:95}$ as $S_{map}(m)$.
+    \STATE Normalize the generalization ratio as $S_{gen}(m)$.
+    \STATE Compute vulnerable-road-user safety score $S_{vru}(m)=1-FNR_{VRU}(m)$.
+    \STATE Compute small vulnerable-road-user safety score $S_{small}(m)=1-FNR_{smallVRU}(m)$.
+    \STATE Compute speed score $S_{speed}(m)=\min_j latency(j)/latency(m)$.
+    \STATE Compute final score:
+    \STATE $S(m)=w_{map}S_{map}(m)+w_{gen}S_{gen}(m)+w_{vru}S_{vru}(m)+w_{small}S_{small}(m)+w_{speed}S_{speed}(m)$.
+\ENDFOR
+\STATE Rank detectors by descending $S(m)$.
+\STATE Identify the fastest detector, strongest external-domain detector, best vulnerable-road-user detector, and best small vulnerable-road-user detector.
+\STATE Present the ranking as decision support, not deployment certification.
+\RETURN Deployment ranking, detector-specific recommendations, and limitations.
+\end{algorithmic}
+\end{algorithm}
