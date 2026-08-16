@@ -1,7 +1,7 @@
 {
   "milestone": 7,
   "step": 10,
-  "timestamp": "2026-08-15T19:29:30.502483+00:00",
+  "timestamp": "2026-08-15T23:53:24.198085+00:00",
   "status": "PASSED",
   "checks": [
     {
@@ -17,32 +17,32 @@
     {
       "name": "detection_error_index",
       "status": "PASSED",
-      "detail": ""
+      "detail": "148920 records, 8 detector-dataset combos"
     },
     {
       "name": "object_size_analysis",
       "status": "PASSED",
-      "detail": ""
+      "detail": "96 size-bin rows, 8 small-object rows"
     },
     {
       "name": "safety_fn_analysis",
       "status": "PASSED",
-      "detail": ""
+      "detail": "72 summary rows, 10 top safety-critical images"
     },
     {
       "name": "failure_type_analysis",
       "status": "PASSED",
-      "detail": ""
+      "detail": "8 failure-type rows, 43 class-confusion rows"
     },
     {
       "name": "failure_gallery",
       "status": "PASSED",
-      "detail": ""
+      "detail": "12 failure cases, 2 panels"
     },
     {
       "name": "deployment_tradeoff",
       "status": "PASSED",
-      "detail": ""
+      "detail": "4 detectors in suitability table"
     },
     {
       "name": "figures_exist",
@@ -52,7 +52,7 @@
     {
       "name": "docx_report",
       "status": "PASSED",
-      "detail": ""
+      "detail": "Milestone_7_Robustness_Failure_Case_Safety_Report.docx present"
     },
     {
       "name": "detectors_datasets_classes_represented",

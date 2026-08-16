@@ -38,20 +38,42 @@ def main():
     check("m6_waymo_predictions", not missing_m6_pred, f"missing={missing_m6_pred}")
 
     # 5. KITTI images/labels (COCO GT + image dir)
-    check("kitti_images_labels", common.KITTI_GT.exists() and common.KITTI_IMG_DIR.exists())
+    kitti_ok = common.KITTI_GT.exists() and common.KITTI_IMG_DIR.exists()
+    kitti_detail = ""
+    if common.KITTI_GT.exists():
+        kitti_gt = common.load_coco(common.KITTI_GT)
+        kitti_detail = (f"kitti_val.json ({len(kitti_gt['images'])} images, "
+                        f"{len(kitti_gt['annotations'])} annotations)")
+    if common.KITTI_IMG_DIR.exists():
+        n_img = sum(1 for _ in common.KITTI_IMG_DIR.iterdir())
+        kitti_detail += f", images dir present ({n_img} files)"
+    check("kitti_images_labels", kitti_ok, kitti_detail)
 
     # 6. Waymo images/labels
-    check("waymo_images_labels", common.WAYMO_GT.exists() and common.WAYMO_IMG_DIR.exists())
+    waymo_ok = common.WAYMO_GT.exists() and common.WAYMO_IMG_DIR.exists()
+    waymo_detail = ""
+    if common.WAYMO_GT.exists():
+        waymo_gt = common.load_coco(common.WAYMO_GT)
+        waymo_detail = (f"waymo_external.json ({len(waymo_gt['images'])} images, "
+                        f"{len(waymo_gt['annotations'])} annotations)")
+    if common.WAYMO_IMG_DIR.exists():
+        n_img = sum(1 for _ in common.WAYMO_IMG_DIR.iterdir())
+        waymo_detail += f", images dir present ({n_img} files)"
+    check("waymo_images_labels", waymo_ok, waymo_detail)
 
     # 7. Locked checkpoint registry
-    check("checkpoint_registry", common.REGISTRY.exists())
+    reg_ok = common.REGISTRY.exists()
+    reg_detail = ""
+    if reg_ok:
+        import csv
+        with open(common.REGISTRY, newline="", encoding="utf-8") as f:
+            reg_rows = list(csv.DictReader(f))
+        reg_detail = f"{len(reg_rows)} detectors registered"
+    check("checkpoint_registry", reg_ok, reg_detail)
 
     # 8. Detector names consistent
     det_ok = True
     detail = ""
-    for d in common.DETECTORS:
-        r = list(common.DETECTORS)
-    # verify registry lists the four detectors
     if common.REGISTRY.exists():
         import csv
         with open(common.REGISTRY, newline="", encoding="utf-8") as f:
@@ -59,6 +81,8 @@ def main():
         if reg_dets != set(common.DETECTORS):
             det_ok = False
             detail = f"registry detectors={sorted(reg_dets)}"
+        else:
+            detail = f"registry={sorted(reg_dets)} matches DETECTORS"
     check("detector_names_consistent", det_ok, detail)
 
     # 9. Class mapping consistent (COCO 1/2/3)
@@ -70,6 +94,8 @@ def main():
             if cats != common.CLASS_NAMES:
                 cls_ok = False
                 cls_detail = f"{gt.name}: {cats}"
+    if cls_ok:
+        cls_detail = "KITTI & Waymo categories = {1: Vehicle, 2: Pedestrian, 3: Cyclist}"
     check("class_mapping_consistent", cls_ok, cls_detail)
 
     # 10. Working tree safe (no staged forbidden artifacts)

@@ -2,7 +2,7 @@
   "milestone": 7,
   "step": 0,
   "purpose": "Verify Milestone 5 and Milestone 6 inputs before robustness analysis",
-  "timestamp": "2026-08-15T19:21:33.119260+00:00",
+  "timestamp": "2026-08-15T23:50:06.155474+00:00",
   "status": "PASSED",
   "checks": {
     "m5_kitti_results": {
@@ -23,23 +23,23 @@
     },
     "kitti_images_labels": {
       "status": "PASSED",
-      "detail": ""
+      "detail": "kitti_val.json (1496 images, 7792 annotations), images dir present (1496 files)"
     },
     "waymo_images_labels": {
       "status": "PASSED",
-      "detail": ""
+      "detail": "waymo_external.json (996 images, 24819 annotations), images dir present (996 files)"
     },
     "checkpoint_registry": {
       "status": "PASSED",
-      "detail": ""
+      "detail": "4 detectors registered"
     },
     "detector_names_consistent": {
       "status": "PASSED",
-      "detail": ""
+      "detail": "registry=['faster_rcnn', 'retinanet', 'rtdetr', 'yolo'] matches DETECTORS"
     },
     "class_mapping_consistent": {
       "status": "PASSED",
-      "detail": ""
+      "detail": "KITTI & Waymo categories = {1: Vehicle, 2: Pedestrian, 3: Cyclist}"
     },
     "working_tree_note": {
       "status": "PASSED",
