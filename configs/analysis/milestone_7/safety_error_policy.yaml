@@ -1,0 +1,63 @@
+# Milestone 7 Safety Error Policy
+
+milestone: 7
+name: "Safety-Oriented Error Analysis"
+
+safety_focus:
+  primary_classes:
+    - "Pedestrian"
+    - "Cyclist"
+  rationale:
+    - "False negatives for vulnerable road users are more safety-critical than vehicle-only AP."
+    - "A missed pedestrian or cyclist can be more important than a small change in average mAP."
+
+core_error_metrics:
+  - false_negative_count
+  - false_negative_rate
+  - false_positive_count
+  - localization_error_count
+  - class_confusion_count
+  - recall_by_class
+  - recall_by_object_size
+  - safety_critical_miss_rate
+
+matching:
+  iou_threshold: 0.50
+  prediction_confidence_min: 0.001
+
+risk_levels:
+  critical:
+    condition: "false_negative and class in [Pedestrian, Cyclist]"
+    description: "Missed vulnerable road user."
+  high:
+    condition: "class_confusion involving Pedestrian or Cyclist"
+    description: "Vulnerable road user confused with another class."
+  medium:
+    condition: "localization_error involving Pedestrian or Cyclist"
+    description: "Detected but poorly localized vulnerable road user."
+  low:
+    condition: "vehicle false positive or duplicate detection"
+    description: "Less safety-critical than missed vulnerable road users, but relevant for reliability."
+
+analysis_dimensions:
+  - dataset
+  - detector
+  - class_name
+  - object_size_bin
+  - failure_type
+  - risk_level
+
+dataset_comparison:
+  baseline_dataset: "kitti"
+  external_dataset: "waymo"
+  compare:
+    - "false_negative_rate"
+    - "safety_critical_miss_rate"
+    - "recall_by_class"
+    - "recall_by_object_size"
+
+output_targets:
+  safety_false_negative_summary: "outputs/milestone_7/safety_error_analysis/safety_false_negative_summary.csv"
+  top_safety_critical_images: "outputs/milestone_7/safety_error_analysis/top_safety_critical_images.csv"
+  failure_type_summary: "outputs/milestone_7/safety_error_analysis/failure_type_summary.csv"
+  class_confusion_summary: "outputs/milestone_7/safety_error_analysis/class_confusion_summary.csv"

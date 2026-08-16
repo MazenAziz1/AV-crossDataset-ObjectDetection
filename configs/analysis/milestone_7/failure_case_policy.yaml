@@ -1,0 +1,92 @@
+# Milestone 7 Failure-Case Policy
+# Robustness, Failure-Case & Safety-Oriented Analysis
+
+milestone: 7
+name: "Robustness, Failure-Case & Safety-Oriented Analysis"
+
+purpose:
+  - "Analyze difficult perception cases."
+  - "Prioritize safety-relevant failures."
+  - "Create failure-case galleries."
+  - "Connect numerical errors to intelligent-vehicle deployment recommendations."
+
+datasets:
+  kitti:
+    split: "validation"
+    image_dir: "data/processed/milestone_3/images/kitti/val"
+    label_dir: "data/processed/milestone_3/labels/kitti/val"
+    prediction_dir: "outputs/milestone_5/final_kitti_validation/predictions"
+  waymo:
+    split: "external"
+    image_dir: "data/processed/milestone_3/images/waymo/external"
+    label_dir: "data/processed/milestone_3/labels/waymo/external"
+    prediction_dir: "outputs/milestone_6/waymo_external_validation/predictions"
+
+detectors:
+  - yolo
+  - rtdetr
+  - retinanet
+  - faster_rcnn
+
+classes:
+  0: "Vehicle"
+  1: "Pedestrian"
+  2: "Cyclist"
+
+matching_policy:
+  primary_iou_threshold: 0.50
+  localization_error_iou_min: 0.10
+  localization_error_iou_max: 0.50
+  class_confusion_iou_min: 0.30
+  duplicate_detection_iou_min: 0.50
+  prediction_confidence_min_for_matching: 0.001
+  prediction_confidence_min_for_gallery: 0.25
+
+failure_types:
+  true_positive:
+    description: "Prediction has correct class and IoU >= primary_iou_threshold with an unmatched ground-truth object."
+  false_negative:
+    description: "Ground-truth object has no matched prediction of the correct class."
+  false_positive:
+    description: "Prediction does not match any ground-truth object of the correct class."
+  localization_error:
+    description: "Prediction has the correct class and overlaps the object, but IoU is below the primary threshold."
+  class_confusion:
+    description: "Prediction overlaps a ground-truth object but predicts the wrong class."
+  duplicate_detection:
+    description: "Multiple predictions match or overlap the same ground-truth object."
+
+gallery_policy:
+  priority_classes:
+    - "Pedestrian"
+    - "Cyclist"
+  secondary_class:
+    - "Vehicle"
+  priority_failure_types:
+    - false_negative
+    - class_confusion
+    - localization_error
+    - false_positive
+  examples_per_detector_dataset_failure: 5
+  max_total_gallery_images: 120
+  prefer_examples:
+    - "high confidence false positives"
+    - "small missed pedestrians"
+    - "small missed cyclists"
+    - "crowded scenes when visible from labels/predictions"
+    - "largest localization errors"
+    - "class confusion involving pedestrians or cyclists"
+
+annotation_colors:
+  ground_truth: "green"
+  true_positive: "blue"
+  false_negative: "red"
+  false_positive: "orange"
+  localization_error: "yellow"
+  class_confusion: "purple"
+
+output_targets:
+  error_index_csv: "outputs/milestone_7/safety_error_analysis/detection_error_index.csv"
+  error_index_json: "outputs/milestone_7/safety_error_analysis/detection_error_index.json"
+  gallery_dir: "outputs/milestone_7/failure_cases/images"
+  panel_dir: "outputs/milestone_7/failure_cases/panels"

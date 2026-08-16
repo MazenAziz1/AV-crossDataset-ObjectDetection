@@ -1,0 +1,39 @@
+# Milestone 7 Object Size Bins
+# Quantile-based object-size bins computed from target-box normalized area.
+
+milestone: 7
+name: "Object Size Analysis"
+
+method: "target_box_normalized_area_quantiles"
+normalized_area_definition: "bbox_area / image_area"
+target_boxes_used: 39086
+
+bbox_size_definition:
+  formula: "normalized_area = bbox_area_pixels / image_area_pixels"
+  bbox_area_pixels: "bbox_width_pixels * bbox_height_pixels"
+  image_area_pixels: "image_width_pixels * image_height_pixels"
+  source: "ground-truth box after converting YOLO normalized labels to pixel coordinates"
+
+size_bins:
+  small:
+    definition: "normalized_area <= lower_33_percent_quantile"
+    max_normalized_area: 0.004157071390230814
+  medium:
+    definition: "lower_33_percent_quantile < normalized_area <= upper_67_percent_quantile"
+    min_normalized_area_exclusive: 0.004157071390230814
+    max_normalized_area: 0.015589650670960799
+  large:
+    definition: "normalized_area > upper_67_percent_quantile"
+    min_normalized_area_exclusive: 0.015589650670960799
+
+notes:
+  - "These bins follow the predefined project method based on target-box normalized-area quantiles."
+  - "The bins are computed from 39086 target boxes."
+  - "Object size is based on bounding-box area divided by image area, not IoU and not the larger box side."
+  - "Small object analysis should be reported separately for Vehicle, Pedestrian, and Cyclist."
+  - "IoU matching thresholds are separate and remain defined in the failure-case and safety-error policies."
+
+outputs:
+  object_size_summary: "outputs/milestone_7/object_size_analysis/object_size_summary.csv"
+  small_object_failure_summary: "outputs/milestone_7/object_size_analysis/small_object_failure_summary.csv"
+  object_size_dataset_comparison: "outputs/milestone_7/object_size_analysis/object_size_dataset_comparison.csv"

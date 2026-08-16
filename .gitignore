@@ -109,3 +109,7 @@ outputs/milestone_4/kaggle_downloads/
 *.onnx
 *.engine
 
+
+outputs/milestone_7/safety_error_analysis/detection_error_index.csv
+outputs/milestone_7/report_bundle/*.zip
+outputs/milestone_7/failure_cases/images/*.png
