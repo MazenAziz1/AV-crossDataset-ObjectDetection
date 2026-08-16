@@ -1,0 +1,66 @@
+% Discussion
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Domain Shift and Ranking Inversion}
+\label{sec:discussion_shift}
+
+All four detectors experience a severe accuracy drop when transferred from KITTI to Waymo,
+with mAP@$[0.50{:}0.95]$ falling by roughly $80$--$90\%$ relative to the in-domain
+baseline. This is expected for a direct, no-retraining cross-dataset transfer: KITTI and
+Waymo differ in camera calibration, sensor position, scene composition, object-scale
+distribution, and annotation density. More consequential is the inversion of the detector
+ranking across domains. YOLOv8s, the strongest in-domain detector, shows the lowest
+generalization ratio ($0.095$), while RetinaNet, the weakest in-domain detector, generalizes
+best ($0.180$). This inversion is a candidate indicator of overfitting to KITTI-specific
+statistics for the higher-capacity detectors, and it demonstrates that the in-domain
+ranking does not transfer to the out-of-domain setting.
+
+The pattern is consistent with the architecture families. The real-time CNN and transformer
+detectors (YOLOv8s and RT-DETR) achieve the highest in-domain accuracy but the strongest
+relative degradation, whereas the two Torchvision detectors trained with a conservative,
+fixed augmentation policy degrade less in relative terms. This does not establish a causal
+mechanism, but it suggests that the choice of training regime and architecture interacts
+with domain shift in a way that in-domain validation alone cannot reveal.
+
+\subsection{Small Objects and Vulnerable Road Users}
+\label{sec:discussion_safety}
+
+The safety-oriented analysis shows that the dominant failure mode is missed detection of
+small objects, and that this is far more severe on Waymo than on KITTI. On KITTI,
+small-object recall is $0.88$--$0.96$ across detectors, whereas on Waymo it is
+$0.03$--$0.13$. Consequently, the pedestrian-plus-cyclist false-negative rate on Waymo
+reaches $0.81$--$0.93$ for all detectors. This result is invisible in average mAP: the
+detector with the highest Waymo mAP is not the most safety-reliable, because average
+precision is dominated by large, easily detected vehicles. For intelligent-vehicle
+perception, small-object and pedestrian/cyclist recall should therefore be treated as
+first-class deployment metrics alongside mAP, and safety-critical evaluation should be
+reported at a fixed operating point rather than only as an AP curve.
+
+\subsection{Deployment Implications}
+\label{sec:discussion_deployment}
+
+The efficiency results reinforce the need for a joint accuracy--efficiency--safety
+assessment. YOLOv8s provides an order-of-magnitude latency advantage and the best in-domain
+accuracy but the least external stability and safety reliability, making it attractive only
+when latency is the binding constraint and in-domain statistics match deployment. RetinaNet
+offers the best external generalization and safety-oriented recall but at substantially
+higher latency and model size, making it attractive when out-of-domain reliability is
+prioritized over speed. RT-DETR-L suffers from a large number of low-confidence
+over-detections at the fixed operating point, and Faster R-CNN is the slowest detector
+despite mid-range accuracy. The practical implication is that detector selection must be
+based on external validation and safety metrics rather than KITTI mAP alone, and that the
+choice depends on the deployment priority: latency, in-domain accuracy, or out-of-domain
+safety.
+
+\subsection{Interpretation and Limitations of the Comparison}
+\label{sec:discussion_interpretation}
+
+These findings are descriptive and correlational: the study quantifies how, where, and why
+the four detectors fail under a controlled target-free transfer, but it does not isolate
+the causal contribution of architecture, capacity, or training regime. The relative
+stability of RetinaNet, for instance, could reflect its conservative training setup as much
+as its architecture. Nevertheless, the results provide a reproducible evidence base for
+deployment-oriented perception and a concrete motivation for domain-robust training or
+adaptation strategies~\cite{chen2018domainadaptive,li2022crossdomainadaptive}, which the
+target-free setting deliberately leaves out.

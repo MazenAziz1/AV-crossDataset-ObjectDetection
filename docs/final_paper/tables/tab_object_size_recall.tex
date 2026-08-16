@@ -1,0 +1,16 @@
+\begin{table}[t]
+    \centering
+    \caption{Class-agnostic recall by object-size category at the frozen operating point (confidence $\geq 0.25$, IoU $\geq 0.50$).}
+    \label{tab:object_size_recall}
+    \begin{tabular}{lcccccc}
+        \toprule
+        Detector & \multicolumn{3}{c}{KITTI recall} & \multicolumn{3}{c}{Waymo recall} \\
+        & Small & Medium & Large & Small & Medium & Large \\
+        \midrule
+        YOLOv8s & 0.932 & 0.958 & 0.985 & 0.045 & 0.448 & 0.460 \\
+        RT-DETR-L & 0.964 & 0.971 & 0.989 & 0.081 & 0.517 & 0.558 \\
+        Faster R-CNN & 0.925 & 0.923 & 0.966 & 0.115 & 0.697 & 0.865 \\
+        RetinaNet & 0.881 & 0.926 & 0.970 & 0.132 & 0.737 & 0.855 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

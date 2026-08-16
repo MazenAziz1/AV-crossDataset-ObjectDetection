@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{Deployment-oriented efficiency comparison on the local GPU.}
+    \label{tab:efficiency}
+    \begin{tabular}{lcccc}
+        \toprule
+        Detector & Parameters (M) & Checkpoint (MB) & Latency (ms) & FPS \\
+        \midrule
+        YOLOv8s & 11.1 & 21.50 & 12.36 & 94.77 \\
+        RT-DETR-L & 32.8 & 63.15 & 55.29 & 18.73 \\
+        Faster R-CNN & 41.3 & 315.68 & 91.22 & 11.24 \\
+        RetinaNet & 36.4 & 278.00 & 75.25 & 13.70 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

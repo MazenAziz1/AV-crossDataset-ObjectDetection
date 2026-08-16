@@ -1,0 +1,31 @@
+% Abstract
+\begin{abstract}
+Reliable object detection is essential for autonomous-driving perception, yet most
+detectors are evaluated primarily on data drawn from the same benchmark used for model
+development. Such in-domain evaluation may overestimate deployment reliability when
+geographic context, camera characteristics, scene density, object scale, and annotation
+policies change. This study presents a controlled cross-dataset evaluation of four
+representative detection paradigms: a YOLO-family real-time one-stage detector, Faster
+R-CNN, RetinaNet, and RT-DETR. All models are trained on harmonized KITTI data and
+evaluated first on a held-out KITTI validation split and then on a representative Waymo
+front-camera subset without retraining, fine-tuning, or target-domain adaptation. Vehicle,
+Pedestrian, and Cyclist categories are aligned across datasets to support consistent
+comparison. The evaluation combines mAP, precision, recall, F1-score, per-class AP,
+absolute and relative performance degradation, and a generalization ratio, together with
+safety-oriented analyses of false negatives, small and occluded objects, and vulnerable
+road users. Deployment suitability is assessed using batch-one latency, throughput,
+parameter count, and model size on common hardware. The results show a severe and
+architecture-dependent accuracy drop under target-free transfer: mAP@$[0.50{:}0.95]$
+falls from $0.538$--$0.690$ on KITTI to $0.065$--$0.097$ on Waymo, with generalization
+ratios between $0.095$ and $0.180$. The in-domain ranking inverts across domains:
+YOLOv8s is strongest in-domain but least stable, while RetinaNet is weaker in-domain yet
+most stable out-of-domain. On the external dataset, small objects and vulnerable road
+users are the dominant failure mode, with pedestrian-plus-cyclist false-negative rates of
+$0.81$--$0.93$ even for the most accurate detector. By unifying external validation,
+safety-relevant failure analysis, and efficiency measurement, the proposed framework
+determines whether strong in-domain accuracy translates into robust and practical
+intelligent-vehicle perception.
+\end{abstract}
+
+\keywords{cross-dataset generalization, object detection, autonomous driving, domain shift,
+deployment analysis, vulnerable road users.}

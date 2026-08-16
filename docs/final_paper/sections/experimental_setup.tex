@@ -1,0 +1,63 @@
+% Experimental Setup
+\section{Experimental Setup}
+\label{sec:experimental_setup}
+
+\subsection{Detectors}
+\label{sec:setup_detectors}
+
+Four representative detectors spanning the main detection paradigms were selected: YOLOv8s
+(Ultralytics), a real-time one-stage CNN detector; RT-DETR-L (Ultralytics), a real-time
+end-to-end transformer detector~\cite{zhao2024rtdetr}; RetinaNet (Torchvision), a dense
+one-stage detector with focal loss~\cite{lin2017focalloss}; and Faster R-CNN (Torchvision),
+a two-stage region-proposal detector~\cite{ren2015fasterrcnn}. All four operate on the
+same three-class task and the same $640\times640$ letterboxed input, and all use
+ImageNet-pretrained backbones.
+
+\subsection{Training Protocol}
+\label{sec:setup_training}
+
+Training ran on Kaggle GPU notebooks (NVIDIA Tesla T4) across two compute slots, with
+evaluation, benchmarking, and checkpoint locking performed locally. All models used an
+effective batch size of $32$ (RT-DETR-L: $16$), a fixed random seed of $42$
+(deterministic mode), an input size of $640\times640$, target epochs of $200$, and early
+stopping with patience $20$ epochs on mAP@$[0.50{:}0.95]$. A $10.5$-hour runtime guard and
+checkpoint/resume-state packaging supported interruption-expected runs; RT-DETR, RetinaNet,
+and Faster R-CNN used validated multi-session resume chains. The online augmentation
+policy described in Section~\ref{sec:methodology_augmentation} was applied to KITTI train
+only.
+
+\subsection{Evaluation Protocol}
+\label{sec:setup_evaluation}
+
+The primary evaluation metric is COCO Average Precision. mAP@$[0.50{:}0.95]$ is computed
+over ten IoU thresholds from $0.50$ to $0.95$ in steps of $0.05$, together with AP50,
+AP75, and per-class AP for Vehicle, Pedestrian, and Cyclist. Object size follows the COCO
+definition: small ($<32^2$ px), medium ($32^2$--$96^2$ px), and large ($>96^2$ px).
+
+In addition to the AP curve, a fixed operating point (confidence $\geq 0.25$, IoU $\geq
+0.50$) is used to compute precision, recall, F1-score, detections per image, and false
+positives per image. KITTI-specific ignore rules suppress a predicted box that overlaps a
+DontCare region of the same class family by IoU $\geq 0.50$, so that it is neither counted
+as a true positive nor as a false positive; Tram and Misc are excluded non-target classes.
+Waymo has no DontCare-style ignore regions, and Sign boxes are excluded as a non-target
+class.
+
+For the Torchvision-based detectors (RetinaNet and Faster R-CNN), the training pipeline
+applied ImageNet normalization through Albumentations in addition to the normalization
+performed internally by the Torchvision detection models; evaluation therefore used the
+same preprocessing configuration to avoid a train--evaluation distribution mismatch. The
+Ultralytics-based YOLOv8s and RT-DETR models did not exhibit this issue. Confidence
+thresholds and operating points were defined a priori and were not tuned using Waymo
+results.
+
+\subsection{External-Validation Methodology}
+\label{sec:setup_external}
+
+Waymo external validation reuses the frozen evaluation stack unchanged: predictions are
+produced by the same adapters and metrics are computed with the same
+\texttt{pycocotools} COCO evaluator, with only the dataset swapped from KITTI validation
+($1{,}496$ images) to the Waymo external subset ($996$ images). The AP-curve confidence
+threshold is $0.001$ (fixed before evaluation), and no threshold is tuned on Waymo.
+Per-image inference time is measured during evaluation to produce the mean inference time
+metric, while dummy-input latency, throughput, parameter count, and checkpoint size are
+measured on the local GPU for the efficiency comparison.

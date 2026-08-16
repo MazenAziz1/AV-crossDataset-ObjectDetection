@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{Deployment trade-off: in-domain accuracy, external accuracy, latency, and vulnerable-road-user (VRU) safety on Waymo.}
+    \label{tab:deployment}
+    \begin{tabular}{lccccc}
+        \toprule
+        Detector & KITTI mAP & Waymo mAP & Latency (ms) & Waymo VRU FN & Waymo VRU small recall \\
+        \midrule
+        YOLOv8s & 0.690 & 0.065 & 34.21 & 0.926 & 0.029 \\
+        RT-DETR-L & 0.606 & 0.071 & 62.57 & 0.906 & 0.047 \\
+        Faster R-CNN & 0.589 & 0.077 & 92.07 & 0.844 & 0.097 \\
+        RetinaNet & 0.537 & 0.097 & 77.50 & 0.811 & 0.127 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

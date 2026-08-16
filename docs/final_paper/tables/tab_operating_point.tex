@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{Operating-point metrics on KITTI validation (confidence $\geq 0.25$, IoU $\geq 0.50$).}
+    \label{tab:operating_point}
+    \begin{tabular}{lcccc}
+        \toprule
+        Detector & Precision & Recall & F1 & FP/image \\
+        \midrule
+        YOLOv8s & 0.926 & 0.947 & 0.936 & 0.40 \\
+        RT-DETR-L & 0.482 & 0.969 & 0.643 & 5.43 \\
+        Faster R-CNN & 0.876 & 0.928 & 0.901 & 0.69 \\
+        RetinaNet & 0.777 & 0.907 & 0.837 & 1.35 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

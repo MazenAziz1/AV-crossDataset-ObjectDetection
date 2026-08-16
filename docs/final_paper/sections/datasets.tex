@@ -1,0 +1,124 @@
+% Datasets
+\section{Dataset Preparation and Harmonization}
+\label{sec:datasets}
+
+This study uses the KITTI Object Detection dataset~\cite{geiger2012kitti} as the primary
+source for model training and in-domain validation, while a representative subset of the
+Waymo Open Dataset~\cite{sun2020waymo} is used exclusively for external cross-dataset
+evaluation. This design allows the evaluated detectors to be compared under both familiar
+and shifted driving conditions without using Waymo data for training, fine-tuning,
+hyperparameter selection, or model selection. Table~\ref{tab:dataset_comparison}
+summarizes the composition and roles of the three frozen partitions, and
+Table~\ref{tab:class_mapping} records the class-harmonization rules.
+
+\input{tables/tab_dataset_comparison}
+\input{tables/tab_class_mapping}
+
+\subsection{KITTI Dataset Preparation}
+\label{sec:datasets_kitti}
+
+The KITTI object-detection benchmark was selected as the primary labeled dataset. The
+official object-detection training set contains $7{,}481$ left-color camera images stored
+in the \texttt{image\_2} directory, together with $7{,}481$ corresponding annotation files
+in \texttt{label\_2} and $7{,}481$ camera-calibration files. In KITTI terminology,
+\texttt{image\_2} denotes the left color camera stream, and the corresponding camera
+projection matrix is represented by $P_2$ in the calibration files.
+
+The official KITTI testing set was not included in the local experimental evaluation
+because its ground-truth annotations are not publicly available. Consequently, the
+official labeled training set was divided into project-specific training and validation
+partitions. Before splitting, all images, annotation files, and calibration files were
+subjected to an integrity-verification procedure, which confirmed that all $7{,}481$
+samples had matching image, label, and calibration identifiers; that all images were
+readable; that all $51{,}865$ annotation rows had valid structures; and that no invalid
+bounding boxes were found.
+
+Special handling was applied to KITTI \texttt{DontCare} annotations, which may contain
+placeholder truncation and occlusion values of $-1$ that are valid for ignored regions and
+were therefore not treated as annotation errors. \texttt{DontCare} regions were preserved
+for later evaluation handling but were not treated as a target object class. The verified
+KITTI dataset contains $51{,}865$ original annotation rows, with an original class
+distribution of $28{,}742$ Car, $2{,}914$ Van, $1{,}094$ Truck, $4{,}487$ Pedestrian,
+$222$ Person\_sitting, $1{,}627$ Cyclist, $511$ Tram, $973$ Misc, and $11{,}295$
+DontCare annotations.
+
+A fixed stratified split was created using a random seed of $42$, preserving the presence
+of the Vehicle, Pedestrian, and Cyclist classes in addition to the distribution of mapped
+target-object density. This produced $5{,}985$ training images and $1{,}496$ in-domain
+validation images. The training partition contains $26{,}278$ Vehicle boxes, $3{,}729$
+Pedestrian boxes, and $1{,}287$ Cyclist boxes; the validation partition contains
+$6{,}472$ Vehicle boxes, $980$ Pedestrian boxes, and $340$ Cyclist boxes. The same frozen
+split is used for all detectors to ensure a fair comparison.
+
+\subsection{Waymo Representative External-Validation Subset}
+\label{sec:datasets_waymo}
+
+The Waymo Open Dataset was used to construct an external-validation subset representing a
+broader range of locations, traffic densities, illumination conditions, and weather
+conditions, considering only the official Waymo validation split. The selection process
+began with metadata from all $202$ validation segments, analyzing time of day, location,
+weather, object counts, and traffic-density characteristics for each segment. The original
+catalog contained $160$ daytime, $23$ dawn/dusk, and $19$ nighttime segments; $93$
+Phoenix, $88$ San Francisco, and $21$ other-location segments; and $201$ sunny versus a
+single rainy segment.
+
+A broad candidate pool of $70$ segments was first selected to maximize coverage of rare
+and important conditions, including all available nighttime and dawn/dusk segments, the
+only rainy segment, pedestrian-rich scenes, cyclist-rich scenes, and daytime scenes
+balanced across location and density groups. The 2D camera annotations of the candidates
+were then analyzed using only the Waymo FRONT camera, and an optimization-based selection
+procedure produced a final frozen set of $25$ representative driving segments. The final
+segment set contains $14$ daytime, six dawn/dusk, and five nighttime segments; $12$ San
+Francisco, $11$ Phoenix, and two other-location segments; and ten high-density, eight
+low-density, and seven medium-density segments, with pedestrians in $22$ segments and
+cyclists in $18$ segments.
+
+After the segment list was frozen, the corresponding camera images and calibration files
+were downloaded. To reduce temporal redundancy, the FRONT-camera frames in each segment
+were sorted chronologically and sampled uniformly by retaining every fifth frame, yielding
+$996$ images. The selected images were matched with their 2D camera boxes using the
+segment identifier, frame timestamp, and camera identifier; only Vehicle, Pedestrian, and
+Cyclist annotations were retained, with Sign annotations excluded. The final Waymo subset
+contains $24{,}819$ target boxes ($16{,}928$ Vehicle, $7{,}127$ Pedestrian, and $764$
+Cyclist), and $12$ images with no target boxes are retained intentionally as negative
+samples for false-positive analysis.
+
+The Waymo subset is used only for external evaluation and is not used for model training,
+retraining, fine-tuning, validation-based checkpoint selection, threshold selection, or
+hyperparameter optimization. This separation prevents information leakage and allows the
+external results to reflect direct cross-dataset generalization.
+
+\subsection{Class Harmonization}
+\label{sec:datasets_harmonization}
+
+To enable a consistent comparison, both datasets were mapped into a common three-class
+detection task---Vehicle, Pedestrian, and Cyclist. For KITTI, Car, Van, and Truck were
+merged into Vehicle; Pedestrian and Person\_sitting were merged into Pedestrian; and
+Cyclist was mapped directly to Cyclist. Tram, Misc, and DontCare were excluded from the
+target classes, with DontCare retained as an ignored region where appropriate. For Waymo,
+Vehicle, Pedestrian, and Cyclist were mapped directly to their corresponding unified
+classes, while Sign annotations were ignored (Table~\ref{tab:class_mapping}).
+
+Following harmonization, KITTI contains $39{,}086$ target boxes ($32{,}750$ Vehicle,
+$4{,}709$ Pedestrian, and $1{,}627$ Cyclist), with a further $12{,}779$ annotations
+retained as ignored. The Waymo representative subset contains $24{,}819$ target boxes
+under the same three-class definition. This harmonization ensures that all detector
+families are trained and assessed using an identical class order and semantic task
+definition.
+
+\subsection{Dataset Statistics and Visual Verification}
+\label{sec:datasets_verification}
+
+Image-level and object-level statistics were generated for the complete KITTI dataset and
+for its training and validation partitions, including original and harmonized class
+distributions, object density, bounding-box dimensions, normalized area, occlusion,
+truncation, and descriptive KITTI difficulty categories. Bounding boxes were additionally
+divided into small, medium, and large descriptive groups according to the lower and upper
+thirds of the normalized target-box area distribution; these project-specific groups are
+used for dataset analysis and do not replace the official KITTI difficulty definitions.
+Visual-inspection samples were generated for Vehicle, Pedestrian, Cyclist, mixed, crowded,
+occluded, truncated, and DontCare scenes, with equivalent checks for the Waymo subset,
+confirming that the generated annotations corresponded to the source labels and that class
+harmonization was applied correctly. Overall, the final protocol consists of $5{,}985$
+KITTI images for training, $1{,}496$ KITTI images for in-domain validation, and $996$
+Waymo FRONT-camera images for external cross-dataset evaluation.

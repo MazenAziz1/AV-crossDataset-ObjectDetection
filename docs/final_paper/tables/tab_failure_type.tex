@@ -1,0 +1,20 @@
+\begin{table}[t]
+    \centering
+    \caption{Failure-type decomposition at the operating point for KITTI and Waymo.}
+    \label{tab:failure_type}
+    \begin{tabular}{llcccccc}
+        \toprule
+        Dataset & Detector & TP & Miss (FN) & FP & Localization & Confusion & Over-detect. \\
+        \midrule
+        KITTI & YOLOv8s & 7,382 & 410 & 163 & 272 & 15 & 142 \\
+         & RT-DETR-L & 7,551 & 241 & 777 & 1,620 & 82 & 5,646 \\
+         & Faster R-CNN & 7,231 & 561 & 241 & 592 & 96 & 98 \\
+         & RetinaNet & 7,069 & 723 & 425 & 1,165 & 161 & 274 \\
+        \addlinespace
+        Waymo & YOLOv8s & 2,721 & 22,098 & 20 & 132 & 56 & 27 \\
+         & RT-DETR-L & 3,769 & 21,050 & 40 & 446 & 132 & 743 \\
+         & Faster R-CNN & 5,269 & 19,550 & 292 & 1,263 & 366 & 78 \\
+         & RetinaNet & 5,771 & 19,048 & 328 & 2,007 & 561 & 216 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

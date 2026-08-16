@@ -1,0 +1,26 @@
+\begin{table}[t]
+    \centering
+    \caption{Class-wise cross-dataset degradation in AP@0.50:0.95.}
+    \label{tab:class_wise_degradation}
+    \begin{tabular}{llcccc}
+        \toprule
+        Detector & Class & KITTI AP & Waymo AP & Abs. drop & Drop (\%) \\
+        \midrule
+        YOLOv8s & Vehicle & 0.849 & 0.106 & 0.743 & 87.56 \\
+         & Pedestrian & 0.530 & 0.049 & 0.481 & 90.74 \\
+         & Cyclist & 0.691 & 0.042 & 0.649 & 93.98 \\
+        \addlinespace
+        RT-DETR-L & Vehicle & 0.730 & 0.116 & 0.615 & 84.17 \\
+         & Pedestrian & 0.490 & 0.058 & 0.432 & 88.20 \\
+         & Cyclist & 0.597 & 0.041 & 0.556 & 93.15 \\
+        \addlinespace
+        Faster R-CNN & Vehicle & 0.741 & 0.123 & 0.619 & 83.46 \\
+         & Pedestrian & 0.432 & 0.070 & 0.362 & 83.74 \\
+         & Cyclist & 0.594 & 0.038 & 0.556 & 93.54 \\
+        \addlinespace
+        RetinaNet & Vehicle & 0.703 & 0.144 & 0.559 & 79.54 \\
+         & Pedestrian & 0.391 & 0.075 & 0.317 & 80.93 \\
+         & Cyclist & 0.518 & 0.072 & 0.446 & 86.08 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

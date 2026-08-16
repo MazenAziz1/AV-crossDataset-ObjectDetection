@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{KITTI-to-Waymo degradation in mAP@0.50:0.95 and generalization ratio.}
+    \label{tab:kitti_vs_waymo}
+    \begin{tabular}{lccccc}
+        \toprule
+        Detector & KITTI mAP & Waymo mAP & Abs. drop & Drop (\%) & Gen. ratio \\
+        \midrule
+        YOLOv8s & 0.690 & 0.065 & 0.625 & 90.52 & 0.095 \\
+        RT-DETR-L & 0.606 & 0.071 & 0.534 & 88.21 & 0.118 \\
+        Faster R-CNN & 0.589 & 0.077 & 0.512 & 86.92 & 0.131 \\
+        RetinaNet & 0.538 & 0.097 & 0.441 & 81.98 & 0.180 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
