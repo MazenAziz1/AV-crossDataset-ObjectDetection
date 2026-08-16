@@ -1,0 +1,35 @@
+metadata:
+  milestone: 7
+  status: frozen
+  date_frozen: '2026-08-15'
+matching:
+  tp_iou_threshold: 0.5
+  confidence_threshold_operating_point: 0.25
+  note: Confidence threshold matches the frozen Milestone 5/6 operating point.
+failure_types:
+  missed_detection: ground-truth object with no matched prediction (false negative)
+  false_positive: prediction with no ground-truth overlap (IoU < 0.10 against any
+    GT)
+  localization_error: correct class but 0.10 <= IoU < 0.50 against an unmatched same-class
+    GT
+  class_confusion: prediction overlaps a ground-truth object of a different class
+    (IoU >= 0.10)
+  over_detection: extra prediction overlapping an already-matched GT of the same class
+    (IoU >= 0.50)
+thresholds:
+  localization_ioi_low: 0.1
+  localization_iou_high: 0.5
+  confusion_iou_low: 0.1
+  over_detection_iou: 0.5
+datasets:
+- kitti
+- waymo
+detectors:
+- yolo
+- rtdetr
+- retinanet
+- faster_rcnn
+classes:
+  1: Vehicle
+  2: Pedestrian
+  3: Cyclist

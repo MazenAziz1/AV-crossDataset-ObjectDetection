@@ -1,0 +1,114 @@
+# Python virtual environments
+AVenv/
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment files
+.env
+*.env
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# MS Office / Word lock files
+~$*
+
+# Datasets — ignore large/raw files, keep documentation and metadata
+
+# Generic external dataset directories
+/datasets/
+
+# KITTI raw dataset files
+data/kitti/raw/
+
+# Waymo raw downloaded components
+data/waymo/raw/
+
+# Waymo extracted images and visual samples
+data/waymo/representative_subset/images/
+
+# Large generated annotation tables
+data/waymo/representative_subset/annotations/boxes.csv
+
+# Milestone 3 generated processed images
+data/processed/milestone_3/images/
+
+# Milestone 3 visual-check images
+data/processed/milestone_3/visual_checks/**/*.png
+data/processed/milestone_3/visual_checks/**/*.jpg
+data/processed/milestone_3/visual_checks/**/*.jpeg
+
+# Milestone 3 generated framework label mirror
+data/processed/milestone_3/labels/
+
+# Milestone 3 generated canonical YOLO labels
+data/processed/milestone_3/annotations/yolo/
+
+# Dataset binary formats
+*.parquet
+*.tfrecord
+*.record
+
+# Model weights and checkpoints
+*.pt
+*.pth
+*.onnx
+*.engine
+*.ckpt
+*.weights
+
+# Training outputs (transient/generated)
+runs/
+results/
+logs/
+checkpoints/
+wandb/
+mlruns/
+
+# Milestone 4 generated artifacts (weights, logs, raw predictions, runtime, cache, packages, downloads)
+# Kept trackable: metrics/, benchmarks/, figures/, reports/, manifests/, README.md
+/outputs/milestone_4/checkpoints/
+/outputs/milestone_4/pretrained/
+/outputs/milestone_4/logs/
+/outputs/milestone_4/predictions/
+/outputs/milestone_4/runtime/
+/outputs/milestone_4/cache/
+/outputs/milestone_4/kaggle_packages/
+/outputs/milestone_4/kaggle_downloads/
+
+# Milestone 5/6 raw prediction exports (JSONL) generated for Milestone 7 analysis
+/outputs/milestone_5/predictions/
+/outputs/milestone_6/waymo_external_validation/predictions/
+
+# Accidental duplicate output tree (stale path-bug artifact)
+/scripts/outputs/
+
+# FiftyOne database/cache
+.fiftyone/
+fiftyone/
+
+# Large archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Temporary files
+*.tmp
+*.log

@@ -1,0 +1,27 @@
+% Conclusion
+\section{Conclusion}
+\label{sec:conclusion}
+
+This study presented a controlled target-free cross-dataset evaluation of four detector
+families---YOLOv8s, Faster R-CNN, RetinaNet, and RT-DETR---trained on KITTI and externally
+validated on a representative Waymo front-camera subset. The evaluation unified in-domain
+accuracy, absolute and relative cross-dataset degradation, a generalization ratio,
+class-wise behavior, safety-oriented failure analysis, and same-hardware efficiency under a
+harmonized three-class protocol.
+
+The results show that strong in-domain accuracy does not translate into robust external
+performance. All detectors degrade sharply under target-free transfer, with
+mAP@$[0.50{:}0.95]$ falling from $0.538$--$0.690$ on KITTI to $0.065$--$0.097$ on Waymo
+and generalization ratios of $0.095$--$0.180$. The in-domain ranking inverts: YOLOv8s is
+strongest in-domain yet least stable, while RetinaNet is weakest in-domain yet most stable
+out-of-domain. Safety-oriented analysis further shows that small objects and vulnerable
+road users dominate the failures, with pedestrian-plus-cyclist false-negative rates of
+$0.81$--$0.93$ on Waymo even for the most accurate detector. No single detector
+simultaneously optimizes accuracy, generalization, latency, and safety.
+
+These findings indicate that detector selection for intelligent-vehicle perception should
+be based on external validation and safety metrics rather than in-domain mAP alone, and
+they motivate domain-robust training or adaptation strategies as a natural next step. By
+preserving a reproducible pipeline from raw results to paper tables and figures, the study
+also provides an evidence base that can be regenerated as the underlying datasets, models,
+or evaluation protocol evolve.

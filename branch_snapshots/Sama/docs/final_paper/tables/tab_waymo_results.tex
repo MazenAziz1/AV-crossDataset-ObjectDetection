@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{Waymo external-validation results (996 front-camera images, no retraining).}
+    \label{tab:waymo_results}
+    \begin{tabular}{lcccccc}
+        \toprule
+        Detector & mAP@0.50 & mAP@0.50:0.95 & Vehicle AP & Pedestrian AP & Cyclist AP & Mean inf. (ms) \\
+        \midrule
+        YOLOv8s & 0.142 & 0.065 & 0.106 & 0.049 & 0.042 & 34.21 \\
+        RT-DETR-L & 0.151 & 0.071 & 0.116 & 0.058 & 0.041 & 62.57 \\
+        Faster R-CNN & 0.175 & 0.077 & 0.123 & 0.070 & 0.038 & 92.07 \\
+        RetinaNet & 0.215 & 0.097 & 0.144 & 0.075 & 0.072 & 77.50 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

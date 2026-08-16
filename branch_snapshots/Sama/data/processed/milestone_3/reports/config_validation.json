@@ -1,0 +1,152 @@
+{
+  "milestone": 3,
+  "step": 9,
+  "purpose": "Create framework-ready YOLO and COCO dataset configurations.",
+  "canonical_yolo_storage": "data/processed/milestone_3/annotations/yolo",
+  "framework_yolo_label_adapter": "data/processed/milestone_3/labels",
+  "adapter_partitions": {
+    "kitti_train": {
+      "images": 5985,
+      "canonical_labels": 5985,
+      "framework_labels": 5985,
+      "empty_labels": 0,
+      "status_counts": {
+        "copied": 5985
+      },
+      "checks": {
+        "image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "manifest_row_count": true,
+        "empty_label_count": true,
+        "image_canonical_stem_match": true,
+        "no_missing_framework_files": true,
+        "no_extra_framework_files": true,
+        "all_hashes_match": true,
+        "ultralytics_mapping_matches": true
+      },
+      "validation_passed": true
+    },
+    "kitti_val": {
+      "images": 1496,
+      "canonical_labels": 1496,
+      "framework_labels": 1496,
+      "empty_labels": 0,
+      "status_counts": {
+        "copied": 1496
+      },
+      "checks": {
+        "image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "manifest_row_count": true,
+        "empty_label_count": true,
+        "image_canonical_stem_match": true,
+        "no_missing_framework_files": true,
+        "no_extra_framework_files": true,
+        "all_hashes_match": true,
+        "ultralytics_mapping_matches": true
+      },
+      "validation_passed": true
+    },
+    "waymo_external": {
+      "images": 996,
+      "canonical_labels": 996,
+      "framework_labels": 996,
+      "empty_labels": 12,
+      "status_counts": {
+        "copied": 996
+      },
+      "checks": {
+        "image_count": true,
+        "canonical_label_count": true,
+        "framework_label_count": true,
+        "manifest_row_count": true,
+        "empty_label_count": true,
+        "image_canonical_stem_match": true,
+        "no_missing_framework_files": true,
+        "no_extra_framework_files": true,
+        "all_hashes_match": true,
+        "ultralytics_mapping_matches": true
+      },
+      "validation_passed": true
+    }
+  },
+  "combined_adapter": {
+    "images": 8477,
+    "canonical_labels": 8477,
+    "framework_labels": 8477,
+    "empty_labels": 12
+  },
+  "yolo_configuration": {
+    "path": "configs/datasets/milestone_3/kitti_waymo_yolo.yaml",
+    "sha256": "4aee5ec698f77d54c1d3d758bf0d9f8ea2dce8faca48423012c0a7000d223bef",
+    "validation": {
+      "resolved_path": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3",
+      "resolved_train": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\images\\kitti\\train",
+      "resolved_val": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\images\\kitti\\val",
+      "resolved_test": "C:\\Users\\Mazen\\Desktop\\AAST\\Research\\Autonomous research\\data\\processed\\milestone_3\\images\\waymo\\external",
+      "names": {
+        "0": "Vehicle",
+        "1": "Pedestrian",
+        "2": "Cyclist"
+      },
+      "checks": {
+        "train_path": true,
+        "validation_path": true,
+        "test_path": true,
+        "class_count": true,
+        "class_names": true
+      },
+      "validation_passed": true
+    }
+  },
+  "coco_configuration": {
+    "path": "configs/datasets/milestone_3/coco_paths.yaml",
+    "sha256": "60ad9bc65ac0fb1832a0768b471e55f594355cbc38316fe035ea031cd86536f4",
+    "validation": {
+      "checks": {
+        "categories": true,
+        "partition_names": true,
+        "all_paths_exist": true,
+        "partition_roles": true
+      },
+      "path_checks": {
+        "kitti_train:images": true,
+        "kitti_train:annotations": true,
+        "kitti_train:evaluation_ignore": true,
+        "kitti_train:excluded_non_target": true,
+        "kitti_validation:images": true,
+        "kitti_validation:annotations": true,
+        "kitti_validation:evaluation_ignore": true,
+        "kitti_validation:excluded_non_target": true,
+        "waymo_external:images": true,
+        "waymo_external:annotations": true,
+        "waymo_external:evaluation_ignore": true,
+        "waymo_external:excluded_non_target": true
+      },
+      "validation_passed": true
+    }
+  },
+  "dataset_registry": {
+    "path": "configs/datasets/milestone_3/dataset_registry.yaml",
+    "sha256": "16857f946e81da5bb82980a0a886694de92b6674b8800753586ead6ceb744ccc"
+  },
+  "adapter_manifest": {
+    "path": "data/processed/milestone_3/manifests/framework_label_adapter_manifest.csv",
+    "rows": 8477,
+    "sha256": "6b0b232ef66afb18e3f8b0b4ce793e60cd66571d95ea53a43abbfe323dbd3c84"
+  },
+  "combined_checks": {
+    "image_count": true,
+    "canonical_label_count": true,
+    "framework_label_count": true,
+    "empty_label_count": true,
+    "adapter_manifest_rows": true,
+    "all_partition_adapters_passed": true,
+    "yolo_config_passed": true,
+    "coco_config_passed": true
+  },
+  "issue_count": 0,
+  "config_validation_passed": true
+}

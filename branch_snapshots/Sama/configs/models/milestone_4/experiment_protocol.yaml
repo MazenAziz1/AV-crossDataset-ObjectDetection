@@ -1,0 +1,74 @@
+# Milestone 4 + 5 Experiment Protocol
+# Status: Frozen
+
+metadata:
+  milestone: 4
+  phase: model_integration_and_training
+  status: frozen
+  date_frozen: "2026-06-24"
+
+scope:
+  input_resolution:
+    width: 640
+    height: 640
+    channels: 3
+  seed: 42
+  waymo_exclusion_rule: true # Waymo is deferred to Milestone 6. Zero training/evaluation on Waymo in Milestones 4/5.
+
+models:
+  families:
+    - yolo
+    - faster_rcnn
+    - retinanet
+    - rtdetr
+  pretrained_weights:
+    yolo: "yolov8s.pt" # Pretrained on COCO
+    faster_rcnn: "fasterrcnn_resnet50_fpn_coco" # Torchvision weights
+    retinanet: "retinanet_resnet50_fpn_coco" # Torchvision weights
+    rtdetr: "rtdetr-l.pt" # Ultralytics RT-DETR pretrained on COCO
+
+data:
+  roles:
+    training:
+      dataset: "KITTI"
+      partition: "kitti_train"
+      size: 5985
+    validation:
+      dataset: "KITTI"
+      partition: "kitti_val"
+      size: 1496
+
+policies:
+  augmentation:
+    enabled_for_training: true
+    disabled_for_validation: true
+  checkpoint_selection:
+    criterion: "max_val_mAP_50_95"
+    save_frequency_epochs: 1
+    eval_frequency_epochs: 1
+  evaluation:
+    primary_metric: "mAP_50_95"
+    iou_thresholds: [0.50, 0.95]
+    step: 0.05
+    confidence_threshold: 0.001 # Low threshold for AP curve generation
+    operating_threshold: 0.25   # Operating point threshold for Precision/Recall/F1 and visual inspection
+  benchmarking:
+    device: "cuda"
+    warmup_runs: 10
+    benchmark_runs: 100
+    metrics:
+      - parameter_count
+      - checkpoint_size_mb
+      - gpu_memory_peak_mb
+      - latency_preprocessing_ms
+      - latency_inference_ms
+      - latency_postprocessing_ms
+      - latency_total_ms
+      - frames_per_second
+
+reproducibility:
+  enforce_deterministic_algorithms: true
+  lock_python_seed: true
+  lock_numpy_seed: true
+  lock_pytorch_seed: true
+  lock_dataloader_workers_seed: true

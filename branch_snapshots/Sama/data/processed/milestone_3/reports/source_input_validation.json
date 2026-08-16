@@ -1,0 +1,127 @@
+{
+  "milestone": 3,
+  "step": 2,
+  "purpose": "Validate all frozen Milestone 2 inputs before preprocessing or conversion.",
+  "kitti": {
+    "validation_passed": true,
+    "train_images": 5985,
+    "validation_images": 1496,
+    "total_images": 7481,
+    "train_target_boxes": 31294,
+    "validation_target_boxes": 7792,
+    "total_target_boxes": 39086,
+    "ignored_boxes": 12779,
+    "class_counts": {
+      "Cyclist": 1627,
+      "Pedestrian": 4709,
+      "Vehicle": 32750
+    },
+    "duplicate_train_ids": 0,
+    "duplicate_validation_ids": 0,
+    "train_validation_overlap": 0,
+    "invalid_boxes": 0,
+    "unknown_classes": [],
+    "checks": {
+      "train_image_count": true,
+      "validation_image_count": true,
+      "total_image_count": true,
+      "train_target_box_count": true,
+      "validation_target_box_count": true,
+      "total_target_box_count": true,
+      "vehicle_box_count": true,
+      "pedestrian_box_count": true,
+      "cyclist_box_count": true,
+      "no_partition_overlap": true,
+      "no_duplicate_train_ids": true,
+      "no_duplicate_validation_ids": true,
+      "no_unknown_classes": true,
+      "no_invalid_boxes": true,
+      "milestone_2_integrity_passed": true,
+      "milestone_2_mapping_passed": true,
+      "milestone_2_statistics_passed": true
+    }
+  },
+  "waymo": {
+    "validation_passed": true,
+    "images": 996,
+    "segments": 25,
+    "target_boxes": 24819,
+    "negative_images": 12,
+    "class_counts": {
+      "Cyclist": 764,
+      "Pedestrian": 7127,
+      "Vehicle": 16928
+    },
+    "duplicate_manifest_image_ids": 0,
+    "unknown_annotation_image_ids": 0,
+    "missing_images": 0,
+    "unreadable_images": 0,
+    "invalid_boxes": 0,
+    "unknown_target_classes": [],
+    "checks": {
+      "image_count": true,
+      "segment_count": true,
+      "target_box_count": true,
+      "vehicle_box_count": true,
+      "pedestrian_box_count": true,
+      "cyclist_box_count": true,
+      "negative_image_count": true,
+      "no_duplicate_manifest_ids": true,
+      "all_annotation_ids_known": true,
+      "no_missing_images": true,
+      "no_unreadable_images": true,
+      "no_invalid_boxes": true,
+      "no_unknown_target_classes": true,
+      "milestone_2_validation_passed": true
+    }
+  },
+  "configuration_consistency": {
+    "validation_passed": true,
+    "computed_totals": {
+      "images": 8477,
+      "target_boxes": 63905,
+      "vehicle_boxes": 49678,
+      "pedestrian_boxes": 11836,
+      "cyclist_boxes": 2391
+    },
+    "configured_totals": {
+      "images": 8477,
+      "target_boxes": 63905,
+      "vehicle_boxes": 49678,
+      "pedestrian_boxes": 11836,
+      "cyclist_boxes": 2391
+    },
+    "internal_class_mapping": {
+      "Vehicle": 0,
+      "Pedestrian": 1,
+      "Cyclist": 2
+    },
+    "yolo_class_mapping": {
+      "Vehicle": 0,
+      "Pedestrian": 1,
+      "Cyclist": 2
+    },
+    "coco_class_mapping": {
+      "Vehicle": 1,
+      "Pedestrian": 2,
+      "Cyclist": 3
+    },
+    "checks": {
+      "computed_images_matches_expected": true,
+      "configured_images_matches_expected": true,
+      "computed_target_boxes_matches_expected": true,
+      "configured_target_boxes_matches_expected": true,
+      "computed_vehicle_boxes_matches_expected": true,
+      "configured_vehicle_boxes_matches_expected": true,
+      "computed_pedestrian_boxes_matches_expected": true,
+      "configured_pedestrian_boxes_matches_expected": true,
+      "computed_cyclist_boxes_matches_expected": true,
+      "configured_cyclist_boxes_matches_expected": true,
+      "internal_mapping_correct": true,
+      "yolo_mapping_correct": true,
+      "coco_mapping_correct": true
+    }
+  },
+  "issue_count": 0,
+  "validation_passed": true
+}

@@ -1,0 +1,24 @@
+\begin{table}[t]
+    \centering
+    \caption{Class harmonization mapping KITTI and Waymo annotations into the common Vehicle, Pedestrian, and Cyclist task.}
+    \label{tab:class_mapping}
+    \begin{tabular}{llll}
+        \toprule
+        Dataset & Source class & Action & Unified class \\
+        \midrule
+        KITTI & Car & map & Vehicle \\
+        KITTI & Van & map & Vehicle \\
+        KITTI & Truck & map & Vehicle \\
+        KITTI & Pedestrian & map & Pedestrian \\
+        KITTI & Person\_sitting & map & Pedestrian \\
+        KITTI & Cyclist & map & Cyclist \\
+        KITTI & Tram & ignore & --- \\
+        KITTI & Misc & ignore & --- \\
+        KITTI & DontCare & ignore & --- \\
+        Waymo & Vehicle & map & Vehicle \\
+        Waymo & Pedestrian & map & Pedestrian \\
+        Waymo & Sign & ignore & --- \\
+        Waymo & Cyclist & map & Cyclist \\
+        \bottomrule
+    \end{tabular}
+\end{table}

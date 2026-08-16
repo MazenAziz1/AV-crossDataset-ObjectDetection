@@ -1,0 +1,4 @@
+partition,images,original_annotations,target_boxes,ignored_boxes,vehicle_boxes,pedestrian_boxes,cyclist_boxes,images_containing_vehicle,images_containing_pedestrian,images_containing_cyclist,target_empty_images,ignored_only_images,average_target_boxes_per_image,maximum_target_boxes_in_image
+all,7481,51865,39086,12779,32750,4709,1627,6798,1796,1141,0,0,5.224703,22
+train,5985,41468,31294,10174,26278,3729,1287,5438,1437,913,0,0,5.228739,22
+val,1496,10397,7792,2605,6472,980,340,1360,359,228,0,0,5.208556,20

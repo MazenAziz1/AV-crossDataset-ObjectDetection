@@ -1,0 +1,34 @@
+{
+  "validation_passed": true,
+  "errors": [],
+  "manifest_rows": 996,
+  "jpg_files_found": 996,
+  "unique_segments": 25,
+  "duplicate_image_ids": 0,
+  "missing_image_files": 0,
+  "unreadable_image_files": 0,
+  "annotation_rows": 24819,
+  "annotations_with_unknown_image_ids": 0,
+  "invalid_dimension_boxes": 0,
+  "out_of_bounds_boxes": 0,
+  "manifest_annotation_count_mismatches": 0,
+  "classes_found": [
+    "Cyclist",
+    "Pedestrian",
+    "Vehicle"
+  ],
+  "vehicle_boxes": 16928,
+  "pedestrian_boxes": 7127,
+  "cyclist_boxes": 764,
+  "negative_images": 12,
+  "visual_checks_created": {
+    "sample_vehicle.jpg": "13415985003725220451_6163_000_6183_000_1518657647337560",
+    "sample_pedestrian.jpg": "14931160836268555821_5778_870_5798_870_1507338339428611",
+    "sample_cyclist.jpg": "14931160836268555821_5778_870_5798_870_1507338339428611",
+    "sample_mixed_scene.jpg": "14931160836268555821_5778_870_5798_870_1507338339428611",
+    "sample_night_scene.jpg": "10335539493577748957_1372_870_1392_870_1508811445344959",
+    "sample_rain_scene.jpg": "13415985003725220451_6163_000_6183_000_1518657647337560",
+    "sample_negative_scene.jpg": "4409585400955983988_3500_470_3520_470_1507165532986381",
+    "sample_crowded_scene.jpg": "10289507859301986274_4200_000_4220_000_1557847410172119"
+  }
+}

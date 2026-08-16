@@ -1,0 +1,61 @@
+dataset: KITTI Object Detection
+
+final_classes:
+  0: Vehicle
+  1: Pedestrian
+  2: Cyclist
+
+kitti_mapping:
+  Car:
+    action: map
+    mapped_class_id: 0
+    mapped_class_name: Vehicle
+
+  Van:
+    action: map
+    mapped_class_id: 0
+    mapped_class_name: Vehicle
+
+  Truck:
+    action: map
+    mapped_class_id: 0
+    mapped_class_name: Vehicle
+
+  Pedestrian:
+    action: map
+    mapped_class_id: 1
+    mapped_class_name: Pedestrian
+
+  Person_sitting:
+    action: map
+    mapped_class_id: 1
+    mapped_class_name: Pedestrian
+
+  Cyclist:
+    action: map
+    mapped_class_id: 2
+    mapped_class_name: Cyclist
+
+  Tram:
+    action: ignore
+    mapped_class_id: null
+    mapped_class_name: null
+
+  Misc:
+    action: ignore
+    mapped_class_id: null
+    mapped_class_name: null
+
+  DontCare:
+    action: ignore
+    mapped_class_id: null
+    mapped_class_name: null
+
+notes:
+  - Car, Van, and Truck are harmonized into Vehicle.
+  - Pedestrian and Person_sitting are harmonized into Pedestrian.
+  - Cyclist remains Cyclist.
+  - Tram and Misc are outside the unified three-class task.
+  - DontCare is preserved only as an ignored evaluation region where needed.
+  - The official KITTI testing split is not used because public labels are unavailable.
+  - This mapping must remain fixed for all models and both datasets.

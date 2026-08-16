@@ -1,0 +1,23 @@
+\begin{table}[t]
+    \centering
+    \caption{Dataset composition and experimental roles of the three frozen partitions.}
+    \label{tab:dataset_comparison}
+    \begin{tabular}{lcccc}
+        \toprule
+        Metric & KITTI (all) & KITTI train & KITTI val. & Waymo ext. \\
+        \midrule
+        Experimental role & Source labeled benchmark & Model training & In-domain validation & External validation only \\
+        Source split & Official labeled training set & Project train split & Project validation split & Official Waymo validation split \\
+        Images & 7481 & 5985 & 1496 & 996 \\
+        Driving segments & --- & --- & --- & 25 \\
+        Target boxes & 39086 & 31294 & 7792 & 24819 \\
+        Vehicle boxes & 32750 & 26278 & 6472 & 16928 \\
+        Pedestrian boxes & 4709 & 3729 & 980 & 7127 \\
+        Cyclist boxes & 1627 & 1287 & 340 & 764 \\
+        Images with no target boxes & 0 & 0 & 0 & 12 \\
+        Camera & Left color camera (image\_2) & Left color camera (image\_2) & Left color camera (image\_2) & FRONT \\
+        Sampling rule & Use all official labeled images & Frozen stratified split & Frozen stratified split & every\_5th\_front\_frame\_starting\_at\_first \\
+        Random seed & --- & 42 & 42 & --- \\
+        \bottomrule
+    \end{tabular}
+\end{table}

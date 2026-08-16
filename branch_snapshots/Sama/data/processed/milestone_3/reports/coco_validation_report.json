@@ -1,0 +1,232 @@
+{
+  "milestone": 3,
+  "step": 10,
+  "purpose": "Independently validate the saved canonical COCO datasets.",
+  "category_mapping": {
+    "1": "Vehicle",
+    "2": "Pedestrian",
+    "3": "Cyclist"
+  },
+  "configuration_validation": {
+    "checks": {
+      "partition_names": true,
+      "all_paths_match": true
+    },
+    "path_checks": {
+      "kitti_train:images": true,
+      "kitti_train:annotations": true,
+      "kitti_validation:images": true,
+      "kitti_validation:annotations": true,
+      "waymo_external:images": true,
+      "waymo_external:annotations": true
+    },
+    "validation_passed": true
+  },
+  "partitions": {
+    "kitti_train": {
+      "images": 5985,
+      "annotations": 31294,
+      "negative_images": 0,
+      "class_counts": {
+        "Vehicle": 26278,
+        "Pedestrian": 3729,
+        "Cyclist": 1287
+      },
+      "missing_images": 0,
+      "unreadable_images": 0,
+      "image_metadata_mismatches": 0,
+      "invalid_boxes": 0,
+      "out_of_bounds_boxes": 0,
+      "area_mismatches": 0,
+      "unknown_image_references": 0,
+      "unknown_categories": 0,
+      "annotation_metadata_mismatches": 0,
+      "duplicate_image_ids": 0,
+      "duplicate_file_names": 0,
+      "duplicate_annotation_ids": 0,
+      "missing_coco_image_records": 0,
+      "extra_coco_image_records": 0,
+      "missing_physical_files": 0,
+      "extra_physical_files": 0,
+      "target_count_mismatch_images": 0,
+      "class_count_mismatch_images": 0,
+      "category_checks": {
+        "three_categories": true,
+        "unique_category_ids": true,
+        "exact_category_mapping": true,
+        "supercategories": true
+      },
+      "checks": {
+        "top_level_structure": true,
+        "categories": true,
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "unique_image_ids": true,
+        "unique_file_names": true,
+        "unique_annotation_ids": true,
+        "exact_image_id_set": true,
+        "exact_physical_file_set": true,
+        "all_images_readable": true,
+        "image_metadata": true,
+        "valid_boxes": true,
+        "boxes_in_bounds": true,
+        "areas_consistent": true,
+        "valid_references": true,
+        "annotation_metadata": true,
+        "per_image_target_counts": true,
+        "per_image_class_counts": true
+      },
+      "validation_passed": true
+    },
+    "kitti_val": {
+      "images": 1496,
+      "annotations": 7792,
+      "negative_images": 0,
+      "class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "missing_images": 0,
+      "unreadable_images": 0,
+      "image_metadata_mismatches": 0,
+      "invalid_boxes": 0,
+      "out_of_bounds_boxes": 0,
+      "area_mismatches": 0,
+      "unknown_image_references": 0,
+      "unknown_categories": 0,
+      "annotation_metadata_mismatches": 0,
+      "duplicate_image_ids": 0,
+      "duplicate_file_names": 0,
+      "duplicate_annotation_ids": 0,
+      "missing_coco_image_records": 0,
+      "extra_coco_image_records": 0,
+      "missing_physical_files": 0,
+      "extra_physical_files": 0,
+      "target_count_mismatch_images": 0,
+      "class_count_mismatch_images": 0,
+      "category_checks": {
+        "three_categories": true,
+        "unique_category_ids": true,
+        "exact_category_mapping": true,
+        "supercategories": true
+      },
+      "checks": {
+        "top_level_structure": true,
+        "categories": true,
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "unique_image_ids": true,
+        "unique_file_names": true,
+        "unique_annotation_ids": true,
+        "exact_image_id_set": true,
+        "exact_physical_file_set": true,
+        "all_images_readable": true,
+        "image_metadata": true,
+        "valid_boxes": true,
+        "boxes_in_bounds": true,
+        "areas_consistent": true,
+        "valid_references": true,
+        "annotation_metadata": true,
+        "per_image_target_counts": true,
+        "per_image_class_counts": true
+      },
+      "validation_passed": true
+    },
+    "waymo_external": {
+      "images": 996,
+      "annotations": 24819,
+      "negative_images": 12,
+      "class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "missing_images": 0,
+      "unreadable_images": 0,
+      "image_metadata_mismatches": 0,
+      "invalid_boxes": 0,
+      "out_of_bounds_boxes": 0,
+      "area_mismatches": 0,
+      "unknown_image_references": 0,
+      "unknown_categories": 0,
+      "annotation_metadata_mismatches": 0,
+      "duplicate_image_ids": 0,
+      "duplicate_file_names": 0,
+      "duplicate_annotation_ids": 0,
+      "missing_coco_image_records": 0,
+      "extra_coco_image_records": 0,
+      "missing_physical_files": 0,
+      "extra_physical_files": 0,
+      "target_count_mismatch_images": 0,
+      "class_count_mismatch_images": 0,
+      "category_checks": {
+        "three_categories": true,
+        "unique_category_ids": true,
+        "exact_category_mapping": true,
+        "supercategories": true
+      },
+      "checks": {
+        "top_level_structure": true,
+        "categories": true,
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "unique_image_ids": true,
+        "unique_file_names": true,
+        "unique_annotation_ids": true,
+        "exact_image_id_set": true,
+        "exact_physical_file_set": true,
+        "all_images_readable": true,
+        "image_metadata": true,
+        "valid_boxes": true,
+        "boxes_in_bounds": true,
+        "areas_consistent": true,
+        "valid_references": true,
+        "annotation_metadata": true,
+        "per_image_target_counts": true,
+        "per_image_class_counts": true
+      },
+      "validation_passed": true
+    }
+  },
+  "cross_partition_overlap_counts": {
+    "kitti_train__kitti_val": 0,
+    "kitti_train__waymo_external": 0,
+    "kitti_val__waymo_external": 0
+  },
+  "combined": {
+    "images": 8477,
+    "annotations": 63905,
+    "negative_images": 12,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    }
+  },
+  "combined_checks": {
+    "image_count": true,
+    "annotation_count": true,
+    "negative_image_count": true,
+    "vehicle_count": true,
+    "pedestrian_count": true,
+    "cyclist_count": true,
+    "no_partition_overlap": true,
+    "all_partitions_passed": true,
+    "configuration_passed": true
+  },
+  "issue_count": 0,
+  "coco_validation_passed": true
+}

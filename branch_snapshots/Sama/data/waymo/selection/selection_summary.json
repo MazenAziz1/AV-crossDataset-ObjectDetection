@@ -1,0 +1,53 @@
+{
+  "candidate_pool_size": 70,
+  "number_of_final_segments": 25,
+  "selection_method": "binary_mixed_integer_linear_optimization",
+  "selection_profile_used": "preferred",
+  "solver_message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+  "camera": "FRONT",
+  "waymo_split": "validation",
+  "selection_frozen_before_model_evaluation": true,
+  "time_of_day_distribution": {
+    "Day": 14,
+    "Dawn/Dusk": 6,
+    "Night": 5
+  },
+  "weather_distribution": {
+    "sunny": 24,
+    "rain": 1
+  },
+  "location_distribution": {
+    "location_sf": 12,
+    "location_phx": 11,
+    "location_other": 2
+  },
+  "density_distribution": {
+    "high": 10,
+    "low": 8,
+    "medium": 7
+  },
+  "segments_containing_front_vehicles": 25,
+  "segments_containing_front_pedestrians": 22,
+  "segments_containing_front_cyclists": 18,
+  "total_front_vehicle_boxes": 83941,
+  "total_front_pedestrian_boxes": 35309,
+  "total_front_cyclist_boxes": 3760,
+  "total_small_boxes": 44874,
+  "total_medium_boxes": 40020,
+  "total_large_boxes": 38116,
+  "active_constraints": [
+    "total_segments",
+    "minimum_rain_segments",
+    "time_Day",
+    "time_Dawn/Dusk",
+    "time_Night",
+    "location_location_phx",
+    "location_location_sf",
+    "location_location_other",
+    "density_low",
+    "density_medium",
+    "density_high",
+    "minimum_pedestrian_segments",
+    "minimum_cyclist_segments"
+  ]
+}

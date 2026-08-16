@@ -1,0 +1,78 @@
+# RT-DETR-L Training Configuration
+# Status: Frozen
+# Slot: B | Framework: Ultralytics | Resume-safe multi-session | Hardware: NVIDIA T4 16GB
+
+metadata:
+  milestone: 4
+  step: 11
+  status: frozen
+  date_frozen: "2026-08-11"
+
+model:
+  family: "rtdetr"
+  name: "rtdetr_l"
+  architecture: "RT-DETR-L (Real-Time DEtection TRansformer)"
+  framework: "ultralytics"
+  pretrained_weights: "rtdetr-l.pt"
+  input_size: [640, 640]
+  num_classes: 3
+  class_mapping:
+    0: "Vehicle"
+    1: "Pedestrian"
+    2: "Cyclist"
+
+slot:
+  assignment: "slot_b"
+  role: "secondary"
+  note: "Dedicated slot for RT-DETR with resume capability"
+
+training:
+  target_epochs: 200
+  early_stopping_patience: 20
+  batch_size: 16
+  effective_batch_size: 16
+  dataloader_workers: 4
+  amp: true
+
+  optimizer:
+    name: "auto"
+    lr0: 0.0001
+    lrf: 0.01
+    momentum: 0.9
+    weight_decay: 0.0001
+    warmup_epochs: 3
+    warmup_momentum: 0.8
+    warmup_bias_lr: 0.1
+
+augmentation:
+  config: "configs/datasets/milestone_3/augmentation.yaml"
+
+vram:
+  target_hardware: "NVIDIA Tesla T4 16GB"
+  expected_gpu_memory_mb: 12000
+  mitigations:
+    - "automatic_mixed_precision_amp_true"
+
+resume:
+  enabled: true
+  checkpoint_every_epochs: 5
+  validation_every_epochs: 5
+  package_resume_after_each_session: true
+  resume_required_if_incomplete: true
+  session_chain_tracking:
+    enabled: true
+    store_session_manifest: true
+    store_resume_state: true
+    validate_epoch_continuity: true
+
+run_types:
+  tiny_overfit:
+    epochs: 5
+    subset_size: 10
+    description: "Verify loss decreases to near-zero"
+  pilot:
+    epochs: 10
+    description: "Check memory, epoch time, loss stability"
+  final:
+    epochs: 200
+    description: "Full training with multi-session resume support"

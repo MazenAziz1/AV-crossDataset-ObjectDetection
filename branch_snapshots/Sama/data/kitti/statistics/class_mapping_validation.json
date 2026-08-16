@@ -1,0 +1,41 @@
+{
+  "dataset": "KITTI Object Detection",
+  "label_files_scanned": 7481,
+  "final_classes": {
+    "0": "Vehicle",
+    "1": "Pedestrian",
+    "2": "Cyclist"
+  },
+  "original_class_counts": {
+    "Car": 28742,
+    "Cyclist": 1627,
+    "DontCare": 11295,
+    "Misc": 973,
+    "Pedestrian": 4487,
+    "Person_sitting": 222,
+    "Tram": 511,
+    "Truck": 1094,
+    "Van": 2914
+  },
+  "mapped_class_counts": {
+    "Cyclist": 1627,
+    "Ignored": 12779,
+    "Pedestrian": 4709,
+    "Vehicle": 32750
+  },
+  "mapped_source_classes": [
+    "Car",
+    "Cyclist",
+    "Pedestrian",
+    "Person_sitting",
+    "Truck",
+    "Van"
+  ],
+  "ignored_source_classes": [
+    "DontCare",
+    "Misc",
+    "Tram"
+  ],
+  "unmapped_source_classes": [],
+  "mapping_validation_passed": true
+}

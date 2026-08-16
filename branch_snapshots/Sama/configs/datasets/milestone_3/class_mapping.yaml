@@ -1,0 +1,100 @@
+schema_version: 1
+milestone: 3
+status: frozen
+frozen_date: "2026-06-18"
+
+task:
+  name: unified_three_class_object_detection
+  number_of_target_classes: 3
+
+target_classes:
+  - name: Vehicle
+    internal_id: 0
+    yolo_id: 0
+    coco_id: 1
+
+  - name: Pedestrian
+    internal_id: 1
+    yolo_id: 1
+    coco_id: 2
+
+  - name: Cyclist
+    internal_id: 2
+    yolo_id: 2
+    coco_id: 3
+
+source_mappings:
+  kitti:
+    authoritative_mapping_file: data/kitti/selection/class_mapping.yaml
+
+    mapped_classes:
+      Car: Vehicle
+      Van: Vehicle
+      Truck: Vehicle
+      Pedestrian: Pedestrian
+      Person_sitting: Pedestrian
+      Cyclist: Cyclist
+
+    evaluation_ignore_classes:
+      - DontCare
+
+    excluded_non_target_classes:
+      - Tram
+      - Misc
+
+    region_policy:
+      preserve_geometry: true
+      train_as_class: false
+      include_in_standard_target_annotations: false
+      suppress_false_positives_for:
+        - DontCare
+
+  waymo:
+    authoritative_mapping_file: >
+      data/waymo/representative_subset/annotations/class_mapping.yaml
+
+    mapped_classes:
+      Vehicle: Vehicle
+      Pedestrian: Pedestrian
+      Cyclist: Cyclist
+
+    evaluation_ignore_classes: []
+
+    excluded_non_target_classes:
+      - Sign
+
+    region_policy:
+      preserve_geometry_when_available: true
+      train_as_class: false
+      include_in_standard_target_annotations: false
+      suppress_false_positives_for: []
+
+format_id_policy:
+  internal:
+    Vehicle: 0
+    Pedestrian: 1
+    Cyclist: 2
+
+  yolo:
+    Vehicle: 0
+    Pedestrian: 1
+    Cyclist: 2
+
+  coco:
+    Vehicle: 1
+    Pedestrian: 2
+    Cyclist: 3
+
+negative_image_policy:
+  preserve_images: true
+  coco_image_record_without_annotations: true
+  yolo_empty_label_file: true
+
+consistency_rules:
+  - COCO is the canonical converted annotation format.
+  - YOLO annotations must be generated from COCO, not independently.
+  - No fourth target class may be introduced.
+  - Evaluation-ignore and excluded non-target classes remain outside the three target classes.
+  - Only KITTI DontCare regions may suppress false positives during evaluation.
+  - KITTI Tram, KITTI Misc, and Waymo Sign remain background for three-class evaluation.
+  - All detector families must use the same semantic class order.

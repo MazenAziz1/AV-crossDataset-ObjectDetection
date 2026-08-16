@@ -1,0 +1,14 @@
+source_dataset,source_class_id,source_class_name,action,unified_class_id,unified_class_name,notes
+KITTI,,Car,map,0,Vehicle,Merged into the common Vehicle superclass.
+KITTI,,Van,map,0,Vehicle,Merged into the common Vehicle superclass.
+KITTI,,Truck,map,0,Vehicle,Merged into the common Vehicle superclass.
+KITTI,,Pedestrian,map,1,Pedestrian,Direct mapping to Pedestrian.
+KITTI,,Person_sitting,map,1,Pedestrian,Merged into Pedestrian as a human road-user class.
+KITTI,,Cyclist,map,2,Cyclist,Direct mapping to Cyclist.
+KITTI,,Tram,ignore,,,Ignored because it is outside the common KITTI-Waymo three-class task.
+KITTI,,Misc,ignore,,,Ignored because it is a heterogeneous and ambiguous category.
+KITTI,,DontCare,ignore,,,Retained as an ignored evaluation region; not trained as an object class.
+Waymo,1,Vehicle,map,0,Vehicle,Direct mapping to Vehicle.
+Waymo,2,Pedestrian,map,1,Pedestrian,Direct mapping to Pedestrian.
+Waymo,3,Sign,ignore,,,Ignored because traffic signs are outside the common three-class task.
+Waymo,4,Cyclist,map,2,Cyclist,Direct mapping to Cyclist.

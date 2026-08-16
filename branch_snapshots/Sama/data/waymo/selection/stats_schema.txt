@@ -1,0 +1,45 @@
+WAYMO VALIDATION STATS INSPECTION
+==================================================
+Stats directory: C:\Users\Mazen\Desktop\AAST\Research\Autonomous research\data\waymo\raw\validation\stats
+Number of Parquet files: 202
+Inspected file: 10203656353524179475_7625_000_7645_000.parquet
+Rows in inspected file: 198
+
+COLUMN NAMES
+--------------------------------------------------
+index
+key.segment_context_name
+key.frame_timestamp_micros
+[StatsComponent].time_of_day
+[StatsComponent].location
+[StatsComponent].weather
+[StatsComponent].lidar_object_counts.types
+[StatsComponent].lidar_object_counts.counts
+[StatsComponent].camera_object_counts.types
+[StatsComponent].camera_object_counts.counts
+
+PARQUET SCHEMA
+--------------------------------------------------
+index: string
+key.segment_context_name: string
+key.frame_timestamp_micros: int64
+[StatsComponent].time_of_day: string
+[StatsComponent].location: string
+[StatsComponent].weather: string
+[StatsComponent].lidar_object_counts.types: list<item: int8>
+  child 0, item: int8
+[StatsComponent].lidar_object_counts.counts: list<item: int32>
+  child 0, item: int32
+[StatsComponent].camera_object_counts.types: list<item: int8>
+  child 0, item: int8
+[StatsComponent].camera_object_counts.counts: list<item: int32>
+  child 0, item: int32
+-- schema metadata --
+pandas: '{"column_indexes": [{"field_name": null, "metadata": {"encoding"' + 1788
+
+FIRST THREE ROWS
+--------------------------------------------------
+              key.segment_context_name  key.frame_timestamp_micros [StatsComponent].time_of_day [StatsComponent].location [StatsComponent].weather [StatsComponent].lidar_object_counts.types [StatsComponent].lidar_object_counts.counts [StatsComponent].camera_object_counts.types [StatsComponent].camera_object_counts.counts
+10203656353524179475_7625_000_7645_000            1522688014970187                          Day              location_phx                    sunny                                     [1, 3]                                    [10, 14]                                      [1, 2]                                      [58, 6]
+10203656353524179475_7625_000_7645_000            1522688015070129                          Day              location_phx                    sunny                                     [1, 3]                                    [10, 14]                                      [1, 2]                                      [57, 7]
+10203656353524179475_7625_000_7645_000            1522688015170074                          Day              location_phx                    sunny                                     [1, 3]                                    [11, 14]                                      [1, 2]                                      [60, 7]

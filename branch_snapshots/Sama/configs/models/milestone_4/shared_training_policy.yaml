@@ -1,0 +1,63 @@
+# Shared Training Policy (Kaggle Execution Target)
+# Status: Frozen
+# Purpose: Kaggle paths, checkpointing rules, runtime guard shared across all models
+# Hardware: NVIDIA Tesla T4 16GB
+
+metadata:
+  milestone: 4
+  step: 11
+  status: frozen
+  date_frozen: "2026-08-11"
+
+environment:
+  execution_target: kaggle
+  project_root: "/kaggle/working/project/milestone4_kaggle_training_package"
+  output_root: "/kaggle/working/project/milestone4_kaggle_training_package/outputs/milestone_4"
+
+data:
+  kitti_train_images: "data/processed/milestone_3/images/kitti/train"
+  kitti_val_images: "data/processed/milestone_3/images/kitti/val"
+  kitti_train_coco: "data/processed/milestone_3/annotations/coco/kitti_train.json"
+  kitti_val_coco: "data/processed/milestone_3/annotations/coco/kitti_val.json"
+  kitti_train_yolo: "data/processed/milestone_3/labels/kitti/train"
+  kitti_val_yolo: "data/processed/milestone_3/labels/kitti/val"
+  ignore_regions_train: "data/processed/milestone_3/annotations/ignore_regions/kitti_train_ignore.json"
+  ignore_regions_val: "data/processed/milestone_3/annotations/ignore_regions/kitti_val_ignore.json"
+  excluded_objects_train: "data/processed/milestone_3/annotations/excluded_objects/kitti_train_excluded.json"
+  excluded_objects_val: "data/processed/milestone_3/annotations/excluded_objects/kitti_val_excluded.json"
+
+training:
+  target_epochs: 200
+  early_stopping_patience: 20
+  early_stopping_metric: "mAP_50_95"
+  effective_batch_size: 32
+  dataloader_workers: 4
+  input_size: [640, 640]
+  seed: 42
+
+checkpointing:
+  save_best: true
+  save_last: true
+  save_every_epochs: 1
+  keep_last_n_checkpoints: 3
+  save_resume_state: true
+  best_metric: "mAP_50_95"
+  best_metric_mode: "max"
+
+runtime_guard:
+  enabled: true
+  max_runtime_hours: 10.5
+  grace_period_minutes: 5
+  graceful_stop: true
+  save_before_stop: true
+  package_on_exit: true
+  check_interval_seconds: 300
+
+outputs:
+  checkpoints: "outputs/milestone_4/checkpoints"
+  logs: "outputs/milestone_4/logs"
+  metrics: "outputs/milestone_4/metrics/kitti_validation"
+  reports: "outputs/milestone_4/reports"
+  manifests: "outputs/milestone_4/manifests"
+  runtime: "outputs/milestone_4/runtime"
+  kaggle_packages: "outputs/milestone_4/kaggle_packages"

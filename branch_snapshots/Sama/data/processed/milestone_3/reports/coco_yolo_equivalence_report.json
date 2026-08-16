@@ -1,0 +1,184 @@
+{
+  "milestone": 3,
+  "step": 12,
+  "purpose": "Prove numerical equivalence between the canonical COCO boxes and serialized YOLO labels.",
+  "matching_method": "per-image, per-class minimum-cost bipartite matching",
+  "yolo_decimal_precision": 10,
+  "serialization_unit": 1e-10,
+  "theoretical_half_unit_error": 5e-11,
+  "tolerances": {
+    "maximum_normalized_error": 1.1000000000000001e-10,
+    "maximum_pixel_error": 1e-06,
+    "minimum_iou": 0.99999
+  },
+  "partitions": {
+    "kitti_train": {
+      "images": 5985,
+      "coco_annotations": 31294,
+      "yolo_rows": 31294,
+      "matched_boxes": 31294,
+      "equivalent_boxes": 31294,
+      "empty_labels": 0,
+      "mismatched_images": 0,
+      "class_count_mismatch_images": 0,
+      "coco_class_counts": {
+        "Vehicle": 26278,
+        "Pedestrian": 3729,
+        "Cyclist": 1287
+      },
+      "yolo_class_counts": {
+        "Vehicle": 26278,
+        "Pedestrian": 3729,
+        "Cyclist": 1287
+      },
+      "maximum_normalized_error": 5.000000413701855e-11,
+      "mean_normalized_error": 2.387204950157588e-11,
+      "maximum_pixel_error": 4.7800028823985485e-08,
+      "mean_pixel_error": 1.622499009750861e-08,
+      "minimum_iou": 0.999999803210414,
+      "checks": {
+        "image_count": true,
+        "coco_annotation_count": true,
+        "yolo_row_count": true,
+        "matched_box_count": true,
+        "equivalent_box_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "no_mismatched_images": true,
+        "no_class_count_mismatches": true,
+        "normalized_error_within_tolerance": true,
+        "pixel_error_within_tolerance": true,
+        "minimum_iou_passed": true
+      },
+      "validation_passed": true
+    },
+    "kitti_val": {
+      "images": 1496,
+      "coco_annotations": 7792,
+      "yolo_rows": 7792,
+      "matched_boxes": 7792,
+      "equivalent_boxes": 7792,
+      "empty_labels": 0,
+      "mismatched_images": 0,
+      "class_count_mismatch_images": 0,
+      "coco_class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "yolo_class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "maximum_normalized_error": 5.000000413701855e-11,
+      "mean_normalized_error": 2.3837042200173376e-11,
+      "maximum_pixel_error": 4.69000127623076e-08,
+      "mean_pixel_error": 1.6207193850038365e-08,
+      "minimum_iou": 0.999999785695944,
+      "checks": {
+        "image_count": true,
+        "coco_annotation_count": true,
+        "yolo_row_count": true,
+        "matched_box_count": true,
+        "equivalent_box_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "no_mismatched_images": true,
+        "no_class_count_mismatches": true,
+        "normalized_error_within_tolerance": true,
+        "pixel_error_within_tolerance": true,
+        "minimum_iou_passed": true
+      },
+      "validation_passed": true
+    },
+    "waymo_external": {
+      "images": 996,
+      "coco_annotations": 24819,
+      "yolo_rows": 24819,
+      "matched_boxes": 24819,
+      "equivalent_boxes": 24819,
+      "empty_labels": 12,
+      "mismatched_images": 0,
+      "class_count_mismatch_images": 0,
+      "coco_class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "yolo_class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "maximum_normalized_error": 5.000000413701855e-11,
+      "mean_normalized_error": 2.5071153392975615e-11,
+      "maximum_pixel_error": 4.800006081495667e-08,
+      "mean_pixel_error": 1.6835132047863133e-08,
+      "minimum_iou": 0.9999999174753351,
+      "checks": {
+        "image_count": true,
+        "coco_annotation_count": true,
+        "yolo_row_count": true,
+        "matched_box_count": true,
+        "equivalent_box_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "no_mismatched_images": true,
+        "no_class_count_mismatches": true,
+        "normalized_error_within_tolerance": true,
+        "pixel_error_within_tolerance": true,
+        "minimum_iou_passed": true
+      },
+      "validation_passed": true
+    }
+  },
+  "combined": {
+    "images": 8477,
+    "coco_annotations": 63905,
+    "yolo_rows": 63905,
+    "matched_boxes": 63905,
+    "equivalent_boxes": 63905,
+    "empty_labels": 12,
+    "mismatched_images": 0,
+    "class_count_mismatch_images": 0,
+    "maximum_normalized_error": 5.000000413701855e-11,
+    "maximum_pixel_error": 4.800006081495667e-08,
+    "minimum_iou": 0.999999785695944,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    }
+  },
+  "combined_checks": {
+    "image_count": true,
+    "coco_annotation_count": true,
+    "yolo_row_count": true,
+    "matched_box_count": true,
+    "equivalent_box_count": true,
+    "empty_label_count": true,
+    "vehicle_count": true,
+    "pedestrian_count": true,
+    "cyclist_count": true,
+    "no_mismatched_images": true,
+    "no_class_count_mismatches": true,
+    "normalized_error_within_tolerance": true,
+    "pixel_error_within_tolerance": true,
+    "minimum_iou_passed": true,
+    "all_partitions_passed": true,
+    "manifest_row_count": true
+  },
+  "image_manifest": {
+    "path": "data/processed/milestone_3/manifests/coco_yolo_equivalence_manifest.csv",
+    "rows": 8477
+  },
+  "issue_count": 0,
+  "coco_yolo_equivalence_passed": true
+}

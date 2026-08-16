@@ -1,0 +1,59 @@
+# KITTI Evaluation Policy Configuration
+# Status: Frozen
+
+metadata:
+  milestone: 4
+  status: frozen
+  date_frozen: "2026-06-24"
+
+metrics:
+  map:
+    iou_start: 0.50
+    iou_end: 0.95
+    iou_step: 0.05
+    primary_metric: "mAP_50_95"
+    key_benchmarks:
+      - "AP50"
+      - "AP75"
+    per_class:
+      - "Vehicle"
+      - "Pedestrian"
+      - "Cyclist"
+
+  operating_point:
+    # Operating point threshold for calculating precision, recall, F1
+    confidence_threshold: 0.25
+    iou_threshold: 0.50
+
+  curve_generation:
+    # Low threshold to capture complete Precision-Recall and F1 curves
+    confidence_threshold: 0.001
+    iou_threshold: 0.50
+    num_points: 101
+
+  scale_ranges:
+    # COCO area ranges: small (< 32^2), medium (32^2 to 96^2), large (> 96^2)
+    small:
+      min_area: 0
+      max_area: 1024
+    medium:
+      min_area: 1024
+      max_area: 9216
+    large:
+      min_area: 9216
+      max_area: 99999999
+
+kitti_rules:
+  # Overlap threshold with ignore/DontCare bounding boxes to suppress False Positives
+  ignore_suppression:
+    enabled: true
+    min_iou_overlap: 0.50
+    ignore_classes:
+      - "DontCare"
+  
+  excluded_non_targets:
+    # Excluded non-target classes are not evaluated, and detections matching them
+    # are not automatically suppressed unless they overlap with DontCare regions.
+    classes:
+      - "Tram"
+      - "Misc"

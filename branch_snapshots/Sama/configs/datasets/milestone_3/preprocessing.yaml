@@ -1,0 +1,209 @@
+schema_version: 1
+milestone: 3
+status: frozen
+frozen_date: "2026-06-18"
+
+purpose: >
+  Define one deterministic image-preprocessing and bounding-box
+  transformation protocol shared by all detector families.
+
+source_partitions:
+  kitti_train:
+    dataset: KITTI
+    role: model_training
+    image_root: data/kitti/raw/training/image_2
+    source_annotations: data/kitti/raw/training/label_2
+    split_ids: data/kitti/selection/train.txt
+    expected_images: 5985
+    expected_target_boxes: 31294
+
+  kitti_validation:
+    dataset: KITTI
+    role: in_domain_validation
+    image_root: data/kitti/raw/training/image_2
+    source_annotations: data/kitti/raw/training/label_2
+    split_ids: data/kitti/selection/val.txt
+    expected_images: 1496
+    expected_target_boxes: 7792
+
+  waymo_external:
+    dataset: Waymo
+    role: external_validation_only
+    image_root: data/waymo/representative_subset/images/front
+    source_annotations: data/waymo/representative_subset/annotations/boxes.csv
+    source_manifest: data/waymo/representative_subset/metadata/manifest.csv
+    expected_images: 996
+    expected_target_boxes: 24819
+    expected_negative_images: 12
+
+expected_totals:
+  images: 8477
+  target_boxes: 63905
+  vehicle_boxes: 49678
+  pedestrian_boxes: 11836
+  cyclist_boxes: 2391
+
+image_preprocessing:
+  target_width: 640
+  target_height: 640
+
+  preserve_aspect_ratio: true
+  resize_policy: centered_letterbox
+  cropping_enabled: false
+
+  padding:
+    placement: centered
+    value_rgb: [114, 114, 114]
+
+  output:
+    color_space: RGB
+    format: PNG
+    extension: ".png"
+    png_compression_level: 3
+    optimize_encoding: false
+
+  filename_policy:
+    kitti:
+      method: preserve_source_stem
+      example: "000018.png"
+
+    waymo:
+      method: use_manifest_image_id
+      example: >-
+        13415985003725220451_6163_000_6183_000_1518657647337560.png
+
+    output_extension: ".png"
+    require_unique_filename_within_partition: true
+
+  dimension_rounding:
+    method: round_half_up
+    formula: "floor(value + 0.5)"
+
+  interpolation:
+    downscale: area
+    upscale: bilinear
+    unchanged_size: identity
+
+geometry:
+  source_box_format: xyxy_absolute_float
+  canonical_box_format: xyxy_absolute_float
+  coco_box_format: xywh_absolute_float
+  yolo_box_format: cxcywh_normalized_float
+
+  coordinate_convention:
+    continuous_coordinates: true
+    inclusive_maximum_coordinate: false
+    width_formula: "xmax - xmin"
+    height_formula: "ymax - ymin"
+    pixel_plus_one_adjustment: false
+
+  letterbox_calculation:
+    nominal_scale: >
+      min(target_width / source_width,
+      target_height / source_height)
+
+    resized_width: >
+      min(target_width,
+      floor(source_width * nominal_scale + 0.5))
+
+    resized_height: >
+      min(target_height,
+      floor(source_height * nominal_scale + 0.5))
+
+    actual_scale_x: "resized_width / source_width"
+    actual_scale_y: "resized_height / source_height"
+
+    padding_left: >
+      floor((target_width - resized_width) / 2)
+
+    padding_top: >
+      floor((target_height - resized_height) / 2)
+
+    padding_right: >
+      target_width - resized_width - padding_left
+
+    padding_bottom: >
+      target_height - resized_height - padding_top
+
+  box_transformation:
+    transformed_xmin: "source_xmin * actual_scale_x + padding_left"
+    transformed_ymin: "source_ymin * actual_scale_y + padding_top"
+    transformed_xmax: "source_xmax * actual_scale_x + padding_left"
+    transformed_ymax: "source_ymax * actual_scale_y + padding_top"
+
+  clipping:
+    enabled: true
+    xmin_range: "[0, target_width]"
+    xmax_range: "[0, target_width]"
+    ymin_range: "[0, target_height]"
+    ymax_range: "[0, target_height]"
+
+  validation:
+    fail_on_non_finite_coordinate: true
+    fail_on_non_positive_width: true
+    fail_on_non_positive_height: true
+    silently_drop_invalid_boxes: false
+    maximum_round_trip_error_pixels: 0.01
+
+annotation_policy:
+  canonical_format: COCO
+  derived_formats:
+    - YOLO
+
+  coco:
+    category_ids_are_one_based: true
+    bbox_format: xywh_absolute_float
+    include_negative_images: true
+    iscrowd_default: 0
+
+  yolo:
+    category_ids_are_zero_based: true
+    bbox_format: cxcywh_normalized_float
+    decimal_precision: 10
+    create_empty_label_file_for_negative_images: true
+
+  region_policy:
+    evaluation_ignore:
+      preserve_in_sidecar_files: true
+      kitti_classes:
+        - DontCare
+      waymo_classes: []
+      suppress_false_positives_during_evaluation: true
+
+    excluded_non_target_objects:
+      preserve_in_audit_sidecars: true
+      kitti_classes:
+        - Tram
+        - Misc
+      waymo_classes:
+        - Sign
+      suppress_false_positives_during_evaluation: false
+
+    include_any_as_target_annotations: false
+    include_any_in_coco_targets: false
+    include_any_in_yolo_targets: false
+
+dataset_policy:
+  random_augmentation_enabled: false
+  preserve_all_negative_images: true
+  allow_target_image_overlap_between_partitions: false
+
+  waymo_usage:
+    training: false
+    fine_tuning: false
+    hyperparameter_selection: false
+    checkpoint_selection: false
+    external_evaluation_only: true
+
+fairness_policy:
+  reuse_identical_processed_images_for_all_models: true
+  permit_model_specific_image_copies: false
+  framework_side_resize_policy: identity_or_fixed_640
+  framework_side_random_augmentation: disabled_during_evaluation
+
+reproducibility:
+  save_source_manifest: true
+  save_transform_manifest: true
+  save_validation_reports: true
+  save_checksums: true
+  record_library_versions: true

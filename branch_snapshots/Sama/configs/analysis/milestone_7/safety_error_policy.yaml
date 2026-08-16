@@ -1,0 +1,19 @@
+metadata:
+  milestone: 7
+  status: frozen
+  date_frozen: '2026-08-15'
+safety_priority_classes:
+  2: Pedestrian
+  3: Cyclist
+fn_rate_definition: false_negatives / (true_positives + false_negatives) per (detector,
+  dataset, class)
+top_safety_critical_images: 10
+top_image_criterion: highest count of pedestrian + cyclist missed detections per image
+datasets:
+- kitti
+- waymo
+detectors:
+- yolo
+- rtdetr
+- retinanet
+- faster_rcnn

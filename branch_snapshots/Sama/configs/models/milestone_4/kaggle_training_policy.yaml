@@ -1,0 +1,112 @@
+# Kaggle Training Policy Configuration
+# Status: Frozen
+# Purpose: Define shared training hyperparameters, checkpointing rules,
+#          runtime guard behavior, and Kaggle-specific environment paths.
+# Hardware: NVIDIA Tesla T4 16GB
+
+metadata:
+  milestone: 4
+  status: frozen
+  date_frozen: "2026-06-26"
+
+environment:
+  execution_target: "kaggle"
+  project_root: "/kaggle/working/project/milestone4_kaggle_training_package"
+  output_root: "/kaggle/working/project/milestone4_kaggle_training_package/outputs/milestone_4"
+  data_root: "/kaggle/working/project/milestone4_kaggle_training_package/data/processed/milestone_3"
+
+training:
+  shared:
+    target_epochs: 200
+    early_stopping_patience: 20
+    early_stopping_metric: "mAP_50_95"
+    early_stopping_min_delta: 0.001
+    pretrained_weights: "coco"
+
+  ultralytics_framework:
+    applies_to: ["yolo", "rtdetr"]
+    batch_size:
+      yolo: 32
+      rtdetr: 32
+    effective_batch_size: 32
+    dataloader_workers: 4
+    optimizer: "auto"  # Ultralytics auto (SGD for YOLO, AdamW for RT-DETR)
+    lr0:
+      yolo: 0.01       # SGD cosine schedule (Ultralytics YOLO default)
+      rtdetr: 0.0001   # AdamW for transformer detector
+    lrf: 0.01           # Final learning rate factor (lr0 * lrf)
+    momentum:
+      yolo: 0.937      # SGD momentum (YOLO standard)
+      rtdetr: 0.9      # not used by AdamW, kept for config compatibility
+    weight_decay:
+      yolo: 0.0005     # SGD weight decay (YOLO standard)
+      rtdetr: 0.0001   # AdamW weight decay (transformer standard)
+    warmup_epochs: 3
+    warmup_momentum: 0.8
+    warmup_bias_lr: 0.1
+
+  torchvision_framework:
+    applies_to: ["faster_rcnn", "retinanet"]
+    batch_size: 32
+    effective_batch_size: 32
+    dataloader_workers: 4
+    optimizer: "SGD"
+    learning_rate: 0.02    # SGD with batch=32, linear scaling from reference
+    momentum: 0.9           # Standard SGD momentum for detection
+    weight_decay: 0.0001    # Standard L2 regularization
+    lr_scheduler: "CosineAnnealingLR"
+    lr_scheduler_t_max: 200
+    warmup_epochs: 5    # Linear warmup for SGD stability (~940 iters at batch=32)
+
+augmentation:
+  training:
+    enabled: true
+    policy_config: "configs/datasets/milestone_3/augmentation.yaml"
+  validation:
+    enabled: false
+  type: "albumentations"
+
+checkpointing:
+  save_best: true
+  save_last: true
+  save_every_epochs: 1
+  keep_last_n_checkpoints: 3
+  save_resume_state: true
+  best_metric: "mAP_50_95"
+  best_metric_mode: "max"
+  checkpoint_format: "pt"
+
+runtime_guard:
+  enabled: true
+  max_runtime_hours: 10.5
+  grace_period_minutes: 5
+  graceful_stop: true
+  save_before_stop: true
+  package_on_exit: true
+  check_interval_seconds: 300
+
+data:
+  datasets:
+    kitti_train:
+      images: "data/processed/milestone_3/images/kitti/train"
+      labels_yolo: "data/processed/milestone_3/labels/kitti/train"
+      annotations_coco: "data/processed/milestone_3/annotations/coco/kitti_train.json"
+      image_count: 5985
+    kitti_val:
+      images: "data/processed/milestone_3/images/kitti/val"
+      labels_yolo: "data/processed/milestone_3/labels/kitti/val"
+      annotations_coco: "data/processed/milestone_3/annotations/coco/kitti_val.json"
+      image_count: 1496
+  waymo_exclusion: true
+
+outputs:
+  directories:
+    checkpoints: "outputs/milestone_4/checkpoints"
+    logs: "outputs/milestone_4/logs"
+    metrics: "outputs/milestone_4/metrics"
+    reports: "outputs/milestone_4/reports"
+    manifests: "outputs/milestone_4/manifests"
+    predictions: "outputs/milestone_4/predictions"
+    visual_checks: "outputs/milestone_4/visual_checks"
+    runtime: "outputs/milestone_4/runtime"
+    kaggle_packages: "outputs/milestone_4/kaggle_packages"

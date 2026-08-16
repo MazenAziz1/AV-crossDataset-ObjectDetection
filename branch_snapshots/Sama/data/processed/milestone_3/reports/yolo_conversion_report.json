@@ -1,0 +1,135 @@
+{
+  "milestone": 3,
+  "step": 8,
+  "purpose": "Generate YOLO labels directly from the canonical COCO annotations.",
+  "decimal_precision": 10,
+  "class_mapping": {
+    "1": 0,
+    "2": 1,
+    "3": 2
+  },
+  "partitions": {
+    "kitti_train": {
+      "images": 5985,
+      "coco_annotations": 31294,
+      "label_files": 5985,
+      "annotation_rows": 31294,
+      "empty_labels": 0,
+      "class_counts": {
+        "Vehicle": 26278,
+        "Pedestrian": 3729,
+        "Cyclist": 1287
+      },
+      "missing_labels": 0,
+      "unexpected_labels": 0,
+      "checks": {
+        "image_count": true,
+        "label_file_count": true,
+        "coco_annotation_count": true,
+        "yolo_annotation_row_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "no_missing_labels": true,
+        "no_unexpected_labels": true
+      },
+      "validation_passed": true
+    },
+    "kitti_val": {
+      "images": 1496,
+      "coco_annotations": 7792,
+      "label_files": 1496,
+      "annotation_rows": 7792,
+      "empty_labels": 0,
+      "class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "missing_labels": 0,
+      "unexpected_labels": 0,
+      "checks": {
+        "image_count": true,
+        "label_file_count": true,
+        "coco_annotation_count": true,
+        "yolo_annotation_row_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "no_missing_labels": true,
+        "no_unexpected_labels": true
+      },
+      "validation_passed": true
+    },
+    "waymo_external": {
+      "images": 996,
+      "coco_annotations": 24819,
+      "label_files": 996,
+      "annotation_rows": 24819,
+      "empty_labels": 12,
+      "class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "missing_labels": 0,
+      "unexpected_labels": 0,
+      "checks": {
+        "image_count": true,
+        "label_file_count": true,
+        "coco_annotation_count": true,
+        "yolo_annotation_row_count": true,
+        "empty_label_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "no_missing_labels": true,
+        "no_unexpected_labels": true
+      },
+      "validation_passed": true
+    }
+  },
+  "combined": {
+    "images": 8477,
+    "label_files": 8477,
+    "annotation_rows": 63905,
+    "empty_labels": 12,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    }
+  },
+  "combined_checks": {
+    "image_count": true,
+    "label_file_count": true,
+    "annotation_row_count": true,
+    "empty_label_count": true,
+    "vehicle_count": true,
+    "pedestrian_count": true,
+    "cyclist_count": true,
+    "manifest_row_count": true,
+    "independent_validation": true
+  },
+  "independent_validation": {
+    "label_files_checked": 8477,
+    "annotation_rows_checked": 63905,
+    "empty_files": 12,
+    "invalid_rows": 0,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    },
+    "validation_passed": true
+  },
+  "label_manifest": {
+    "path": "data/processed/milestone_3/manifests/yolo_label_manifest.csv",
+    "rows": 8477,
+    "sha256": "5bc667682a9d9d2f71b1317671a0eebce4b6f16382b8e1cc12316d0c45c6ac5f"
+  },
+  "issue_count": 0,
+  "yolo_conversion_passed": true
+}

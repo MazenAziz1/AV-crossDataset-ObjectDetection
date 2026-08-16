@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{Safety-critical false-negative rate for pedestrians and cyclists (operating point, confidence $\geq 0.25$, IoU $\geq 0.50$).}
+    \label{tab:safety_fn}
+    \begin{tabular}{lcc}
+        \toprule
+        Detector & KITTI FN rate & Waymo FN rate \\
+        \midrule
+        YOLOv8s & 0.152 & 0.926 \\
+        RT-DETR-L & 0.077 & 0.906 \\
+        Faster R-CNN & 0.159 & 0.844 \\
+        RetinaNet & 0.194 & 0.811 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

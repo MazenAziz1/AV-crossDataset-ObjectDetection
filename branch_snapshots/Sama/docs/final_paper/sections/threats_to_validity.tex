@@ -1,0 +1,38 @@
+% Threats to Validity
+\section{Threats to Validity}
+\label{sec:threats}
+
+Several limitations bound the interpretation of these results.
+
+\textbf{Subset size and coverage.} The Waymo external subset ($996$ images) is smaller than
+the KITTI validation split ($1{,}496$ images) and represents a single camera view (FRONT)
+sampled every fifth frame from $25$ segments. The subset was selected to maximize coverage
+of rare conditions (night, dawn/dusk, the single rainy segment), but it cannot represent
+the full diversity of the Waymo dataset, and conclusions should not be generalized beyond
+this configuration.
+
+\textbf{Operating point.} The robustness and safety analyses are confined to the frozen
+operating point (confidence $0.25$, IoU $0.50$); results may differ at other operating
+points, and no threshold is tuned on Waymo, so operating-point precision/recall reflect the
+a priori threshold rather than an optimized one.
+
+\textbf{Inference-time comparability.} Waymo inference time is measured per real image
+including first-image warmup, and is not directly comparable to the dummy-input benchmark
+latency reported in the efficiency comparison; the two measures serve different purposes.
+
+\textbf{Failure-type classification.} The failure-type decomposition uses documented
+IoU-based heuristics, and ambiguous cases are resolved by a fixed priority order. The
+classification is therefore descriptive rather than definitive, and counts of localization
+errors, confusions, and over-detections should be interpreted relative to each other rather
+than as absolute error frequencies.
+
+\textbf{Preprocessing note.} The Torchvision-based detectors applied training-time ImageNet
+normalization through Albumentations in addition to the normalization performed internally
+by the detection models, and evaluation used the same configuration. This avoids a
+train--evaluation mismatch but means the exact preprocessing path differs across
+frameworks, a practical characteristic of a cross-family comparison.
+
+\textbf{Scope.} Results are specific to the locked checkpoints, the frozen split, the
+three-class task, and the evaluated hardware. The study makes no causal claims and does not
+claim state-of-the-art performance or a novel architecture; the contribution is a
+reproducible external-validation methodology and evidence base.

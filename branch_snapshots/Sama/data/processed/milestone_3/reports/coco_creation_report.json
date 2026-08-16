@@ -1,0 +1,140 @@
+{
+  "milestone": 3,
+  "step": 6,
+  "purpose": "Create canonical COCO target annotations for all experimental partitions.",
+  "coordinate_precision": 10,
+  "categories": [
+    {
+      "id": 1,
+      "name": "Vehicle",
+      "supercategory": "road_user"
+    },
+    {
+      "id": 2,
+      "name": "Pedestrian",
+      "supercategory": "road_user"
+    },
+    {
+      "id": 3,
+      "name": "Cyclist",
+      "supercategory": "road_user"
+    }
+  ],
+  "waymo_resolved_columns": {
+    "image_id": "image_id",
+    "class_name": "mapped_class_name",
+    "xmin": "xmin",
+    "ymin": "ymin",
+    "xmax": "xmax",
+    "ymax": "ymax"
+  },
+  "partitions": {
+    "kitti_train": {
+      "images": 5985,
+      "annotations": 31294,
+      "negative_images": 0,
+      "class_counts": {
+        "Vehicle": 26278,
+        "Pedestrian": 3729,
+        "Cyclist": 1287
+      },
+      "clipping_applied_boxes": 0,
+      "count_mismatch_images": 0,
+      "checks": {
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "unique_image_ids": true,
+        "unique_annotation_ids": true,
+        "per_image_annotation_counts": true
+      },
+      "validation_passed": true
+    },
+    "kitti_val": {
+      "images": 1496,
+      "annotations": 7792,
+      "negative_images": 0,
+      "class_counts": {
+        "Vehicle": 6472,
+        "Pedestrian": 980,
+        "Cyclist": 340
+      },
+      "clipping_applied_boxes": 0,
+      "count_mismatch_images": 0,
+      "checks": {
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "unique_image_ids": true,
+        "unique_annotation_ids": true,
+        "per_image_annotation_counts": true
+      },
+      "validation_passed": true
+    },
+    "waymo_external": {
+      "images": 996,
+      "annotations": 24819,
+      "negative_images": 12,
+      "class_counts": {
+        "Vehicle": 16928,
+        "Pedestrian": 7127,
+        "Cyclist": 764
+      },
+      "clipping_applied_boxes": 0,
+      "count_mismatch_images": 0,
+      "checks": {
+        "image_count": true,
+        "annotation_count": true,
+        "negative_image_count": true,
+        "vehicle_count": true,
+        "pedestrian_count": true,
+        "cyclist_count": true,
+        "unique_image_ids": true,
+        "unique_annotation_ids": true,
+        "per_image_annotation_counts": true
+      },
+      "validation_passed": true
+    }
+  },
+  "combined": {
+    "images": 8477,
+    "annotations": 63905,
+    "negative_images": 12,
+    "class_counts": {
+      "Vehicle": 49678,
+      "Pedestrian": 11836,
+      "Cyclist": 2391
+    },
+    "clipping_applied_boxes": 0
+  },
+  "combined_checks": {
+    "image_count": true,
+    "annotation_count": true,
+    "negative_image_count": true,
+    "vehicle_count": true,
+    "pedestrian_count": true,
+    "cyclist_count": true
+  },
+  "output_files": {
+    "kitti_train": {
+      "path": "data/processed/milestone_3/annotations/coco/kitti_train.json",
+      "sha256": "4126bbad7b2d655c03f5b946627e282da424511e3f41db56be96b9a0e3daa024"
+    },
+    "kitti_val": {
+      "path": "data/processed/milestone_3/annotations/coco/kitti_val.json",
+      "sha256": "f6c216256c4e9a0c9424ec1dbc2ce417354862f47573895450ca3bc256070b3f"
+    },
+    "waymo_external": {
+      "path": "data/processed/milestone_3/annotations/coco/waymo_external.json",
+      "sha256": "b30af6787bb7a03e5707090ec84454d2fab1ad9c389e48b204cac1b938a5437c"
+    }
+  },
+  "issue_count": 0,
+  "coco_creation_passed": true
+}

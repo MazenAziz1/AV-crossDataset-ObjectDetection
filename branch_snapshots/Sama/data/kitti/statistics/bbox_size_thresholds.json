@@ -1,0 +1,10 @@
+{
+  "method": "target_box_normalized_area_quantiles",
+  "normalized_area_definition": "bbox_area / image_area",
+  "small_definition": "normalized_area <= lower_33_percent_quantile",
+  "medium_definition": "lower_33_percent_quantile < normalized_area <= upper_67_percent_quantile",
+  "large_definition": "normalized_area > upper_67_percent_quantile",
+  "small_max_normalized_area": 0.004157071390230814,
+  "medium_max_normalized_area": 0.015589650670960799,
+  "target_boxes_used": 39086
+}

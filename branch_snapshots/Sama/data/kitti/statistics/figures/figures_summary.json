@@ -1,0 +1,15 @@
+{
+  "figure_count": 8,
+  "figures": [
+    "data/kitti/statistics/figures/original_class_distribution.png",
+    "data/kitti/statistics/figures/mapped_class_distribution.png",
+    "data/kitti/statistics/figures/train_val_class_distribution.png",
+    "data/kitti/statistics/figures/bbox_area_distribution.png",
+    "data/kitti/statistics/figures/objects_per_image_distribution.png",
+    "data/kitti/statistics/figures/occlusion_distribution.png",
+    "data/kitti/statistics/figures/truncation_distribution.png",
+    "data/kitti/statistics/figures/difficulty_distribution.png"
+  ],
+  "source_object_rows": 51865,
+  "source_image_rows": 7481
+}

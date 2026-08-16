@@ -1,0 +1,134 @@
+schema_version: 1
+milestone: 3
+status: frozen
+
+purpose: >
+  Define the shared data-level augmentation and image-quality policy
+  used for fair training of all detector families.
+
+execution:
+  mode: online_during_training
+  generate_permanent_augmented_dataset: false
+  base_seed: 42
+
+partition_policy:
+  enabled:
+    - kitti_train
+
+  disabled:
+    - kitti_val
+    - waymo_external
+
+  rules:
+    - Augmentation is permitted only for the KITTI training partition.
+    - KITTI validation must remain deterministic and unaugmented.
+    - Waymo external validation must remain deterministic and unaugmented.
+    - Waymo must never influence training, tuning, or checkpoint selection.
+
+input:
+  width: 640
+  height: 640
+  channels: 3
+  stored_format: PNG
+  runtime_color_order: BGR
+  bounding_box_format: xyxy_absolute
+
+output:
+  preserve_width: 640
+  preserve_height: 640
+  preserve_box_count: true
+  preserve_class_ids: true
+  clip_boxes_to_image: true
+  reject_non_positive_boxes: true
+
+letterbox_padding:
+  value: 114
+  preserve_padding_value_after_photometric_transforms: true
+
+transform_order:
+  - horizontal_flip
+  - brightness_contrast
+  - hsv_adjustment
+  - gaussian_blur
+
+transforms:
+  horizontal_flip:
+    enabled: true
+    probability: 0.50
+
+  brightness_contrast:
+    enabled: true
+    probability: 0.50
+    brightness_limit: 0.15
+    contrast_limit: 0.15
+
+  hsv_adjustment:
+    enabled: true
+    probability: 0.30
+    hue_shift_limit_opencv: 5
+    saturation_scale:
+      minimum: 0.85
+      maximum: 1.15
+    value_scale:
+      minimum: 0.90
+      maximum: 1.10
+
+  gaussian_blur:
+    enabled: true
+    probability: 0.10
+    kernel_choices:
+      - 3
+      - 5
+    sigma:
+      minimum: 0.10
+      maximum: 1.20
+
+disabled_transforms:
+  vertical_flip: true
+  random_crop: true
+  random_rotation: true
+  affine_rotation: true
+  random_scale: true
+  perspective: true
+  shear: true
+  mosaic: true
+  mixup: true
+  copy_paste: true
+  cutout: true
+
+framework_policy:
+  use_shared_data_level_policy: true
+  disable_unmatched_framework_native_augmentations: true
+
+  prohibited_native_augmentations:
+    - mosaic
+    - mixup
+    - copy_paste
+    - random_perspective
+    - random_crop
+    - rotation
+    - vertical_flip
+
+  note: >
+    Model-specific normalization required by pretrained backbones may
+    differ, but semantic and geometric data augmentation must follow
+    this shared policy.
+
+image_quality:
+  reject_unreadable_images: true
+  reject_non_rgb_images: true
+  preserve_aspect_ratio: true
+  no_upstream_sharpening: true
+  no_upstream_denoising: true
+  no_histogram_equalization: true
+  no_lossy_reencoding: true
+  stored_processed_images_remain_unchanged: true
+
+reproducibility:
+  seed_components:
+    - base_seed
+    - epoch
+    - global_image_id
+
+  deterministic_for_same_seed: true
+  different_epochs_may_produce_different_augmentations: true

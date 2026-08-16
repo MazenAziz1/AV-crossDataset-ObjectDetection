@@ -1,0 +1,6 @@
+type_id,type_name,selected_front_box_count,policy
+0,Unknown,0,unknown
+1,Vehicle,16928,target
+2,Pedestrian,7127,target
+3,Sign,0,excluded_non_target
+4,Cyclist,764,target

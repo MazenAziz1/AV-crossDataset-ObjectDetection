@@ -1,0 +1,91 @@
+# Model Registry Configuration (Standard Training on T4 16GB)
+# Status: Frozen
+
+metadata:
+  milestone: 4
+  status: frozen
+  date_frozen: "2026-06-24"
+  hardware_target: "NVIDIA Tesla T4 (16 GB VRAM)"
+  memory_policy: "Full-batch training with AMP"
+
+models:
+  yolo:
+    family: "yolo"
+    name: "yolov8s"
+    architecture: "YOLOv8-Small"
+    framework: "ultralytics"
+    framework_version: "8.2.0"
+    pretrained_weights: "yolov8s.pt"
+    input_size: [640, 640]
+    num_classes: 3
+    parameter_count: 11166822 # ~11.2M
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 5500 # ~5.5GB with AMP
+    status: "frozen"
+    optimizer: "auto (SGD)"
+    learning_rate: 0.01
+    weight_decay: 0.0005
+    mitigation_strategies:
+      - "automatic_mixed_precision_amp_true"
+    selection_rationale: "YOLOv8s SGD training with batch=32 at 640x640 on T4 16GB."
+
+  faster_rcnn:
+    family: "faster_rcnn"
+    name: "fasterrcnn_resnet50_fpn"
+    architecture: "Faster R-CNN with ResNet-50-FPN backbone"
+    framework: "torchvision"
+    framework_version: "0.18.0"
+    pretrained_weights: "FasterRCNN_ResNet50_FPN_Weights.DEFAULT"
+    input_size: [640, 640]
+    num_classes: 4 # 3 targets + 1 background
+    parameter_count: 41755028 # ~41.8M
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 14000 # ~14GB with AMP + gradient checkpointing
+    status: "frozen"
+    optimizer: "SGD"
+    learning_rate: 0.02
+    weight_decay: 0.0001
+    mitigation_strategies:
+      - "automatic_mixed_precision_amp_true"
+      - "gradient_checkpointing_on_backbone"
+    selection_rationale: "Faster R-CNN ResNet-50 SGD training with batch=32, fully trainable backbone, gradient checkpointing for memory safety on T4 16GB."
+
+  retinanet:
+    family: "retinanet"
+    name: "retinanet_resnet50_fpn_v2"
+    architecture: "RetinaNet with ResNet-50-FPN V2 backbone"
+    framework: "torchvision"
+    framework_version: "0.18.0"
+    pretrained_weights: "RetinaNet_ResNet50_FPN_V2_Weights.DEFAULT"
+    input_size: [640, 640]
+    num_classes: 4 # 3 targets + 1 background
+    parameter_count: 34015332 # ~34.0M
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 9500 # ~9.5GB with AMP
+    status: "frozen"
+    optimizer: "SGD"
+    learning_rate: 0.02
+    weight_decay: 0.0001
+    mitigation_strategies:
+      - "automatic_mixed_precision_amp_true"
+    selection_rationale: "RetinaNet ResNet-50 V2 SGD training with batch=32, fully trainable backbone on T4 16GB."
+
+  rtdetr:
+    family: "rtdetr"
+    name: "rtdetr_l"
+    architecture: "RT-DETR-L (Real-Time DEtection TRansformer)"
+    framework: "ultralytics"
+    framework_version: "8.2.0"
+    pretrained_weights: "rtdetr-l.pt"
+    input_size: [640, 640]
+    num_classes: 3
+    parameter_count: 32900000 # ~32.9M
+    recommended_batch_size: 32
+    expected_gpu_memory_mb: 12000 # ~12GB with AMP
+    status: "frozen"
+    optimizer: "auto (AdamW)"
+    learning_rate: 0.0001
+    weight_decay: 0.0001
+    mitigation_strategies:
+      - "automatic_mixed_precision_amp_true"
+    selection_rationale: "RT-DETR-L AdamW training with batch=32, proper transformer LR on T4 16GB."

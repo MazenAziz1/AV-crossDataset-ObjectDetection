@@ -1,0 +1,28 @@
+{
+  "milestone": 3,
+  "step": 4,
+  "purpose": "Validate deterministic 640x640 letterbox preprocessing on a representative sample.",
+  "target_size": {
+    "width": 640,
+    "height": 640
+  },
+  "padding_value": 114,
+  "expected_samples": 8,
+  "created_samples": 8,
+  "selection_reasons": [
+    "kitti_train_crowded",
+    "kitti_val_crowded",
+    "kitti_train_cyclist_rich",
+    "kitti_val_pedestrian_rich",
+    "waymo_crowded",
+    "waymo_cyclist_rich",
+    "waymo_pedestrian_rich",
+    "waymo_negative"
+  ],
+  "all_dimensions_valid": true,
+  "all_padding_valid": true,
+  "all_geometry_valid": true,
+  "all_aspect_ratios_valid": true,
+  "issue_count": 0,
+  "dry_run_passed": true
+}

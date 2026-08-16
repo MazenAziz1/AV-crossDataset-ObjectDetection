@@ -1,0 +1,9 @@
+output_file,image_id,split,target_box_count,ignored_box_count,vehicle_count,pedestrian_count,cyclist_count,boxes_drawn,ignored_boxes_included
+sample_vehicle.jpg,002972,val,17,1,17,0,0,17,False
+sample_pedestrian.jpg,002707,train,19,2,1,18,0,19,False
+sample_cyclist.jpg,006682,train,15,1,3,7,5,15,False
+sample_mixed_scene.jpg,004139,train,22,2,5,16,1,22,False
+sample_crowded_scene.jpg,004139,train,22,2,5,16,1,22,False
+sample_occluded_scene.jpg,002050,val,20,1,19,0,1,20,False
+sample_truncated_scene.jpg,002979,train,15,5,1,14,0,15,False
+sample_dontcare_scene.jpg,000018,train,2,18,2,0,0,20,True

@@ -1,0 +1,173 @@
+% Results
+\section{Results}
+\label{sec:results}
+
+\subsection{In-Domain Accuracy on KITTI}
+\label{sec:results_kitti}
+
+Table~\ref{tab:kitti_results} reports the KITTI in-domain results for the four detectors.
+YOLOv8s achieves the highest accuracy on every axis, with mAP@$[0.50{:}0.95]$ of $0.690$,
+AP50 of $0.925$, and AP75 of $0.780$. The accuracy ranking is YOLOv8s
+($0.690$) $>$ RT-DETR-L ($0.606$) $>$ Faster R-CNN ($0.589$) $>$ RetinaNet ($0.537$).
+Pedestrian is the weakest class across all four detectors ($0.392$--$0.530$), consistent
+with the class's small object size and limited training instances, while Vehicle is the
+strongest ($0.703$--$0.849$).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/kitti_vs_waymo_map50_95.pdf}
+    \caption{KITTI in-domain versus Waymo external mAP@$[0.50{:}0.95]$ under target-free
+    transfer. All detectors degrade sharply, and the in-domain ranking does not transfer to
+    the external setting.}
+    \label{fig:kitti_vs_waymo}
+\end{figure}
+
+\input{tables/tab_kitti_results}
+
+\subsection{Computational Efficiency}
+\label{sec:results_efficiency}
+
+Table~\ref{tab:efficiency} summarizes the deployment-oriented efficiency comparison on the
+local GPU. YOLOv8s is by far the most efficient detector: $11.1$M parameters, a $21.5$~MB
+checkpoint, $12.36$~ms latency, and $94.77$~FPS. RT-DETR-L offers the second-best accuracy
+but is considerably slower ($55.29$~ms, $18.73$~FPS). The two heaviest detectors carry a
+large efficiency penalty: Faster R-CNN ($41.3$M parameters, $315.68$~MB, $91.22$~ms) and
+RetinaNet ($36.4$M parameters, $278.0$~MB, $75.25$~ms).
+
+\input{tables/tab_efficiency}
+
+\subsection{Operating-Point Behavior}
+\label{sec:results_operating_point}
+
+At the fixed operating point (confidence $\geq 0.25$, IoU $\geq 0.50$,
+Table~\ref{tab:operating_point}), YOLOv8s attains the highest precision ($0.926$) with a
+high recall ($0.947$). RT-DETR-L emits many low-confidence detections (DETR-style
+$300$ queries), so it achieves the highest recall ($0.969$) but the lowest precision
+($0.482$) and the most false positives per image ($5.431$). Faster R-CNN and RetinaNet
+fall between these two extremes.
+
+\input{tables/tab_operating_point}
+
+\subsection{Cross-Dataset External Validation on Waymo}
+\label{sec:results_waymo}
+
+Table~\ref{tab:waymo_results} reports the Waymo external-validation results obtained by
+applying the four KITTI-trained checkpoints directly to the frozen Waymo subset with no
+retraining. All detectors degrade sharply: mAP@$[0.50{:}0.95]$ falls to
+$0.065$--$0.097$, an order of magnitude below the KITTI baseline
+(Figure~\ref{fig:kitti_vs_waymo}). RetinaNet achieves the highest Waymo accuracy
+($0.097$), followed by Faster R-CNN ($0.077$), RT-DETR-L ($0.071$), and YOLOv8s ($0.065$),
+the reverse of the in-domain ranking.
+
+\input{tables/tab_waymo_results}
+
+Table~\ref{tab:kitti_vs_waymo} quantifies the degradation and the generalization ratio
+(Waymo mAP divided by KITTI mAP). Relative mAP@$[0.50{:}0.95]$ drops range from $82.0\%$
+(RetinaNet) to $90.5\%$ (YOLOv8s), and generalization ratios range from $0.095$ (YOLOv8s)
+to $0.180$ (RetinaNet), as shown in Figure~\ref{fig:generalization_ratio}. The best
+generalizing detector is RetinaNet and the worst is YOLOv8s.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/generalization_ratio_map50_95.pdf}
+    \caption{Generalization ratio (Waymo mAP@$[0.50{:}0.95]$ / KITTI mAP@$[0.50{:}0.95]$)
+    for the four detectors. Higher values indicate greater cross-domain stability.}
+    \label{fig:generalization_ratio}
+\end{figure}
+
+\input{tables/tab_kitti_vs_waymo}
+
+\subsection{Class-Wise Degradation}
+\label{sec:results_class_wise}
+
+Table~\ref{tab:class_wise_degradation} reports per-class AP@$[0.50{:}0.95]$ on both
+datasets together with the absolute and relative drop. Vehicle exhibits the largest
+absolute drop across detectors (Figure~\ref{fig:class_wise_degradation}), reflecting its
+high in-domain score combined with a large distributional shift in scale and appearance on
+Waymo. Cyclist shows the largest relative drop (up to $94.0\%$), while Pedestrian degrades
+least in absolute terms but from a low baseline.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/class_wise_degradation.pdf}
+    \caption{Class-wise absolute degradation in AP@$[0.50{:}0.95]$ (KITTI minus Waymo) by
+    detector.}
+    \label{fig:class_wise_degradation}
+\end{figure}
+
+\input{tables/tab_class_wise_degradation}
+
+\subsection{Robustness and Safety-Oriented Analysis}
+\label{sec:results_safety}
+
+\subsubsection{Object-Size Analysis}
+\label{sec:results_size}
+
+Recall and miss rate were computed per detector, dataset, and size category at the
+operating point (Table~\ref{tab:object_size_recall}). On KITTI, recall declines with
+object size but remains high for all detectors ($0.88$--$0.96$ small-object recall); on
+Waymo, small-object recall collapses, reaching $0.045$--$0.132$ across detectors
+(Figure~\ref{fig:object_size_recall}). This indicates that small objects are the dominant
+failure mode under domain shift, consistent with Waymo containing many more small and
+distant objects.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/object_size_recall.pdf}
+    \caption{Recall by object-size category at the operating point for KITTI (left) and
+    Waymo (right).}
+    \label{fig:object_size_recall}
+\end{figure}
+
+\input{tables/tab_object_size_recall}
+
+\subsubsection{Safety-Critical False Negatives}
+\label{sec:results_safety_fn}
+
+False-negative rates for the safety-priority classes (Pedestrian and Cyclist) were computed
+separately from overall accuracy (Table~\ref{tab:safety_fn}). On Waymo, the combined
+pedestrian-plus-cyclist false-negative rate is $0.81$--$0.93$ for all detectors
+(Figure~\ref{fig:pedestrian_cyclist_fn}), a safety-relevant result that is not visible
+from average mAP alone: even the detector with the best Waymo mAP misses the large majority
+of vulnerable road users.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/pedestrian_cyclist_fn_rate.pdf}
+    \caption{Safety-critical false-negative rate for pedestrians and cyclists at the
+    operating point, for KITTI and Waymo.}
+    \label{fig:pedestrian_cyclist_fn}
+\end{figure}
+
+\input{tables/tab_safety_fn}
+
+\subsubsection{Failure-Type Decomposition}
+\label{sec:results_failure_type}
+
+Table~\ref{tab:failure_type} decomposes detections into true positives, missed detections,
+false positives, localization errors, class confusions, and over-detections. On KITTI,
+RT-DETR-L emits the most false positives and by far the most over-detections, consistent
+with its low operating-point precision. On Waymo, missed detections dominate for every
+detector, again reflecting the collapse of small-object recall.
+
+\input{tables/tab_failure_type}
+
+\subsection{Deployment Trade-Off}
+\label{sec:results_deployment}
+
+Table~\ref{tab:deployment} and Figure~\ref{fig:deployment_tradeoff} jointly summarize
+in-domain accuracy, external accuracy, latency, and vulnerable-road-user (VRU) safety on
+Waymo (the VRU false-negative rate and the small-object recall restricted to pedestrians
+and cyclists). No single detector simultaneously optimizes accuracy, generalization,
+latency, and safety: YOLOv8s is fastest and most accurate in-domain but least stable and
+safety-reliable out-of-domain, while RetinaNet generalizes best and is most safety-reliable
+on Waymo but is slower and weaker in-domain.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/deployment_tradeoff.pdf}
+    \caption{Deployment trade-off between mean inference time and Waymo mAP@$[0.50{:}0.95]$.}
+    \label{fig:deployment_tradeoff}
+\end{figure}
+
+\input{tables/tab_deployment}

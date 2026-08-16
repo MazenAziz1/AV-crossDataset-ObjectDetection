@@ -1,0 +1,113 @@
+{
+  "dataset": "KITTI Object Detection",
+  "source_subset": "official labeled training set",
+  "official_testing_set_used": false,
+  "class_mapping": {
+    "Vehicle": [
+      "Car",
+      "Van",
+      "Truck"
+    ],
+    "Pedestrian": [
+      "Pedestrian",
+      "Person_sitting"
+    ],
+    "Cyclist": [
+      "Cyclist"
+    ],
+    "Ignored": [
+      "Tram",
+      "Misc",
+      "DontCare"
+    ]
+  },
+  "all": {
+    "images": 7481,
+    "original_annotations": 51865,
+    "target_boxes": 39086,
+    "ignored_boxes": 12779,
+    "vehicle_boxes": 32750,
+    "pedestrian_boxes": 4709,
+    "cyclist_boxes": 1627,
+    "images_containing_vehicle": 6798,
+    "images_containing_pedestrian": 1796,
+    "images_containing_cyclist": 1141,
+    "target_empty_images": 0,
+    "ignored_only_images": 0,
+    "average_target_boxes_per_image": 5.224703,
+    "maximum_target_boxes_in_image": 22,
+    "density_distribution": {
+      "low": 2967,
+      "high": 2294,
+      "medium": 2220
+    }
+  },
+  "train": {
+    "images": 5985,
+    "original_annotations": 41468,
+    "target_boxes": 31294,
+    "ignored_boxes": 10174,
+    "vehicle_boxes": 26278,
+    "pedestrian_boxes": 3729,
+    "cyclist_boxes": 1287,
+    "images_containing_vehicle": 5438,
+    "images_containing_pedestrian": 1437,
+    "images_containing_cyclist": 913,
+    "target_empty_images": 0,
+    "ignored_only_images": 0,
+    "average_target_boxes_per_image": 5.228739,
+    "maximum_target_boxes_in_image": 22,
+    "density_distribution": {
+      "low": 2373,
+      "high": 1835,
+      "medium": 1777
+    }
+  },
+  "validation": {
+    "images": 1496,
+    "original_annotations": 10397,
+    "target_boxes": 7792,
+    "ignored_boxes": 2605,
+    "vehicle_boxes": 6472,
+    "pedestrian_boxes": 980,
+    "cyclist_boxes": 340,
+    "images_containing_vehicle": 1360,
+    "images_containing_pedestrian": 359,
+    "images_containing_cyclist": 228,
+    "target_empty_images": 0,
+    "ignored_only_images": 0,
+    "average_target_boxes_per_image": 5.208556,
+    "maximum_target_boxes_in_image": 20,
+    "density_distribution": {
+      "low": 594,
+      "high": 459,
+      "medium": 443
+    }
+  },
+  "bbox_size_thresholds": {
+    "method": "target_box_normalized_area_quantiles",
+    "normalized_area_definition": "bbox_area / image_area",
+    "small_definition": "normalized_area <= lower_33_percent_quantile",
+    "medium_definition": "lower_33_percent_quantile < normalized_area <= upper_67_percent_quantile",
+    "large_definition": "normalized_area > upper_67_percent_quantile",
+    "small_max_normalized_area": 0.004157071390230814,
+    "medium_max_normalized_area": 0.015589650670960799,
+    "target_boxes_used": 39086
+  },
+  "validation_checks": {
+    "image_rows_equal_7481": true,
+    "object_rows_equal_51865": true,
+    "train_images_equal_5985": true,
+    "validation_images_equal_1496": true,
+    "overall_target_boxes_equal_39086": true,
+    "overall_ignored_boxes_equal_12779": true,
+    "all_target_classes_present_train": true,
+    "all_target_classes_present_validation": true
+  },
+  "statistics_validation_passed": true,
+  "notes": [
+    "Target-empty images are retained for background and false-positive evaluation.",
+    "Ignored-only images are retained, but ignored annotations are not treated as target classes.",
+    "DontCare regions remain available for later evaluation handling."
+  ]
+}

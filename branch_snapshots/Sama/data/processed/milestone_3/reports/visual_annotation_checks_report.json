@@ -1,0 +1,33 @@
+{
+  "milestone": 3,
+  "step": 13,
+  "purpose": "Create deterministic visual comparisons of canonical COCO and derived YOLO annotations.",
+  "expected_samples": 8,
+  "created_samples": 8,
+  "selection_reasons": [
+    "kitti_train_crowded",
+    "kitti_train_cyclist_rich",
+    "kitti_val_crowded",
+    "kitti_val_pedestrian_rich",
+    "waymo_crowded",
+    "waymo_cyclist_rich",
+    "waymo_pedestrian_rich",
+    "waymo_negative"
+  ],
+  "maximum_selected_normalized_error": 5.000000413701855e-11,
+  "maximum_selected_pixel_error": 4.8000060814956675e-08,
+  "minimum_selected_iou": 0.9999999428377964,
+  "contact_sheet": "data/processed/milestone_3/visual_checks/coco_yolo_comparison/annotation_comparison_contact_sheet.png",
+  "checks": {
+    "sample_count": true,
+    "all_samples_passed": true,
+    "all_output_files_exist": true,
+    "contact_sheet_exists": true,
+    "negative_sample_present": true,
+    "cyclist_samples_present": true,
+    "pedestrian_samples_present": true,
+    "all_equivalence_records_passed": true
+  },
+  "issue_count": 0,
+  "visual_annotation_checks_passed": true
+}

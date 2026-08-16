@@ -1,0 +1,70 @@
+% Introduction
+\section{Introduction}
+\label{sec:introduction}
+
+Modern object detectors achieve strong results on autonomous-driving benchmarks, but
+these results are typically reported under in-domain evaluation, in which the training and
+test data are drawn from the same dataset distribution. This setting can hide sensitivity
+to dataset bias and may not reflect how reliably a detector behaves when deployed in a
+different environment~\cite{geiger2012kitti,sun2020waymo}. In practice, a perception
+system trained in one city or on one sensor configuration must operate in scenes with
+different camera characteristics, traffic density, object-scale distributions, and
+annotation conventions, and it remains unclear whether a high in-domain score translates
+into robust performance under such shift.
+
+This uncertainty is particularly important for safety-critical classes such as pedestrians
+and cyclists, and for small, distant, occluded, and crowded objects. A detector that
+attains a strong aggregate mean Average Precision (mAP) may still miss a large fraction
+of vulnerable road users after a domain shift, an effect that aggregate metrics conceal.
+Deployment constraints introduce a further dimension: a highly accurate detector may be
+impractical at the required frame rate, while a very fast detector may be insufficiently
+reliable for safety-critical perception~\cite{yang2022streaming,wang2023asap}. A
+unified assessment of accuracy, external generalization, safety-oriented failure, and
+computational efficiency is therefore needed to identify a defensible
+accuracy--generalization--efficiency trade-off.
+
+This study investigates the external generalization of object detectors trained on the
+KITTI dataset~\cite{geiger2012kitti} and evaluated, without retraining, fine-tuning, or
+target-domain adaptation, on a representative front-camera subset of the Waymo Open
+Dataset~\cite{sun2020waymo}. Four detector families spanning representative detection
+paradigms are considered: YOLOv8s (real-time one-stage CNN),
+Faster R-CNN~\cite{ren2015fasterrcnn} (two-stage region proposal),
+RetinaNet~\cite{lin2017focalloss} (dense one-stage with focal loss), and
+RT-DETR~\cite{zhao2024rtdetr} (real-time transformer). All models are trained on the
+same harmonized three-class task (Vehicle, Pedestrian, and Cyclist) under a common
+experimental protocol, and evaluated in-domain on KITTI and externally on Waymo with a
+frozen operating point. The evaluation combines in-domain accuracy, absolute and relative
+cross-dataset degradation, a generalization ratio, class-wise behavior, safety-oriented
+failure analysis, and same-hardware efficiency measurement.
+
+The main contributions of this work are:
+
+\begin{enumerate}
+    \item \textbf{Controlled cross-family comparison.} A harmonized benchmark is
+    developed for four representative detection paradigms under identical data,
+    class, and evaluation rules.
+    \item \textbf{Target-free external validation.} Models trained exclusively on
+    KITTI are evaluated directly on Waymo with no retraining, fine-tuning, domain
+    adaptation, or target-dependent selection.
+    \item \textbf{Dataset and class harmonization.} A transparent class-mapping
+    procedure aligns KITTI and Waymo annotations into the common Vehicle, Pedestrian,
+    and Cyclist classes (Section~\ref{sec:datasets}).
+    \item \textbf{Cross-dataset generalization analysis.} Generalization is quantified
+    using in-domain and external mAP, absolute and relative degradation, a
+    generalization ratio, and class-wise AP changes
+    (Section~\ref{sec:results}).
+    \item \textbf{Safety-oriented failure analysis.} False negatives, vulnerable road
+    users, small and distant objects, and error types are examined alongside aggregate
+    accuracy (Section~\ref{sec:results}).
+    \item \textbf{Deployment-oriented efficiency evaluation.} Latency, throughput,
+    parameter count, and model size are reported on common hardware
+    (Section~\ref{sec:results}).
+\end{enumerate}
+
+The remainder of this paper is organized as follows. Section~\ref{sec:related_work}
+reviews related work, Section~\ref{sec:datasets} describes dataset preparation and class
+harmonization, Section~\ref{sec:methodology} details the preprocessing and validation
+pipeline, Section~\ref{sec:experimental_setup} presents the training and evaluation
+protocol, Section~\ref{sec:results} reports the results, Section~\ref{sec:discussion}
+discusses their implications, Section~\ref{sec:threats} describes threats to validity,
+and Section~\ref{sec:conclusion} concludes.

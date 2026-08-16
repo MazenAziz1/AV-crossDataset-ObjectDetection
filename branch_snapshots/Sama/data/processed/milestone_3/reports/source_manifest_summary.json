@@ -1,0 +1,73 @@
+{
+  "milestone": 3,
+  "step": 3,
+  "purpose": "Create one canonical source record for every KITTI and Waymo image.",
+  "global_id_policy": {
+    "KITTI": "integer KITTI image ID plus one",
+    "Waymo": "1000001 plus deterministic sorted manifest row index"
+  },
+  "filename_policy": {
+    "KITTI": "preserve six-digit source stem",
+    "Waymo": "use full manifest image_id"
+  },
+  "manifest_rows": 8477,
+  "issues": 0,
+  "validation_passed": true,
+  "checks": {
+    "row_count": true,
+    "unique_global_image_ids": true,
+    "unique_canonical_keys": true,
+    "unique_output_paths": true,
+    "source_paths_exist": true,
+    "kitti_train_images": true,
+    "kitti_val_images": true,
+    "kitti_train_boxes": true,
+    "kitti_val_boxes": true,
+    "waymo_images": true,
+    "waymo_boxes": true,
+    "waymo_negative_images": true,
+    "combined_target_boxes": true,
+    "combined_vehicle_boxes": true,
+    "combined_pedestrian_boxes": true,
+    "combined_cyclist_boxes": true
+  },
+  "summaries": {
+    "kitti_train": {
+      "images": 5985,
+      "target_boxes": 31294,
+      "vehicle_boxes": 26278,
+      "pedestrian_boxes": 3729,
+      "cyclist_boxes": 1287,
+      "ignored_boxes": 10174,
+      "negative_images": 0
+    },
+    "kitti_validation": {
+      "images": 1496,
+      "target_boxes": 7792,
+      "vehicle_boxes": 6472,
+      "pedestrian_boxes": 980,
+      "cyclist_boxes": 340,
+      "ignored_boxes": 2605,
+      "negative_images": 0
+    },
+    "waymo_external": {
+      "images": 996,
+      "target_boxes": 24819,
+      "vehicle_boxes": 16928,
+      "pedestrian_boxes": 7127,
+      "cyclist_boxes": 764,
+      "ignored_boxes": 0,
+      "negative_images": 12
+    },
+    "combined": {
+      "images": 8477,
+      "target_boxes": 63905,
+      "vehicle_boxes": 49678,
+      "pedestrian_boxes": 11836,
+      "cyclist_boxes": 2391,
+      "ignored_boxes": 12779,
+      "negative_images": 12
+    }
+  },
+  "source_manifest_passed": true
+}

@@ -1,0 +1,172 @@
+% Related Work
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{Autonomous-Driving Datasets and Benchmark Bias}
+\label{sec:related_datasets}
+
+Progress in autonomous-driving perception has been strongly shaped by public benchmarks.
+The KITTI Vision Benchmark Suite established one of the earliest widely adopted
+real-world evaluation platforms for road-scene understanding by combining synchronized
+cameras, LiDAR, and vehicle-localization sensors~\cite{geiger2012kitti}. Its
+object-detection benchmark enabled reproducible comparison of cars, pedestrians, and
+cyclists and remains influential in the field. However, KITTI is comparatively compact
+and reflects a limited set of geographic, traffic, camera, and environmental conditions,
+so strong performance on a KITTI validation split does not by itself demonstrate
+robustness outside the source distribution.
+
+Later datasets broadened the scale and diversity of driving perception. The Waymo Open
+Dataset provides large-scale camera and LiDAR recordings collected across multiple cities
+and driving environments~\cite{sun2020waymo}. BDD100K contributes extensive geographic,
+weather, illumination, and scene variation across a large collection of driving videos and
+multiple perception tasks~\cite{yu2020bdd100k}. nuScenes further expands benchmark
+diversity through a full sensor suite, 360-degree coverage, radar data, and dense
+multimodal annotations~\cite{caesar2020nuscenes}. Together, these datasets show that
+autonomous-driving benchmarks differ not only in size but also in viewpoint, image
+characteristics, traffic density, object-size distribution, class frequency, annotation
+ontology, and operating environment.
+
+These differences create a meaningful benchmark-bias problem. A detector can exploit
+regularities specific to its training dataset---camera height, road layout, background
+appearance, and class prevalence---while appearing highly accurate under an in-domain
+split. Cross-dataset testing is therefore a necessary complement to conventional
+validation. Nevertheless, dataset papers mainly define benchmarks and evaluation tasks;
+they do not provide a controlled comparison in which detectors trained under the same
+protocol on KITTI are transferred directly to a harmonized Waymo subset. This limitation
+motivates the external-validation setting adopted here.
+
+\subsection{CNN-Based Object Detection}
+\label{sec:related_cnn}
+
+Convolutional object detectors are commonly organized into two-stage and one-stage
+paradigms. Faster R-CNN integrated a Region Proposal Network with a region-based detector,
+allowing proposal generation and classification to share convolutional
+features~\cite{ren2015fasterrcnn}. This design established a strong accuracy-oriented
+baseline and remains relevant when localization quality is prioritized, although its
+proposal and per-region processing stages can increase computational cost relative to
+compact one-stage architectures.
+
+RetinaNet addressed a central limitation of dense one-stage detection: the extreme
+imbalance between background locations and foreground objects. Focal loss reduces the
+contribution of easy negatives and concentrates learning on difficult
+examples~\cite{lin2017focalloss}, allowing a one-stage detector to achieve competitive
+accuracy with a simpler dense prediction pipeline. This formulation is particularly
+relevant to road scenes, where the image contains large background regions and
+comparatively few small foreground instances. The original work, however, focused on
+standard in-domain benchmarks and did not evaluate how focal-loss-based detection behaves
+when transferred between autonomous-driving datasets.
+
+The YOLO family represents the real-time one-stage paradigm; YOLOv7, for example,
+introduced architectural and training refinements designed to improve accuracy without
+proportionally increasing inference cost~\cite{wang2023yolov7}. Such models are
+attractive for autonomous vehicles because of their high throughput and compact
+deployment footprint. Published comparisons among YOLO, Faster R-CNN, and RetinaNet are
+difficult to interpret directly because studies frequently differ in datasets, input
+resolutions, backbones, pretraining sources, hardware platforms, precision modes, and
+latency definitions. A controlled same-data and same-hardware evaluation is therefore
+required to determine whether speed-oriented CNN detectors preserve their advantages
+under cross-dataset shift.
+
+\subsection{Transformer-Based and End-to-End Detection}
+\label{sec:related_transformer}
+
+Transformer-based detectors introduced a substantially different formulation of object
+detection. DETR treated detection as direct set prediction and used bipartite matching to
+associate predicted objects with ground-truth instances~\cite{carion2020detr}. By
+combining a convolutional backbone with a transformer encoder--decoder, DETR removed
+several hand-designed components, including anchor generation and non-maximum suppression.
+This end-to-end formulation simplified the pipeline, but the original model required long
+training schedules and was less effective for small objects, which are common and
+safety-relevant in driving scenes.
+
+Deformable DETR improved the efficiency of transformer attention by sampling a sparse set
+of relevant spatial locations across multi-scale feature maps~\cite{zhu2021deformabledetr},
+accelerating convergence and improving small-object performance. RT-DETR extended this
+direction by explicitly targeting real-time end-to-end detection through an efficient
+hybrid encoder and flexible speed control~\cite{zhao2024rtdetr}, providing an appropriate
+modern transformer baseline for comparison with real-time CNN detectors.
+
+Despite their architectural differences, CNN and transformer detectors are commonly
+compared only on the benchmark on which each model was developed. It remains uncertain
+whether global or selective attention, end-to-end set prediction, region proposals, and
+dense convolutional prediction produce different robustness patterns under natural
+autonomous-driving domain shift. This question is addressed by evaluating RT-DETR and
+representative CNN families under one harmonized KITTI-to-Waymo protocol.
+
+\subsection{Domain Shift and Cross-Dataset Generalization}
+\label{sec:related_domain_shift}
+
+Domain shift arises when the distribution encountered during deployment differs from the
+distribution used for model development. In object detection this shift may involve
+appearance, weather, illumination, camera geometry, object scale, traffic density, class
+balance, or annotation conventions. Domain-adaptation research attempts to reduce this
+mismatch by using information from the target domain: Domain Adaptive Faster R-CNN
+introduced image-level and instance-level adversarial alignment for an unlabeled target
+domain~\cite{chen2018domainadaptive}, and the Cross-Domain Adaptive Teacher later used
+teacher--student learning with target-domain pseudo-labels~\cite{li2022crossdomainadaptive}.
+These methods are valuable when target images are available during training, but they
+answer a different question from target-free external validation.
+
+Direct cross-dataset studies provide evidence that benchmark-specific performance may not
+generalize. Hasan et al.\ showed that pedestrian detectors with strong within-dataset
+results can degrade substantially when evaluated on other pedestrian
+datasets~\cite{hasan2021generalizablepedestrian}, exposing the risk of dataset-specific
+design choices, although the principal focus is pedestrian detection rather than a unified
+comparison across detector paradigms. The SHIFT dataset enables controlled investigation
+of continuous changes in weather, time of day, and traffic conditions~\cite{sun2022shift},
+while weather-robust detection studies analyze real and synthetic adverse-weather
+transformations~\cite{gupta2024weather}. Such work clarifies individual sources of
+degradation but does not fully represent the combined geographic, camera, ontology, and
+scene-distribution differences between independent real-world datasets.
+
+The present study therefore distinguishes three evaluation settings. \emph{Domain
+adaptation} modifies training using labeled or unlabeled target-domain information.
+\emph{Domain generalization} typically modifies training to improve performance on
+unspecified unseen domains. \emph{Target-free external validation}, which is used here,
+leaves the trained detector unchanged and measures its direct transfer to an independently
+constructed target dataset. This setting reveals the natural external reliability of
+standard detectors before adaptation is introduced and supports a fair analysis of
+architecture-dependent degradation.
+
+\subsection{Safety-Oriented and Deployment-Aware Evaluation}
+\label{sec:related_safety}
+
+Mean Average Precision is indispensable but insufficient for safety-oriented
+autonomous-driving evaluation. Similar mAP values can arise from different error profiles,
+including misclassification, poor localization, duplicate detections, background false
+positives, and missed objects. TIDE formalized this distinction through a model-agnostic
+decomposition of object-detection errors~\cite{bolya2020tide}. Such analysis is
+particularly important for pedestrians and cyclists, because a moderate aggregate score
+can conceal a high number of safety-critical false negatives; object size, distance,
+occlusion, crowding, and class frequency should therefore be examined alongside overall
+accuracy.
+
+Deployment constraints introduce an additional evaluation dimension. Streaming-perception
+work demonstrated that processing delay changes the effective quality of online
+predictions because a delayed result may describe an earlier scene
+state~\cite{yang2022streaming}, and the ASAP benchmark similarly incorporated latency into
+vision-centric autonomous-driving evaluation, showing that strong offline models may behave
+differently under streaming conditions~\cite{wang2023asap}. These findings motivate
+measuring detector performance on common hardware using batch-one latency, throughput,
+and, where possible, latency percentiles rather than reporting only theoretical speed. A
+deployment-oriented comparison should also report parameter count, computational
+complexity, model size, and memory requirements.
+
+\subsection{Research Gap and Positioning}
+\label{sec:related_gap}
+
+The reviewed literature provides strong foundations in autonomous-driving datasets, CNN
+and transformer detection, domain adaptation, error analysis, and latency-aware
+evaluation, but these streams remain fragmented. Dataset studies emphasize scale and
+diversity; detector papers prioritize in-domain architectural performance; adaptation
+methods use target-domain information; cross-dataset studies often focus on one class or
+one shift type; and deployment studies usually examine latency separately from external
+robustness. There is limited evidence from a controlled target-free experiment in which
+proposal-based, dense one-stage, real-time CNN, and real-time transformer detectors are
+trained on the same source dataset and evaluated on a distinct real-world dataset using
+harmonized classes and common implementation rules. The proposed study addresses this gap
+by training YOLO, Faster R-CNN, RetinaNet, and RT-DETR on KITTI and externally validating
+them on a representative Waymo front-camera subset without retraining or adaptation,
+jointly considering in-domain accuracy, absolute and relative degradation, class-wise
+generalization, false negatives, difficult-object conditions, and same-hardware
+efficiency.

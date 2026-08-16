@@ -1,0 +1,55 @@
+{
+  "milestone": 3,
+  "step": 7,
+  "purpose": "Separate true evaluation-ignore regions from excluded non-target objects.",
+  "policy": {
+    "evaluation_ignore": {
+      "KITTI": [
+        "DontCare"
+      ],
+      "Waymo": [],
+      "suppresses_false_positives": true
+    },
+    "excluded_non_target": {
+      "KITTI": [
+        "Tram",
+        "Misc"
+      ],
+      "Waymo": [
+        "Sign"
+      ],
+      "suppresses_false_positives": false
+    }
+  },
+  "class_counts": {
+    "kitti_train:DontCare": 8983,
+    "kitti_train:Misc": 769,
+    "kitti_train:Tram": 422,
+    "kitti_val:DontCare": 2312,
+    "kitti_val:Misc": 204,
+    "kitti_val:Tram": 89
+  },
+  "waymo_selected_type_counts": {
+    "Unknown": 0,
+    "Vehicle": 16928,
+    "Pedestrian": 7127,
+    "Sign": 0,
+    "Cyclist": 764
+  },
+  "waymo_target_total": 24819,
+  "total_evaluation_ignore_regions": 11295,
+  "total_excluded_non_target_regions": 1484,
+  "checks": {
+    "source_image_count": true,
+    "kitti_dontcare_count": true,
+    "kitti_tram_count": true,
+    "kitti_misc_count": true,
+    "waymo_vehicle_audit": true,
+    "waymo_pedestrian_audit": true,
+    "waymo_cyclist_audit": true,
+    "waymo_target_total_audit": true,
+    "waymo_evaluation_ignore_empty": true
+  },
+  "issue_count": 0,
+  "region_policy_passed": true
+}
